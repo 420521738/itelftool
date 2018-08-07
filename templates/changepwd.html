@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+{% block header-css %}
+<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css" />
+<link rel="stylesheet" type="text/css" href="/static/admin/css/widgets.css" />
+{% endblock %}
+
+{% block page-content-title %}
+修改密码
+{% endblock %}
+
+{% block page-nav-tab %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">修改密码</li>
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+    <!-- Content -->
+    <div id="content" class="colM">
+        
+        <div id="content-main">
+
+<form action="{% url 'changepwd' %}?next={{ next  }}" method="POST"> {% csrf_token %}
+	<!-- <input type='hidden' name='csrfmiddlewaretoken' value='LpbfzNNe0d5VolTIcLYQ30WH4kdaotC8SCwJQzdVzt7EG87PMxtgud9fAaJc5grh' /> -->
+<div>
+
+
+
+<p>Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly.</p>
+
+<fieldset class="module aligned wide">
+
+<div class="form-row">
+    
+    <label class="required" for="id_old_password">Old password:</label> <input type="password" name="old_password" required id="id_old_password" autofocus />
+</div>
+
+<div class="form-row">
+    
+    <label class="required" for="id_new_password1">New password:</label> 
+    <input type="password" name="new_password1" id="id_new_password1" />
+    
+    <!-- <div class="help"><ul><li>Your password can&#39;t be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can&#39;t be a commonly used password.</li><li>Your password can&#39;t be entirely numeric.</li></ul></div>  -->
+    
+</div>
+
+<div class="form-row">
+
+    <label class="required" for="id_new_password2">New password confirmation:</label> <input type="password" name="new_password2" required id="id_new_password2" />
+    <p style="color:red">{{ changepwd_err }}</p>
+</div>
+
+</fieldset>
+
+<div class="submit-row">
+    <input type="submit" value="Change my password" class="default" />
+</div>
+
+</div>
+</form></div>
+
+
+        
+        <br class="clear" />
+    </div>
+    <!-- END Content -->
+
+    <div id="footer"></div>
+</div>
+<!-- END Container -->
+{% endblock %}

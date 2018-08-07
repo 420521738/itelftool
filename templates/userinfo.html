@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+{% block header-css %}
+{% endblock %}
+
+{% block page-content-title %}
+个人中心
+{% endblock %}
+
+{% block page-nav-tab %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">个人中心</li>
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+<div id="content" class="colM">
+        
+	<div id="content-main">
+		<table class="table">
+			<caption>个人信息</caption>
+		   <thead>
+		      <tr>
+		         <th>姓名</th>
+		         <th>邮箱</th>
+		         <th>最后一次登录时间</th>
+		         <th>账号创建时间</th>
+		         <th>账号有效开始时间</th>
+		         <th>账号有效结束时间</th>
+		      </tr>
+		   </thead>
+		   <tbody>
+		      <tr>
+		         {% if userinfo.name == None %}
+		         	<td>{{ '未设置' }}</td>
+		         {%  else %}
+		         	<td>{{ userinfo.name }}</td>
+		         {% endif %}
+		         <td>{{ userinfo.email }}</td>
+		         <td>{{ userinfo.last_login }}</td>
+		         <td>{{ userinfo.date_joined }}</td>
+		         <td>{{ userinfo.valid_begin_time }}</td>
+		         {% if userinfo.valid_end_time == None %}
+		         	<td>{{ '未设置' }}</td>
+		         {%  else %}
+		         	<td>{{ userinfo.valid_end_time }}</td>
+		         {% endif %}
+		      </tr>
+		   </tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}
