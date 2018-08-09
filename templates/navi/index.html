@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+{% block header-css %}
+{% endblock %}
+
+{% block page-content-title %}
+站点导航
+{% endblock %}
+
+{% block page-nav-tab %}
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">站点导航</li>
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+<div id="content" class="colM">
+        
+	<div id="content-main">
+		<table class="table">
+			<caption>网站信息</caption>
+		   <thead>
+		      <tr>
+		         <th>网站名称</th>
+		         <th>网站描述</th>
+		         <th>网站URL</th>
+		      </tr>
+		   </thead>
+		   <tbody>
+		   	  {% for item in allnavi %}
+		      <tr>
+			         <td><a style="color:red" href={{ item.url }} target="_blank">{{ item.name }}</a></td>
+			         <td>{{ item.description }}</td>
+			         <td>{{ item.url }}</td>
+		      </tr>
+		      {% endfor %}
+		   </tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}
