@@ -852,3 +852,22 @@
 2018-08-08-09:38:01	WARNING	{'AssetUpdateWarning': "Asset component [1:00:09:0F:FE:00:01]'s field [bonding] is not provided in reporting data "}
 2018-08-08-09:38:01	WARNING	{'AssetUpdateWarning': "Asset component [disk_set]'s key field [slot] is not provided in reporting data "}
 2018-08-08-09:38:01	WARNING	{'AssetUpdateWarning': "Asset component [WindowsServer1 sn:00426-OEM-8992662-00006]'s field [raid_type] is not provided in reporting data "}
+2018-08-08-16:01:09	INFO	{'HardwareChanges': 'Asset[<id:1 name:WindowsServer1>] --> component[1:slot:0 capacity:465.76] --> is lacking from reporting source data, assume it has been removed or replaced,will also delete it from DB'}
+2018-08-08-16:01:09	INFO	{'NewComponentAdded': "Asset[<id:1 name:WindowsServer1>] --> component[Disk] has justed added a new item [{'capacity': 465.76, 'asset_id': 1, 'iface_type': 'SCSI', 'model': 'TOSHIBA MQ01ACF050 SCSI Disk Device', 'sn': '           74I3CCQUT', 'manufactory': '(标准磁盘驱动器)', 'slot': 0}]"}
+2018-08-08-16:01:09	ERROR	{'AssetUpdateWarning': 'Cannot find any matches in source data by using key field val [0],component data is missing in reporting data!'}
+2018-08-08-16:01:09	WARNING	{'AssetUpdateWarning': "Asset component [1:28:B2:BD:51:79:A2]'s field [sn] is not provided in reporting data "}
+2018-08-08-16:01:09	WARNING	{'AssetUpdateWarning': "Asset component [1:28:B2:BD:51:79:A2]'s field [ipaddress] is not provided in reporting data "}
+2018-08-08-16:01:09	WARNING	{'AssetUpdateWarning': "Asset component [1:28:B2:BD:51:79:A2]'s field [netmask] is not provided in reporting data "}
+2018-08-08-16:01:09	WARNING	{'AssetUpdateWarning': "Asset component [1:28:B2:BD:51:79:A2]'s field [bonding] is not provided in reporting data "}
+2018-08-08-16:01:09	WARNING	{'AssetUpdateWarning': "Asset component [1:28:B2:BD:51:79:9E]'s field [sn] is not provided in reporting data "}
+2018-08-08-16:01:09	WARNING	{'AssetUpdateWarning': "Asset component [1:28:B2:BD:51:79:9E]'s field [ipaddress] is not provided in reporting data "}
+2018-08-08-16:01:09	WARNING	{'AssetUpdateWarning': "Asset component [1:28:B2:BD:51:79:9E]'s field [netmask] is not provided in reporting data "}
+2018-08-08-16:01:09	WARNING	{'AssetUpdateWarning': "Asset component [1:28:B2:BD:51:79:9E]'s field [bonding] is not provided in reporting data "}
+2018-08-08-16:01:09	WARNING	{'AssetUpdateWarning': "Asset component [1:28:D2:44:B4:CA:14]'s field [sn] is not provided in reporting data "}
+2018-08-08-16:01:09	WARNING	{'AssetUpdateWarning': "Asset component [1:28:D2:44:B4:CA:14]'s field [bonding] is not provided in reporting data "}
+2018-08-08-16:01:09	WARNING	{'AssetUpdateWarning': "Asset component [1:00:09:0F:FE:00:01]'s field [sn] is not provided in reporting data "}
+2018-08-08-16:01:09	WARNING	{'AssetUpdateWarning': "Asset component [1:00:09:0F:FE:00:01]'s field [ipaddress] is not provided in reporting data "}
+2018-08-08-16:01:09	WARNING	{'AssetUpdateWarning': "Asset component [1:00:09:0F:FE:00:01]'s field [netmask] is not provided in reporting data "}
+2018-08-08-16:01:09	WARNING	{'AssetUpdateWarning': "Asset component [1:00:09:0F:FE:00:01]'s field [bonding] is not provided in reporting data "}
+2018-08-08-16:01:09	WARNING	{'AssetUpdateWarning': "Asset component [disk_set]'s key field [slot] is not provided in reporting data "}
+2018-08-08-16:01:09	WARNING	{'AssetUpdateWarning': "Asset component [WindowsServer1 sn:00426-OEM-8992662-00006]'s field [raid_type] is not provided in reporting data "}

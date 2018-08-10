@@ -64,13 +64,19 @@
   </div>
 {#回传参数至父层#}
 <script type="text/javascript">
+		//parent.layer.getFrameIndex(window.name)获取窗口索引
         var index = parent.layer.getFrameIndex(window.name);
+        //判断save函数传回来的status值，如果保存成功，传回来的status就是1，不成功就是2
         var success = {{ status }};
         if ( success == '1' ) {
+        	//如果保存成功，那么设置id为handle_status的属性的值为1（manage.html页面中）
             parent.$("#handle_status").val('1');
+              //关闭弹出的子页面窗口
               parent.layer.close(index);
         } else if( success == '2' ) {
+        	//如果保存成功，那么设置id为handle_status的属性的值为2（manage.html页面中）
             parent.$("#handle_status").val('2');
+            //关闭弹出的子页面窗口
             parent.layer.close(index);
         }
 </script>

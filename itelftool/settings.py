@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 注册assets以及rest_framework
     'assets',
+    'navi',
     'rest_framework',
 ]
 
