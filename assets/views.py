@@ -9,7 +9,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 from assets import tables
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from  assets.dashboard import  AssetDashboard
+from assets.dashboard import  AssetDashboard
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+from assets.forms import IdcForm,CabinetForm
+from assets.models import IDC,Cabinet
 
 
 
@@ -193,3 +197,141 @@ def event_center(request):
 
     return render(request,'assets/event_center.html',{'table_obj': table_obj,
                                                   'paginator': paginator})
+    
+
+@login_required()
+def idc(request):
+    idc_info = models.IDC.objects.all()
+    return render(request, 'assets/idc.html', locals())
+
+
+@login_required()
+def idc_add(request):
+    if request.method == "POST":
+        idc_form = IdcForm(request.POST)
+        if idc_form.is_valid():
+            idc_form.save()
+            tips = u"增加成功！"
+            display_control = ""
+        else:
+            tips = u"增加失败！"
+            display_control = ""
+        return render(request, "assets/idc_base.html", locals())
+    else:
+        display_control = "none"
+        idc_form = IdcForm()
+        return render(request, "assets/idc_base.html", locals())
+
+@login_required()
+def idc_del(request):
+    idc_id = request.GET.get('id', '')
+    if idc_id:
+        IDC.objects.filter(id=idc_id).delete()
+    if request.method == 'POST':
+        idc_items = request.POST.getlist('idc_check', [])
+        if idc_items:
+            for n in idc_items:
+                IDC.objects.filter(id=n).delete()
+    idc_info = IDC.objects.all()
+    return render(request, "assets/idc.html", locals())
+
+@login_required()
+def idc_edit(request, idc_id):
+    project = IDC.objects.get(id=idc_id)
+    if request.method == 'POST':
+        form = IdcForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            # HttpResponseRedirect(reverse('idc'))是重定向的方法，跳转到name为idc的url中去
+            return HttpResponseRedirect(reverse('idc'))
+    else:
+        form = IdcForm(instance=project)
+    display_control = "none"
+    results = {
+        'idc_form': form,
+        'idc_id': idc_id,
+        'request': request,
+        'display_control': display_control,
+    }
+    return render(request, 'assets/idc_base.html', results)
+
+@login_required()
+def cabinet_list(request, cabinet_id):
+    cab = IDC.objects.get(id=cabinet_id)
+    cabinets = cab.cabinet_set.all()
+    results = {
+        'cabinet_list':  cabinets,
+    }
+    return render(request, 'assets/idc_cabinet_list.html', results)
+
+
+@login_required()
+def cabinet(request):
+    allcabinet = Cabinet.objects.all()
+    context = {
+        'allcabinet': allcabinet
+    }
+    return render(request, 'assets/cabinet.html', context)
+
+
+@login_required()
+def cabinet_add(request):
+    if request.method == "POST":
+        cabinet_form = CabinetForm(request.POST)
+        if cabinet_form.is_valid():
+            cabinet_form.save()
+            tips = u"增加成功！"
+            display_control = ""
+        else:
+            tips = u"增加失败！"
+            display_control = ""
+        return render(request, "assets/cabinet_base.html", locals())
+    else:
+        display_control = "none"
+        cabinet_form = CabinetForm()
+        return render(request, "assets/cabinet_base.html", locals())
+
+
+@login_required()
+def cabinet_del(request):
+    cabinet_id = request.GET.get('id', '')
+    if cabinet_id:
+        Cabinet.objects.filter(id=cabinet_id).delete()
+
+    if request.method == 'POST':
+        cabinet_items = request.POST.getlist('g_check', [])
+        if cabinet_items:
+            for n in cabinet_items:
+                Cabinet.objects.filter(id=n).delete()
+    allcabinet = Cabinet.objects.all()
+    return render(request, "assets/cabinet.html", locals())
+
+
+@login_required()
+def cabinet_edit(request, cabinet_id):
+    project = Cabinet.objects.get(id=cabinet_id)
+    if request.method == 'POST':
+        form = CabinetForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('cabinet'))
+    else:
+        form = CabinetForm(instance=project)
+    display_control = "none"
+    results = {
+        'cabinet_form': form,
+        'cabinet_id': cabinet_id,
+        'request': request,
+        'display_control': display_control,
+    }
+    return render(request, 'assets/cabinet_base.html', results)
+
+
+@login_required
+def server_list(request, cabinet_id):
+    cab = Cabinet.objects.get(id=cabinet_id)
+    servers = cab.serverList.all()
+    results = {
+        'server_list':  servers,
+    }
+    return render(request, 'assets/cabinet_server_list.html', results)

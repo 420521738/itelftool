@@ -32,6 +32,16 @@ urlpatterns = [
     url(r'^asset_list/list/$', views.get_asset_list, name="get_asset_list"),
     url(r'^asset_list/category/$', views.asset_category, name="asset_category"),
     url(r'^asset_event_logs/(\d+)/$', views.asset_event_logs, name="asset_event_logs"),
-    url(r'^event_center/$',views.event_center,name="event_center")
+    url(r'^event_center/$',views.event_center,name="event_center"),
+    url(r'^idc/$', views.idc, name='idc'),
+    url(r'^idc/add/$', views.idc_add, name='idc_add'),
+    url(r'^idc/del/$', views.idc_del, name='idc_del'),
+    url(r'^idc/edit/(?P<idc_id>\d+)/$', views.idc_edit, name='idc_edit'),
+    url(r'^idc/cabinetlist/(?P<cabinet_id>\d+)/$', views.cabinet_list, name='idc_cabinet_list'),
+    url(r'^cabinet/$', views.cabinet, name='cabinet'),
+    url(r'^cabinet/del/$', views.cabinet_del, name='cabinet_del'),
+    url(r'^cabinet/add/$', views.cabinet_add, name='cabinet_add'),
+    url(r'^cabinet/server_list/(?P<cabinet_id>\d+)/$', views.server_list, name='cabinet_server_list'),
+    url(r'^cabinet/edit/(?P<cabinet_id>\d+)/$', views.cabinet_edit, name='cabinet_edit'),
 
 ]

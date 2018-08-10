@@ -618,7 +618,6 @@
 											<span class="menu-title">站点一览</span>
 										</a>
 									</li>
-						
 									<li id="navi_manage" class="">
 										<a href="/navi/manage/">
 											<i class="fa fa-list-ul"></i>
@@ -641,7 +640,7 @@
 										</a>
 									</li>
 						
-									<li class="">
+									<li id="cmdb" class="">
 										<a href="{% url 'asset_list' %}">
 											<i class="fa fa-tag"></i>
 											<span class="menu-title">资产列表</span>
@@ -671,6 +670,23 @@
 											<span class="menu-title">事件中心</span>
 										</a>
 									</li>
+									
+									<li id="idc" class="">
+										<!-- <a href="{% url 'event_center' %}"> -->
+										<a href="/asset/idc/">
+											<i class="fa fa-list-ul"></i>
+											<span class="menu-title">机房管理</span>
+										</a>
+									</li>
+									
+									<li id="idc" class="">
+										<!-- <a href="{% url 'event_center' %}"> -->
+										<a href="/asset/cabinet/">
+											<i class="fa fa-list-ul"></i>
+											<span class="menu-title">机柜管理</span>
+										</a>
+									</li>
+									
 								</ul>
 								
 

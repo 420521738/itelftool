@@ -4,19 +4,22 @@
 {% endblock %}
 
 {% block page-content-title %}
-站点管理
+机柜管理
 {% endblock %}
 
 {% block page-nav-tab %}
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <ol class="breadcrumb">
     <li><a href="/">Home</a></li>
-    <li class="active">站点管理</li>
+    <li class="active">机柜管理</li>
 </ol>
 {% endblock %}
 
 
+
 {% block page-content %}
+
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -24,13 +27,12 @@
 
     <!-- Main content -->
     <section class="content">
-        <form action="{% url 'delete' %}" method="post">
+        <form action="{% url 'cabinet_del' %}" method="post">
                 {% csrf_token %}
             <div class="box">
                 <div class="box-header">
-                  <div class="btn-group">
-						 <a href="{% url 'add' %}"><li class="btn btn-success" style="width: 60pt;font-size: medium" ><b>添加</b></li></a>
-						 <p></p>
+                    <div class="btn-group">
+						 <a href="{% url 'cabinet_add' %}"><li class="btn btn-success" ><b>添加机柜</b></li></a>
                   </div>
                 </div>
                 <!-- /.box-header -->
@@ -41,33 +43,33 @@
                             <th>
                                 <input type="checkbox" onclick="checkAll(this, 'item1');" />
                             </th>
-                            		<th>操作</th>
-                                    <th>名称</th>
-                                    <th>注释</th>
-                                    <th>URL</th>
+                                    <th>机柜</th>
+                                    <th>描述</th>
+                                    <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% if allnavi %}
-                                {% for navi in allnavi %}
+                                {% if allcabinet %}
+                                {% for g in allcabinet %}
                                     <tr class="even gradeA">
-                                        <td><input type="checkbox" id="u_id" class="item1" value="{{ navi.id }}" name="navi_check" /></td>
-                                        <input type="hidden" name="u_name" value="{{ navi.name }}">
-                                        <td><a href="#"><li style="list-style-type:none;color:green" onclick="return tanchu(this.value)" value="{{ navi.id }}">编辑</li></a></td>
-                                        <td>{{ navi.name }}</td>
-                                    	<td>{{ navi.description }}</td>
-                                        <td>{{ navi.url }}</td>
+                                        <td><input type="checkbox" id="u_id" class="item1" value="{{ g.id }}" name="g_check" /></td>
+                                        <td><a href="#"><li style="list-style-type:none" onclick="return popWin(this.value)" value="{{ g.id }}">{{ g.name }}</li></a> </td>
+                                        <td>{{ g.desc }}</td>
+
+                                        <td>
+                                            <a href="{% url "cabinet_edit" g.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                            <a href="{% url "cabinet_del"%}?id={{ g.id }}" onclick="return confirm('确认删除？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 {% else %}
                                     <p>No Item are available.</p>
                                 {% endif %}
-
                             </tbody>
                   </table>
-                <div class="btn-group">
-						 <button class="btn btn-danger" style="width: 60pt;font-size: medium" onclick="return checkSubmit()"><b>删除</b></button>
-                  </div>
+                    <div class="btn-group">
+						 <button class="btn btn-danger " onclick="return checkSubmit()"><b>删除</b></button>
+                    </div>
                 </div>
             </div>
         </form>
@@ -75,6 +77,7 @@
     </section>
         <!-- /.content -->
       </div>
+{#接收子层回传参数#}
 <input id="handle_status" value="" hidden="hidden">
 <script>
 function checkAll(sender, checkClass) {
@@ -90,7 +93,6 @@ function checkAll(sender, checkClass) {
 <script src="/static/plugins/datatables/DataTables-1.10.9/js/jquery.dataTables.min.js"></script>
 <script src="/static/plugins/datatables/DataTables-1.10.9/js/dataTables.bootstrap.min.js"></script>
 <script>
-  //这个function是调用了js的DataTable的方法，作用是将表格的数据分页，并且添加搜索功能
   $(function () {
 {#    $("#example1").DataTable();#}
     $('#dataform').DataTable({
@@ -111,37 +113,17 @@ function checkSubmit() {
 }
 </script>
 <script>
-function tanchu(n){
-    layer.open({
-    type: 2,
-    title: '修改信息',
-    closeBtn: 1,
-    area: ['600px', '400px'],
-    shadeClose: true, //点击遮罩关闭
-    content: ['/navi/edit?id=' + n,],
-    end:function(){
-            var handle_status = $("#handle_status").val();
-            if ( handle_status == '1' ) {
-                layer.msg('保存成功！',{
-                    icon: 1,
-                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                },function(){
-                    history.go(0);
-                });
-            } else if ( handle_status == '2' ) {
-                layer.msg('修改失败！',{
-                    icon: 2,
-                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                },function(){
-                    history.go(0);
-                });
-            }
-        }
+function popWin(cabinet_id){
+  layer.open({
+      type: 2,
+      title: '服务器列表',
+      area: ['700px', '500px'],
+      shadeClose: true, //点击遮罩关闭
+      content: ['/asset/cabinet/server_list/' + cabinet_id]
   });
 }
 </script>
 {% endblock %}
-
 
 {% block  bottom-js %}
 	<script src="/static/layer/layer.js"></script>

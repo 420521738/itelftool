@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+{% block header-css %}
+	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap-duallistbox.css">
+    <script src="/static/layer/layer.js"></script>
+    <script src="/static/js/jquery.bootstrap-duallistbox.js"></script>
+{% endblock %}
+
+{% block page-content-title %}
+添加机柜
+{% endblock %}
+
+{% block page-nav-tab %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">添加机柜</li>
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="alert alert-info alert-dismissible" style="display: {{ display_control }};">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4>{{ tips }}</h4>
+        </div>
+    </section>
+
+    <!-- Main content -->
+
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+        </div>
+        <div class="box-body">
+        {% if cabinet_id %}
+            <form action="{% url 'cabinet_edit' cabinet_id %}" method="post">
+        {% else %}
+            <form action="{% url 'cabinet_add' %}" method="post">
+        {% endif %}
+        {% csrf_token %}
+        {{ cabinet_form.as_p }}
+          <!-- onclick="CheckChinese('test',this.value)" -->
+        <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{% url 'cabinet' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>
+          </form>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <i class="fa fa-info-circle"></i> 请勿重复添加条目,不建议使用中文。
+        </div>
+        <!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
+    </section>
+
+  </div>
+
+<script>
+	//serverList是models中类Cabinet中定义的，在views中cabinet_form = CabinetForm()的时候带过来了
+    var demo1 = $('select[name="serverList"]').bootstrapDualListbox({
+          nonSelectedListLabel: '可选择服务器',
+          selectedListLabel: '已选择服务器',
+          preserveSelectionOnMove: 'moved',
+          moveOnSelect: false
+    });
+</script>
+<script language="javascript" type="text/javascript">
+  function CheckChinese(obj,val){
+　　var reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
+　　if(reg.test(val)){
+       alert("不能输入汉字！");
+       var strObj = document.getElementById(obj);
+       strObj.value = "";
+       strObj.focus();
+　　}
+  }
+</script>
+{% endblock %}
+
+{% block  bottom-js %}
+{% endblock %}

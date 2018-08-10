@@ -353,9 +353,17 @@ class Contract(models.Model):
 
 class IDC(models.Model):
     """机房"""
-
+    # 这个IDC的表已经是重新设计过的了，所以很多项都是设置了null=True，但是如果再次重新使用，可以把null=True去掉
+    ids = models.CharField(u"机房标识", max_length=255, unique=True)
     name = models.CharField(u'机房名称', max_length=64, unique=True)
     memo = models.CharField(u'备注', max_length=128, blank=True, null=True)
+    address = models.CharField(u"机房地址", max_length=100, blank=True, null=True)
+    tel = models.CharField(u"机房电话", max_length=30, blank=True, null=True)
+    contact = models.CharField(u"客户经理", max_length=30, blank=True, null=True)
+    contact_phone = models.CharField(u"移动电话", max_length=30, blank=True, null=True)
+    jigui = models.CharField(u"机柜信息", max_length=30, blank=True, null=True)
+    ip_range = models.CharField(u"IP范围", max_length=30, blank=True, null=True)
+    bandwidth = models.CharField(u"接入带宽", max_length=30, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -363,6 +371,36 @@ class IDC(models.Model):
     class Meta:
         verbose_name = '机房'
         verbose_name_plural = "机房"
+        
+
+class HostGroup(models.Model):
+    name = models.CharField(u"服务器组名", max_length=30, unique=True)
+    desc = models.CharField(u"描述", max_length=100, blank=True)
+
+    serverList = models.ManyToManyField(
+            Asset,
+            blank=True,
+            verbose_name=u"所在服务器"
+    )
+
+    def __unicode__(self):
+        return self.name
+    
+
+class Cabinet(models.Model):
+    idc = models.ForeignKey(IDC, verbose_name=u"所在机房", on_delete=models.SET_NULL, null=True, blank=True)
+    name = models.CharField(u"机柜", max_length=100)
+    desc = models.CharField(u"描述", max_length=100, blank=True)
+
+    serverList = models.ManyToManyField(
+            Asset,
+            blank=True,
+            verbose_name=u"所在服务器"
+    )
+    
+
+    def __unicode__(self):
+        return self.name
 
 
 class Tag(models.Model):

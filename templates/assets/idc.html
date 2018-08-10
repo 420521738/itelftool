@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+{% block header-css %}
+{% endblock %}
+
+{% block page-content-title %}
+机房管理
+{% endblock %}
+
+{% block page-nav-tab %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">机房管理</li>
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <form action="{% url 'idc_del' %}" method="post">
+                    {% csrf_token %}
+            <div class="box">
+                <div class="box-header">
+                    <div class="btn-group">
+						 <a href="{% url 'idc_add' %}"><li class="btn btn-success" ><b>添加机房</b></li></a>
+                  </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <table class="table table-striped table-bordered" id="dataform">
+                      <thead>
+                        <tr>
+                                    <th>机房名称</th>
+                                    <th>机房标识</th>
+                                    <th>机房电话</th>
+                                    <th>客户经理</th>
+                                    <th>移动电话</th>
+                                    <th>备注</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if idc_info %}
+                                {% for idc in idc_info %}
+                                    <tr class="even gradeA">
+                                        <td><a href="#"><li style="list-style-type:none" onclick="return popWin(this.value)" value="{{ idc.id }}">{{ idc.name }}</li></a> </td>
+                                        <td>{{ idc.ids }}</td>
+                                        <td>{{ idc.tel }}</td>
+                                        <td>{{ idc.contact }}</td>
+                                        <td>{{ idc.contact_phone }}</td>
+                                        <td>{{ idc.memo }}</td>
+                                        <td>
+                                            <a href="{% url "idc_edit" idc.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                            <a href="{% url "idc_del"%}?id={{ idc.id }}" onclick="return confirm('确认删除？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                {% else %}
+                                    <p>No Item are available.</p>
+                                {% endif %}
+                            </tbody>
+                  </table>
+                </div>
+            </div>
+        </form>
+
+    </section>
+        <!-- /.content -->
+      </div>
+{#接收子层回传参数#}
+<input id="handle_status" value="" hidden="hidden">
+<script>
+function checkAll(sender, checkClass) {
+    var checkItems = document.getElementsByTagName('input');
+    for (var i = 0; i < checkItems.length; i++) {
+        var checkItem = checkItems[i];
+        if (checkItem.type === 'checkbox' && checkItem.className === 'item1') {
+            checkItem.checked = sender.checked;
+        }
+    }
+}
+</script>
+<script src="/static/plugins/datatables/DataTables-1.10.9/js/jquery.dataTables.min.js"></script>
+<script src="/static/plugins/datatables/DataTables-1.10.9/js/dataTables.bootstrap.min.js"></script>
+<script>
+  $(function () {
+{#    $("#example1").DataTable();#}
+    $('#dataform').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true
+    });
+  });
+</script>
+<script>
+function popWin(idc_id){
+  layer.open({
+      type: 2,
+      title: '机柜列表',
+      area: ['700px', '500px'],
+      shadeClose: true, //点击遮罩关闭
+      content: ['/asset/idc/cabinetlist/' + idc_id]
+  });
+}
+</script>
+<script>
+function tanchu(n){
+  layer.open({
+  type: 2,
+  title: '机房信息修改',
+  area: ['600px', '450px'],
+  shadeClose: true, //点击遮罩关闭
+  content: ['/asset/idc/edit/' + n,],
+  end:function(){
+        var handle_status = $("#handle_status").val();
+        if ( handle_status == '1' ) {
+            layer.msg('保存成功！',{
+                icon: 1,
+                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            },function(){
+                history.go(0);
+            });
+        } else if ( handle_status == '2' ) {
+            layer.msg('修改失败！',{
+                icon: 2,
+                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            },function(){
+                history.go(0);
+            });
+        }
+    }
+  });
+}
+</script>
+{% endblock %}
+
+{% block  bottom-js %}
+	<script src="/static/layer/layer.js"></script>
+{% endblock %}
