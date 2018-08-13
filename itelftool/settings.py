@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     # 注册assets以及rest_framework
     'assets',
     'navi',
+    'appconf',
     'rest_framework',
 ]
 

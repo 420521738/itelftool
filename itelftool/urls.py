@@ -36,6 +36,8 @@ urlpatterns = [
     url(r'^asset/',include(asset_urls)),
     # 站点导航url入口
     url(r'^navi/', include('navi.urls')),
+    # 应用管理url入口
+    url(r'^appconf/', include('appconf.urls')),
     # 首页
     # name，简单来说，name 可以用于在 templates，models，views ..... 中得到对应的网址，相当于给网址取了个名字，只要这个名字不变，网址变了也能通过名字获取到。
     url(r'^$',views.index,name="dashboard"),
