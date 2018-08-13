@@ -39,6 +39,7 @@
                       <thead>
                         <tr>
                                     <th>机房名称</th>
+                                    <th>机柜列表</th>
                                     <th>机房标识</th>
                                     <th>机房电话</th>
                                     <th>客户经理</th>
@@ -51,7 +52,8 @@
                                 {% if idc_info %}
                                 {% for idc in idc_info %}
                                     <tr class="even gradeA">
-                                        <td><a href="#"><li style="list-style-type:none" onclick="return popWin(this.value)" value="{{ idc.id }}">{{ idc.name }}</li></a> </td>
+                                    	<td>{{ idc.name }}</td>
+                                        <td><a href="#"><li style="list-style-type:none;color:green" onclick="return popWin(this.value)" value="{{ idc.id }}">{{ '显示机柜' }}</li></a> </td>
                                         <td>{{ idc.ids }}</td>
                                         <td>{{ idc.tel }}</td>
                                         <td>{{ idc.contact }}</td>

@@ -44,6 +44,7 @@
                                 <input type="checkbox" onclick="checkAll(this, 'item1');" />
                             </th>
                                     <th>机柜</th>
+                                    <th>服务器列表</th>
                                     <th>描述</th>
                                     <th>操作</th>
                                 </tr>
@@ -53,7 +54,8 @@
                                 {% for g in allcabinet %}
                                     <tr class="even gradeA">
                                         <td><input type="checkbox" id="u_id" class="item1" value="{{ g.id }}" name="g_check" /></td>
-                                        <td><a href="#"><li style="list-style-type:none" onclick="return popWin(this.value)" value="{{ g.id }}">{{ g.name }}</li></a> </td>
+                                        <td>{{ g.name }}</td>
+                                        <td><a href="#"><li style="list-style-type:none;color:green" onclick="return popWin(this.value)" value="{{ g.id }}">{{ '显示该机柜服务器' }}</li></a> </td>
                                         <td>{{ g.desc }}</td>
 
                                         <td>

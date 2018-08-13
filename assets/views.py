@@ -331,7 +331,8 @@ def cabinet_edit(request, cabinet_id):
 def server_list(request, cabinet_id):
     cab = Cabinet.objects.get(id=cabinet_id)
     servers = cab.serverList.all()
-    results = {
-        'server_list':  servers,
-    }
-    return render(request, 'assets/cabinet_server_list.html', results)
+    serverlist = []
+    for server in servers:
+        obj = models.Asset.objects.get(id=server.id)
+        serverlist.append(server)
+    return render(request, 'assets/cabinet_server_list.html', {'serverlist':serverlist})

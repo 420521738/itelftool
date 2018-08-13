@@ -18,6 +18,7 @@ encoding//navi/models.py=utf-8
 encoding//navi/tests.py=utf-8
 encoding//navi/urls.py=utf-8
 encoding//navi/views.py=utf-8
+encoding//templates/assets/asset_detail.html=UTF-8
 encoding//templates/assets/cabinet.html=UTF-8
 encoding//templates/assets/cabinet_base.html=UTF-8
 encoding//templates/assets/cabinet_server_list.html=UTF-8

@@ -6,7 +6,7 @@ from django.forms.widgets import *
 
 from .models import Asset, IDC, HostGroup, Cabinet
 
-
+'''
 class AssetForm(forms.ModelForm):
 
     class Meta:
@@ -32,7 +32,7 @@ class AssetForm(forms.ModelForm):
             'position': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;', 'placeholder': u'物理机写位置，虚机写宿主'}),
             'memo': Textarea(attrs={'rows': 4, 'cols': 15, 'class': 'form-control', 'style': 'width:530px;'}),
         }
-
+'''
 
 class IdcForm(forms.ModelForm):
 
@@ -63,6 +63,7 @@ class IdcForm(forms.ModelForm):
         }
 
 
+'''
 class GroupForm(forms.ModelForm):
 
     def clean(self):
@@ -84,6 +85,7 @@ class GroupForm(forms.ModelForm):
             'desc': Textarea(attrs={'rows': 4, 'cols': 15, 'class': 'form-control', 'style': 'width:450px;'}),
 
         }
+'''
 
 
 class CabinetForm(forms.ModelForm):

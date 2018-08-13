@@ -29,18 +29,26 @@
                       <thead>
                         <tr>
                             <th>服务器名</th>
+                            <th>IP地址</th>
                             <th>所属业务线</th>
                             <th>所在位置</th>
                         </tr>
                       </thead>
                             <tbody>
-                            {% for project in server_list %}
+                            
+								{% for server_list in serverlist%} 
                                 <tr class="even gradeX">
-                                    <td><a href="#" target="_blank">{{ project.name }}</a></td>
-                                    <td>{{ project.business_unit_id }} </td>
-                                    <td>{{ project.idc_id }} </td>
+                                    <td><a href="#" target="_blank">{{ server_list.name }}</a></td>
+			                       {% for nic in server_list.nic_set.select_related  %}
+			                           {% if nic.ipaddress %}
+			                            <td>{{ nic.ipaddress }} </td> 
+			                           {% endif %}
+			                       {% endfor %}
+                                    <td>{{ server_list.business_unit }} </td>
+                                    <td>{{ server_list.idc }} </td>
                                 </tr>
-                            {% endfor %}
+                                {% endfor %}
+
                             </tbody>
                   </table>
                 </div>
