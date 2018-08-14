@@ -3,9 +3,9 @@
 
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from appconf.models import Product, Project
+from appconf.models import Product, Project, AppOwner
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
-from appconf.forms import ProductForm, ProjectForm
+from appconf.forms import ProductForm, ProjectForm, AppOwnerForm
 from django.core.urlresolvers import reverse
 import csv
 import datetime
@@ -16,7 +16,8 @@ def str2gb(args):
     :参数 args:
     :返回: GB2312编码
     """
-    return str(args).encode('gb2312')
+    #return str(args).encode('gb2312')
+    return str(args)
 
 
 @login_required
@@ -164,9 +165,9 @@ def project_export(request):
 
     response = HttpResponse(content_type='text/csv')
     now = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')
-    file_name = 'adminset_project_' + now + '.csv'
+    file_name = 'itelftool_project_' + now + '.csv'
     response['Content-Disposition'] = "attachment; filename="+file_name
-    writer = csv.writer(response)
+    writer = csv.writer(response, dialect='excel')
     writer.writerow([str2gb(u'项目名称'), str2gb(u'项目描述'), str2gb(u'语言类型'), str2gb(u'程序类型'),
                      str2gb(u'服务器类型'), str2gb(u'程序框架'), str2gb(u'源类型'), str2gb(u'源地址'),
                      str2gb(u'程序部署路径'), str2gb(u'配置文件路径'),
@@ -182,29 +183,100 @@ def project_export(request):
     return response
 
 
+@login_required
+def appowner_list(request):
+    all_app_owner = AppOwner.objects.all()
+    results = {
+        'all_app_owner':  all_app_owner,
+    }
+    return render(request, 'appconf/appowner_list.html', results)
+
 
 @login_required
 def appowner_add(request):
-    pass
+    if request.method == 'POST':
+        form = AppOwnerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('appowner_list'))
+    else:
+        form = AppOwnerForm()
+
+    results = {
+        'form': form,
+        'request': request,
+        'page_type': "whole"
+    }
+    return render(request, 'appconf/appowner_add_edit.html', results)
+
 
 @login_required
-def appowner_add_mini(request):
-    pass
+def appowner_edit(request, appowner_id, mini=False):
+    appowner = AppOwner.objects.get(id=appowner_id)
+    if request.method == 'POST':
+        form = AppOwnerForm(request.POST, instance=appowner)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('appowner_list'))
+    else:
+        form = AppOwnerForm(instance=appowner)
 
+    results = {
+        'form': form,
+        'appowner_id': appowner_id,
+        'request': request,
+        'page_type': "whole"
+    }
+    return render(request, 'appconf/appowner_add_edit.html', results)
 
-@login_required
-def appowner_list(request):
-    pass
-
-
-@login_required
-def appowner_edit(request):
-    pass
 
 
 @login_required
 def appowner_del(request):
-    pass
+    appowner_id = request.GET.get('id', '')
+    if appowner_id:
+        AppOwner.objects.filter(id=appowner_id).delete()
+
+    appowner_id_all = str(request.POST.get('appowner_id_all', ''))
+    if appowner_id_all:
+        for appowner_id in appowner_id_all.split(','):
+            AppOwner.objects.filter(id=appowner_id).delete()
+
+    return HttpResponseRedirect(reverse('appowner_list'))
+
+
+@login_required
+def appowner_add_mini(request):
+    status = 0
+    owner_id = 0
+    if request.method == 'POST':
+        form = AppOwnerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            owner_name = request.POST.get('name', '')
+            app_owner = AppOwner.objects.get(name=owner_name)
+            owner_id = app_owner.id
+            status = 1
+        else:
+            status = 2
+    else:
+        form = AppOwnerForm()
+
+    results = {
+        'form': form,
+        'request': request,
+        'status': status,
+        'owner_id': owner_id,
+        'owner_name': request.POST.get('name', ''),
+        'page_type': "mini"
+    }
+    return render(request, 'appconf/appowner_add_edit_mini.html', results)
+
+
+
+
+
+
 
 
 

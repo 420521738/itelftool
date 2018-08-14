@@ -12,7 +12,7 @@ class AppOwner(models.Model):
     qq = models.CharField(u"负责人QQ", max_length=100, null=True, blank=True)
     weChat = models.CharField(u"负责人微信", max_length=100, null=True, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 

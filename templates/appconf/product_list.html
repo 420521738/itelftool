@@ -43,6 +43,7 @@
                                 <input id="checkall" type="checkbox" class="i-checks" name="checkall" value="checkall" data-editable='false' onclick="check_all('product_form')">
                             </th>
                             <th>产品线名称</th>
+                            <th>旗下项目</th>
                             <th>产品线描述</th>
                             <th>负责人姓名</th>
                             <th>负责人电话</th>
@@ -53,7 +54,8 @@
                             {% for product in all_product %}
                                 <tr class="even gradeX">
                                     <td><input type="checkbox" id="id" class="i-checks" value="{{ product.id }}" name="id" /></td>
-                                    <td><a href="#"><li style="list-style-type:none" onclick="return popWin(this.value)" value="{{ product.id }}">{{ product.name }}</li></a> </td>
+                                    <td>{{ product.name }} </td>
+                                    <td><a href="#"><li style="list-style-type:none;color:green" onclick="return popWin(this.value)" value="{{ product.id }}">{{ '显示包含项目' }}</li></a> </td>
                                     <td>{{ product.description }} </td>
                                     <td>{{ product.owner.name }} </td>
                                     <td>{{ product.owner.phone }} </td>
