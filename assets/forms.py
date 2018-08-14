@@ -63,7 +63,7 @@ class IdcForm(forms.ModelForm):
         }
 
 
-'''
+
 class GroupForm(forms.ModelForm):
 
     def clean(self):
@@ -85,7 +85,7 @@ class GroupForm(forms.ModelForm):
             'desc': Textarea(attrs={'rows': 4, 'cols': 15, 'class': 'form-control', 'style': 'width:450px;'}),
 
         }
-'''
+
 
 
 class CabinetForm(forms.ModelForm):

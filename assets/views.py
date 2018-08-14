@@ -12,8 +12,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from assets.dashboard import  AssetDashboard
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from assets.forms import IdcForm,CabinetForm
-from assets.models import IDC,Cabinet
+from assets.forms import IdcForm, CabinetForm, GroupForm
+from assets.models import IDC,Cabinet, HostGroup
 
 
 
@@ -336,3 +336,78 @@ def server_list(request, cabinet_id):
         obj = models.Asset.objects.get(id=server.id)
         serverlist.append(server)
     return render(request, 'assets/cabinet_server_list.html', {'serverlist':serverlist})
+
+
+@login_required
+def group(request):
+    allgroup = HostGroup.objects.all()
+    context = {
+        'allgroup': allgroup
+    }
+    return render(request, 'assets/group.html', context)
+
+
+@login_required
+def group_add(request):
+    if request.method == "POST":
+        group_form = GroupForm(request.POST)
+        if group_form.is_valid():
+            group_form.save()
+            tips = u"增加成功！"
+            display_control = ""
+        else:
+            tips = u"增加失败！"
+            display_control = ""
+        return render(request, "assets/group_base.html", locals())
+    else:
+        display_control = "none"
+        group_form = GroupForm()
+        return render(request, "assets/group_base.html", locals())
+
+
+@login_required
+def group_edit(request, group_id):
+    project = HostGroup.objects.get(id=group_id)
+    if request.method == 'POST':
+        form = GroupForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('group'))
+    else:
+        form = GroupForm(instance=project)
+    display_control = "none"
+    results = {
+        'group_form': form,
+        'group_id': group_id,
+        'request': request,
+        'display_control': display_control,
+    }
+    return render(request, 'assets/group_base.html', results)
+
+
+@login_required
+def group_del(request):
+    group_id = request.GET.get('id', '')
+    if group_id:
+        HostGroup.objects.filter(id=group_id).delete()
+    if request.method == 'POST':
+        group_items = request.POST.getlist('g_check', [])
+        if group_items:
+            for n in group_items:
+                HostGroup.objects.filter(id=n).delete()
+    allgroup = HostGroup.objects.all()
+    return render(request, "assets/group.html", locals())
+
+
+@login_required
+def groupserver_list(request, group_id):
+    grp = HostGroup.objects.get(id=group_id)
+    servers = grp.serverList.all()
+    serverlist = []
+    for server in servers:
+        obj = models.Asset.objects.get(id=server.id)
+        serverlist.append(server)
+    return render(request, 'assets/group_server_list.html', {'serverlist':serverlist})
+
+
+

@@ -47,5 +47,13 @@ urlpatterns = [
     url(r'^cabinet/server_list/(?P<cabinet_id>\d+)/$', views.server_list, name='cabinet_server_list'),
     url(r'^cabinet/edit/(?P<cabinet_id>\d+)/$', views.cabinet_edit, name='cabinet_edit'),
     # 机柜管理 结束
+    
+    # 属组管理 开始
+    url(r'^group/$', views.group, name='group'),
+    url(r'^group/add/$', views.group_add, name='group_add'),
+    url(r'^group/edit/(?P<group_id>\d+)/$', views.group_edit, name='group_edit'),
+    url(r'^group/del/$', views.group_del, name='group_del'),
+    url(r'^group/server_list/(?P<group_id>\d+)/$', views.groupserver_list, name='group_server_list'),
+    # 属组管理 结束
 
 ]
