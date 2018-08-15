@@ -1,36 +1,36 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-from cmdb.models import Host, HostGroup
+
+from assets.models import Asset, HostGroup, NIC
 from django.shortcuts import render
 from subprocess import Popen, PIPE
 import pbs
 from config.views import get_dir
 from django.contrib.auth.decorators import login_required
-from accounts.permission import permission_verify
-from lib.log import log
+#from lib.log import log
 from lib.setup import get_scripts
 import logging
+from _mysql import NULL
+
+
 scripts_dir = get_dir("s_path")
 level = get_dir("log_level")
 log_path = get_dir("log_path")
-log("setup.log", level, log_path)
+#log("setup.log", level, log_path)
 
 
 @login_required()
-@permission_verify()
 def index(request):
-    temp_name = "setup/setup-header.html"
-    all_host = Host.objects.all()
+    all_host = Asset.objects.all()
     all_group = HostGroup.objects.all()
     all_scripts = get_scripts(scripts_dir)
     return render(request, 'setup/shell.html', locals())
 
 
 @login_required()
-@permission_verify()
 def exec_scripts(request):
+    logging.basicConfig(filename='C:\\Users\\Administrator\\eclipse-workspace\\itelftool\\data\\logs\\setup.log',level=logging.INFO,format='%(asctime)s %(levelname)s %(message)s',datefmt='%Y%m%d %H:%M:%S')
     ret = []
-    temp_name = "setup/setup-header.html"
     if request.method == 'POST':
         server = request.POST.getlist('mserver', [])
         group = request.POST.getlist('mgroup', [])
@@ -40,11 +40,11 @@ def exec_scripts(request):
         if server:
             if scripts:
                 for name in server:
-                    host = Host.objects.get(hostname=name)
-                    ret.append(host.hostname)
+                    host = Asset.objects.get(name=name)
+                    ret.append(host.name)
                     logging.info("==========Shell Start==========")
-                    logging.info("User:"+request.user.username)
-                    logging.info("Host:"+host.hostname)
+                    logging.info("User:"+request.user.name)
+                    logging.info("Host:"+host.name)
                     for s in scripts:
                         try:
                             pbs.Command.scp(scripts_dir+s, "root@{}:/tmp/".format(host.ip)+s)
@@ -60,14 +60,17 @@ def exec_scripts(request):
                     logging.info("==========Shell End============")
             else:
                 for name in server:
-                    host = Host.objects.get(hostname=name)
-                    ret.append(host.hostname)
+                    host = Asset.objects.get(name=name)
+                    nicinfo = NIC.objects.get(asset_id = host.id)
+                    ip = nicinfo.ipaddress
+                    ret.append(host.name)
                     logging.info("==========Shell Start==========")
-                    logging.info("User:"+request.user.username)
-                    logging.info("Host:"+host.hostname)
+                    logging.info("User:"+request.user.name)
+                    logging.info("Host:"+host.name)
                     command_list = command.split('\n')
                     for cmd in command_list:
-                        cmd = "ssh root@"+host.ip+" "+'"{}"'.format(cmd)
+                        cmd = "ssh chenqiufei@"+ip+" "+'"{}"'.format(cmd)
+                        print('cmd',cmd)
                         p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                         data = p.communicate()
                         ret.append(data)
@@ -79,7 +82,7 @@ def exec_scripts(request):
             if scripts:
                 for g in group:
                     logging.info("==========Shell Start==========")
-                    logging.info("User:"+request.user.username)
+                    logging.info("User:"+request.user.name)
                     logging.info("Group:"+g)
                     get_group = HostGroup.objects.get(name=g)
                     hosts = get_group.serverList.all()
@@ -104,7 +107,7 @@ def exec_scripts(request):
                 command_list = command.split('\n')
                 for g in group:
                     logging.info("==========Shell Start==========")
-                    logging.info("User:"+request.user.username)
+                    logging.info("User:"+request.user.name)
                     logging.info("Group:"+g)
                     get_group = HostGroup.objects.get(name=g)
                     hosts = get_group.serverList.all()
