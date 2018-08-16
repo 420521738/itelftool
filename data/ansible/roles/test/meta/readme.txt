@@ -1,0 +1,7 @@
+files：用来存放由copy模块或script模块调用的文件。
+templates：用来存放jinjia2模板，template模块会自动在此目录中寻找jinjia2模板文件。
+tasks：此目录应当包含一个main.yml文件，用于定义此角色的任务列表，此文件可以使用include包含其它的位于此目录的task文件。
+handlers：此目录应当包含一个main.yml文件，用于定义此角色中触发条件时执行的动作。
+vars：此目录应当包含一个main.yml文件，用于定义此角色用到的变量。
+defaults：此目录应当包含一个main.yml文件，用于为当前角色设定默认变量。
+meta：此目录应当包含一个main.yml文件，用于定义此角色的特殊设定及其依赖关系。

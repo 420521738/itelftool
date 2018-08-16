@@ -1,0 +1,5 @@
+---
+- hosts: node2,node3
+  tasks:
+     - name: "helloworld"
+       shell: echo "Hello World" `date` by `hostname` > /tmp/hello.log
