@@ -41,23 +41,31 @@ def exec_scripts(request):
             if scripts:
                 for name in server:
                     host = Asset.objects.get(name=name)
+                    nicinfo = NIC.objects.get(asset_id = host.id)
+                    ip = nicinfo.ipaddress
                     ret.append(host.name)
-                    logging.info("==========Shell Start==========")
+                    logging.info("==========Script Start==========")
                     logging.info("User:"+request.user.name)
                     logging.info("Host:"+host.name)
                     for s in scripts:
                         try:
-                            pbs.Command.scp(scripts_dir+s, "root@{}:/tmp/".format(host.ip)+s)
+                            # windows开发环境下需要进行的路径字符串替换，如果是在linux下根本不需要这么写，直接调用sh模块调用命令就行了
+                            temp_scripts_dir = scripts_dir.replace('\\\\','/')
+                            scriptsdir = temp_scripts_dir.replace(':','')
+                            scpcmd = "scp "+"/cygdrive/"+scriptsdir+s+" "+"chenqiufei@{}:/tmp/".format(ip)+s
+                            scp_p = Popen(scpcmd, stdout=PIPE, stderr=PIPE, shell=True)
+                            data = scp_p.communicate()
+                            ret.append(data)
                         except:
                             pass
-                        cmd = "ssh root@"+host.ip+" "+'"sh /tmp/{} {}"'.format(s, args)
+                        cmd = "ssh chenqiufei@"+ip+" "+'"sh /tmp/{} {}"'.format(s, args)
                         p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                         data = p.communicate()
                         ret.append(data)
                         logging.info("Scripts:"+s)
                         for d in data:
                             logging.info(d)
-                    logging.info("==========Shell End============")
+                    logging.info("==========Script End============")
             else:
                 for name in server:
                     host = Asset.objects.get(name=name)
@@ -70,7 +78,7 @@ def exec_scripts(request):
                     command_list = command.split('\n')
                     for cmd in command_list:
                         cmd = "ssh chenqiufei@"+ip+" "+'"{}"'.format(cmd)
-                        print('cmd',cmd)
+                        #print('cmd',cmd)
                         p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                         data = p.communicate()
                         ret.append(data)
@@ -81,27 +89,42 @@ def exec_scripts(request):
         if group:
             if scripts:
                 for g in group:
-                    logging.info("==========Shell Start==========")
+                    logging.info("==========Script Start==========")
                     logging.info("User:"+request.user.name)
                     logging.info("Group:"+g)
                     get_group = HostGroup.objects.get(name=g)
-                    hosts = get_group.serverList.all()
+                    hosts = get_group.serverList.all() 
+                    # 表结构适配，从group里面获取到assetid,serverlist是整理后的资产列表
+                    serverlist = []
+                    for server in hosts:
+                        obj = Asset.objects.get(id=server.id)
+                        serverlist.append(server)
+                    #print(serverlist)
                     ret.append(g)
-                    for host in hosts:
-                        ret.append(host.hostname)
+                    
+                    for asset in serverlist:
+                        nicinfo = NIC.objects.get(asset_id = asset.id)
+                        ip = nicinfo.ipaddress
+                        ret.append(asset.name)
                         for s in scripts:
                             try:
-                                pbs.Command.scp(scripts_dir+s, "root@{}:/tmp/".format(host.ip)+s)
+                                # windows开发环境下需要进行的路径字符串替换，如果是在linux下根本不需要这么写，直接调用sh模块调用命令就行了
+                                temp_scripts_dir = scripts_dir.replace('\\\\','/')
+                                scriptsdir = temp_scripts_dir.replace(':','')
+                                scpcmd = "scp "+"/cygdrive/"+scriptsdir+s+" "+"chenqiufei@{}:/tmp/".format(ip)+s
+                                scp_p = Popen(scpcmd, stdout=PIPE, stderr=PIPE, shell=True)
+                                data = scp_p.communicate()
+                                ret.append(data)
                             except:
                                 pass
-                            cmd = "ssh root@"+host.ip+" "+'"sh /tmp/{} {}"'.format(s, args)
+                            cmd = "ssh chenqiufei@"+ip+" "+'"sh /tmp/{} {}"'.format(s, args)
                             p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                             data = p.communicate()
                             ret.append(data)
                             logging.info("command:"+cmd)
                             for d in data:
                                 logging.info(d)
-                    logging.info("==========Shell End============")
+                    logging.info("==========Script End============")
             else:
                 command_list = []
                 command_list = command.split('\n')
@@ -111,11 +134,19 @@ def exec_scripts(request):
                     logging.info("Group:"+g)
                     get_group = HostGroup.objects.get(name=g)
                     hosts = get_group.serverList.all()
+                    # 表结构适配，从group里面获取到assetid,serverlist是整理后的资产列表
+                    serverlist = []
+                    for server in hosts:
+                        obj = Asset.objects.get(id=server.id)
+                        serverlist.append(server)
+                    #print(serverlist)
                     ret.append(g)
-                    for host in hosts:
-                        ret.append(host.hostname)
+                    for asset in serverlist:
+                        nicinfo = NIC.objects.get(asset_id = asset.id)
+                        ip = nicinfo.ipaddress
+                        ret.append(asset.name)
                         for cmd in command_list:
-                            cmd = "ssh root@"+host.ip+" "+'"{}"'.format(cmd)
+                            cmd = "ssh chenqiufei@"+ip+" "+'"{}"'.format(cmd)
                             p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                             data = p.communicate()
                             ret.append(data)
