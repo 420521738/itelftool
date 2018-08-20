@@ -54,7 +54,6 @@ def index(request):
 def playbook(request):
     logging.basicConfig(filename='C:\\Users\\Administrator\\eclipse-workspace\\itelftool\\data\\logs\\setup.log',level=logging.INFO,format='%(asctime)s %(levelname)s %(message)s',datefmt='%Y%m%d %H:%M:%S')
     ret = []
-    temp_name = "setup/setup-header.html"
     if os.path.exists(ansible_dir + '/gexec.yml'):
         os.remove(ansible_dir + '/gexec.yml')
     else:
@@ -72,7 +71,7 @@ def playbook(request):
                     write_role_vars(roles, role_vars)
                 for h in host:
                     logging.info("==========ansible tasks start==========")
-                    logging.info("User:"+request.user.username)
+                    logging.info("User:"+request.user.name)
                     logging.info("host:"+h)
                     with open(ansible_dir + '/gexec.yml', 'w+') as f:
                         flist = ['- hosts: '+h+'\n', '  remote_user: root\n', '  gather_facts: true\n', '  roles:\n']
@@ -102,7 +101,7 @@ def playbook(request):
                         data = pcmd.communicate()
                         ret.append(data)
                         logging.info("==========ansible tasks start==========")
-                        logging.info("User:"+request.user.username)
+                        logging.info("User:"+request.user.name)
                         logging.info("host:"+h)
                         logging.info("Playbook:"+p)
                         for d in data:
@@ -161,8 +160,6 @@ def ansible_command(request):
     logging.basicConfig(filename='C:\\Users\\Administrator\\eclipse-workspace\\itelftool\\data\\logs\\setup.log',level=logging.INFO,format='%(asctime)s %(levelname)s %(message)s',datefmt='%Y%m%d %H:%M:%S')
     command_list = []
     ret = []
-    count = 1
-    temp_name = "setup/setup-header.html"
     if request.method == 'POST':
         mcommand = request.POST.get('mcommand')
         command_list = mcommand.split('\n')
@@ -172,11 +169,10 @@ def ansible_command(request):
                 data = p.communicate()
                 ret.append(data)
             else:
-                data = "your command " + str(count) + "  is invalid!"
+                data = "your command: [" + command + "]  is invalid!"
                 ret.append(data)
-            count += 1
             logging.info("==========ansible tasks start==========")
-            logging.info("User:"+request.user.username)
+            logging.info("User:"+request.user.name)
             logging.info("command:"+command)
             for d in data:
                 logging.info(d)
@@ -188,17 +184,21 @@ def ansible_command(request):
 def host_sync(request):
     logging.basicConfig(filename='C:\\Users\\Administrator\\eclipse-workspace\\itelftool\\data\\logs\\setup.log',level=logging.INFO,format='%(asctime)s %(levelname)s %(message)s',datefmt='%Y%m%d %H:%M:%S')
     group = HostGroup.objects.all()
-    ansible_file = open(ansible_dir+"\\hosts", "wb")
+    ansible_file = open(ansible_dir+"\\hosts", "w")
     all_host = Asset.objects.all()
     for host in all_host:
-        nicinfo = NIC.objects.get(asset_id = host.id)
-        ip = nicinfo.ipaddress
+        nicinfo = NIC.objects.filter(asset_id = host.id)
+        for i in nicinfo:
+            if i.ipaddress is None:
+                pass
+            else:
+                ip = i.ipaddress
         host_item = host.name+" "+"ansible_host="+ip+" "+"host_name="+host.name+"\n"
         ansible_file.write(host_item)
     for g in group:
         group_name = "["+g.name+"]"+"\n"
         ansible_file.write(group_name)
-        get_member = HostGroup.objects.get(name=g)
+        get_member = HostGroup.objects.get(name=g.name)
         members = get_member.serverList.all()
         # 表结构适配，从group里面获取到assetid,serverlist是整理后的资产列表
         serverlist = []
@@ -206,8 +206,6 @@ def host_sync(request):
             obj = Asset.objects.get(id=server.id)
             serverlist.append(server)
         for m in serverlist:
-            nicinfo = NIC.objects.get(asset_id = m.id)
-            ip = nicinfo.ipaddress
             group_item = m.name+"\n"
             ansible_file.write(group_item)
     ansible_file.close()

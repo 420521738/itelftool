@@ -33,6 +33,7 @@ SECRET_KEY = '+euai7bpjfy$t8%$o5v%*cqwd%y1k86izt9wh7umo&k%6p7*5a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 # 秋飞修改
 # ALLOWED_HOSTS之前是空的，但是如果不加星号的话，或者不加主机IP的话，会导致客户端无法提交数据
 # 报错如下：Invalid HTTP_HOST header: '192.168.7.199:8002'. You may need to add '192.168.7.199' to ALLOWED_HOSTS.
@@ -43,6 +44,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'setup',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,6 +56,8 @@ INSTALLED_APPS = [
     'navi',
     'appconf',
     'rest_framework',
+    'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
