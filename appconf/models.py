@@ -50,6 +50,7 @@ class Project(models.Model):
 
     SERVER_TYPE = (
         ("Tomcat", "Tomcat"),
+        ("Resin", "Resin"),
         ("Weblogic", "Weblogic"),
         ("JETTY", "JETTY"),
         ("Nginx", "Nginx"),

@@ -43,7 +43,10 @@ def verifycode(request):
     fontcolor = (255, random.randrange(0, 255), random.randrange(0, 255))
     
     #构造字体对象，这里需要注意，有很多地方说直接在这里写字体，但是直接写字体，不写绝对路径的话，程序会报错
-    ft = ImageFont.truetype("C:\Windows\Fonts\STZHONGS.TTF", 23)
+    # windows下
+    # ft = ImageFont.truetype("C:\Windows\Fonts\STZHONGS.TTF", 23)
+    # linux下
+    ft = ImageFont.truetype("STZHONGS.TTF", 23)
     
     #绘制4个字符
     draw.text((5, 2), rand_str[0], font=ft, fill=fontcolor)

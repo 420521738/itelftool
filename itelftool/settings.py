@@ -30,6 +30,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '+euai7bpjfy$t8%$o5v%*cqwd%y1k86izt9wh7umo&k%6p7*5a'
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -44,7 +45,6 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'setup',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,8 +56,6 @@ INSTALLED_APPS = [
     'navi',
     'appconf',
     'rest_framework',
-    'django_celery_results',
-    'django_celery_beat',
 ]
 
 MIDDLEWARE = [

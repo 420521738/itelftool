@@ -2,6 +2,7 @@
 {% load custom_tag %}
 {% block header-css %}
 	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap-duallistbox.css">
+	<link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
     <script src="/static/layer/layer.js"></script>
     <script src="/static/js/jquery.bootstrap-duallistbox.js"></script>
 {% endblock %}
@@ -22,7 +23,7 @@
 
 {% block page-content %}
 
-  <div class="content-wrapper">
+  <div>
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="alert alert-info alert-dismissible" style="display: {{ display_control }};">

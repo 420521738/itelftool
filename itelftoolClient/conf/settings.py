@@ -5,8 +5,8 @@ import os
 BaseDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 Params = {
-    "server": "192.168.7.199",
-    "port":8003,
+    "server": "192.168.1.240",
+    "port":8008,
     'request_timeout':30,
     "urls":{
           "asset_report_with_no_id":"/asset/report/asset_with_no_asset_id/",

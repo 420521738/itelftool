@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load custom_tag %}
 {% block header-css %}
+	<link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
 {% endblock %}
 
 {% block page-content-title %}
@@ -17,18 +18,8 @@
 
 
 {% block page-content %}
-<script>
-    window.onload=init;
-    function init() {
-        showhide(1);
-    }
-    function showhide(n) {
-        var box = document.getElementById("navi");
-        box.className="active";
-    }
-</script>
 
-  <div class="content-wrapper">
+  <div>
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="alert alert-info alert-dismissible" style="display: {{ display_control }};">

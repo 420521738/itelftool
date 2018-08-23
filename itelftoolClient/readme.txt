@@ -7,8 +7,9 @@ windows下客户端：
 	
 Linux下客户端：
 	python环境
-	#chmod +x /MadKingClientRoot/plugins/linux/MegaCli
+	# chmod +x /MadKingClientRoot/plugins/linux/MegaCli
 	需要安装megacli，ubuntu下的安装参考：https://www.iyunv.com/thread-311722-1-1.html
+	# yum install -y redhat-lsb
 	
 执行方法：
 widows下：python C:\Users\Administrator\eclipse-workspace\MadKing\MadKingClient\bin\NedStark.py report_asset
