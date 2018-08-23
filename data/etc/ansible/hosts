@@ -1,9 +1,0 @@
-WindowsServer1 ansible_host=192.168.7.199 host_name=WindowsServer1
-LinuxServer1 ansible_host=192.168.1.234 host_name=LinuxServer1
-LinuxServer2 ansible_host=192.168.1.235 host_name=LinuxServer2
-[前台组]
-WindowsServer1
-LinuxServer1
-[Linux组]
-LinuxServer1
-LinuxServer2
