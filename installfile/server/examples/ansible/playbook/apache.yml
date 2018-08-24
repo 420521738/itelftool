@@ -1,0 +1,12 @@
+- hosts: LinuxServer1
+  remote_user: root
+  gather_facts: true
+  tasks:
+   - name: "install apache on CentOS"
+     yum: name=httpd state=present
+     when: ansible_os_family =="RedHat"
+   - name: "install apache on Debian"
+     yum: name=apache2 state=present
+     when: ansible_os_family =="Debian"
+   - name: "启动Apache，并设置开机启动"
+     service: name=httpd state=started enabled=yes

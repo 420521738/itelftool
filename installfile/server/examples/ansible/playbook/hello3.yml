@@ -1,0 +1,5 @@
+- hosts: LinuxServer1
+  gather_facts: false
+  tasks:
+     - name: "helloworld"
+       shell: echo "Hello World" `date` by `hostname` > /tmp/hello.log

@@ -1,13 +1,21 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, HttpResponse
-import configparser as cf
+try:
+    import configparser as cf
+except Exception as msg:
+    print(msg)
+    import ConfigParser as cf
 import os
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
+from lib.log import dic
+
 
 def get_dir(args):
     config = cf.RawConfigParser()
     dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    with open(dirs+'\\adminset.conf', 'r') as cfgfile:
+    with open(dirs+'/adminset.conf', 'r') as cfgfile:
         config.readfp(cfgfile)
         a_path = config.get('config', 'ansible_path')
         r_path = config.get('config', 'roles_path')

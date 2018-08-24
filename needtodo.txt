@@ -1,0 +1,33 @@
+mkdir /etc/ansible/
+mkdir /var/opt/itelftool/data/ansible/roles/ -p
+mkdir /var/opt/itelftool/data/ansible/playbook/ -p
+mkdir  /var/opt/itelftool/data/scripts/ -p
+mkdir /var/opt/itelftool/logs -p
+
+
+# ssh-copy-id -i ~/.ssh/id_rsa.pub -p 22 "chenqiufei@192.168.1.234"
+# ssh-copy-id -i ~/.ssh/id_rsa.pub -p 22 "chenqiufei@192.168.1.235"
+
+
+#install depandencies
+yum install -y epel-release
+yum install -y gcc expect python-pip python-devel smartmontools dmidecode libselinux-python git rsync dos2unix
+yum install -y openssl openssl-devel
+
+main_dir="/var/opt/itelftool"
+data_dir="$main_dir/data"
+mkdir -p $data_dir/ansible/playbook
+mkdir -p $data_dir/ansible/roles
+mkdir -p /etc/ansible/
+
+将installfile/server/ansible/ansible.cfg替换/etc/ansible/ansible.cfg
+注意配置文件中的remote_user和remote_port 以及日志文件路径
+
+pip3 install ansible==2.6.3
+或者
+/home/software/python3.5/bin/pip install ansible==2.6.3
+两者都是一样的，只是软链接区别
+
+安装完成后做软链接：
+ln -s /home/software/python3.5/bin/ansible /usr/bin/ansible
+ln -s /home/software/python3.5/bin/ansible-playbook /usr/bin/ansible-playbook
