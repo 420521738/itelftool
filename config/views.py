@@ -15,7 +15,7 @@ from lib.log import dic
 def get_dir(args):
     config = cf.RawConfigParser()
     dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    with open(dirs+'/adminset.conf', 'r') as cfgfile:
+    with open(dirs+'/itelftool.conf', 'r') as cfgfile:
         config.readfp(cfgfile)
         a_path = config.get('config', 'ansible_path')
         r_path = config.get('config', 'roles_path')
