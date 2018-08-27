@@ -1,0 +1,22 @@
+LinuxServer1 ansible_host=192.168.1.234 host_name=LinuxServer1
+LinuxServer2 ansible_host=192.168.1.235 host_name=LinuxServer2
+CentosServer1 ansible_host=192.168.1.240 host_name=CentosServer1
+WindowsServer1 ansible_host=192.168.7.199 host_name=WindowsServer1
+[UbuntuGroup]
+LinuxServer1
+LinuxServer2
+[CentosGroup]
+CentosServer1
+[WindowsGroup]
+WindowsServer1
+[LinuxGroup]
+LinuxServer1
+LinuxServer2
+CentosServer1
+
+
+[LinuxServer1-root]
+192.168.1.234 ansible_become=True ansible_become_method=su ansible_become_user=root ansible_become_pass=123456
+
+[testroot]
+192.168.1.71 ansible_ssh_port=22612 ansible_become=True ansible_become_method=su ansible_become_user=root ansible_become_pass=zxc@1234
