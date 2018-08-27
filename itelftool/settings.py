@@ -30,6 +30,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '+euai7bpjfy$t8%$o5v%*cqwd%y1k86izt9wh7umo&k%6p7*5a'
 
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Shanghai'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -56,6 +61,9 @@ INSTALLED_APPS = [
     'navi',
     'appconf',
     'rest_framework',
+    'django_celery_results',
+    'django_celery_beat',
+    'setup',
 ]
 
 MIDDLEWARE = [

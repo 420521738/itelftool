@@ -13,7 +13,6 @@ dic = {"debug": logging.DEBUG,
 
 
 def log(log_name, level="info", path=None):
-    print('hello',log_name)
 
     if path:
         log_path = path+'/'
@@ -27,6 +26,5 @@ def log(log_name, level="info", path=None):
                 filename=log_path+log_name,
                 # the file open mode is add
                 filemode='a+')
-    print('hello',logging.basicConfig)
                 
     return logging.basicConfig

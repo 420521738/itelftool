@@ -7,8 +7,8 @@ Type=oneshot
 RemainAfterExit=true
 User=root
 Group=root
-WorkingDirectory=/var/opt/adminset/main
-ExecStart=/var/opt/adminset/config/celery/start_celery.sh
+WorkingDirectory=/home/software/eclipse-workspace/itelftool
+ExecStart=/var/opt/itelftool/config/celery/start_celery.sh
 
 [Install]
 WantedBy=multi-user.target

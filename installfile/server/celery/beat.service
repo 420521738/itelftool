@@ -6,8 +6,8 @@ After=network.target
 #Type=forking
 User=root
 Group=root
-EnvironmentFile=-/var/opt/adminset/config/celery/beat.conf
-WorkingDirectory=/var/opt/adminset/main
+EnvironmentFile=-/var/opt/itelftool/config/celery/beat.conf
+WorkingDirectory=/home/software/eclipse-workspace/itelftool
 ExecStart=/bin/sh -c '${CELERY_BIN} \
   -A ${CELERY_APP} --pidfile=${CELERYD_PID_FILE} \
   --logfile=${CELERYD_LOG_FILE} --loglevel=${CELERYD_LOG_LEVEL} ${CELERYD_OPTS}'
