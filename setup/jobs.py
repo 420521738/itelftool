@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from setup.forms import PeriodicTaskForm, IntervalForm, CrontabForm, TaskResultForm
 from subprocess import Popen, PIPE
 import os, time
-from celery.task.base import periodic_task
 
 
 def get_object(model, **kwargs):

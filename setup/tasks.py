@@ -17,8 +17,11 @@ def command(host, name):
     h = Asset.objects.get(name=host)
     nicinfo = NIC.objects.get(asset_id = h.id)
     ip = nicinfo.ipaddress
-    cmd = sh.ssh("chenqiufei@"+ip, " "+name)
-    data = str(cmd)
+    #cmd = sh.ssh("chenqiufei@"+ip, " "+name)
+    cmd = "ssh chenqiufei@"+ip+" "+name
+    p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+    data = p.communicate()
+    data = str(data)
     return data
 
 
@@ -31,5 +34,6 @@ def script(host, name):
     cmd = "ssh chenqiufei@"+ip+" "+'"sh /tmp/{}"'.format(name)
     p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
     data = p.communicate()
+    data = str(data)
     return data
 
