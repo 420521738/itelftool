@@ -3,6 +3,7 @@ mkdir /var/opt/itelftool/data/ansible/roles/ -p
 mkdir /var/opt/itelftool/data/ansible/playbook/ -p
 mkdir  /var/opt/itelftool/data/scripts/ -p
 mkdir /var/opt/itelftool/logs -p
+mkdir /var/opt/itelftool/data/filetransfer/ -p
 
 
 # ssh-copy-id -i ~/.ssh/id_rsa.pub -p 22 "chenqiufei@192.168.1.234"

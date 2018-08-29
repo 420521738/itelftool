@@ -42,3 +42,14 @@ def get_scripts(args):
         else:
             files_list.append(d)
     return files_list
+
+
+def get_files(args):
+    files_list = []
+    dirs = os.listdir(args)
+    for d in dirs:
+        if d[0] == '.':
+            pass
+        else:
+            files_list.append(d)
+    return files_list

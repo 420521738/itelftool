@@ -21,6 +21,7 @@ def get_dir(args):
         r_path = config.get('config', 'roles_path')
         p_path = config.get('config', 'playbook_path')
         s_path = config.get('config', 'scripts_path')
+        f_path = config.get('config', 'filetransfer_path')
         token = config.get('token', 'token')
         ssh_pwd = config.get('token', 'ssh_pwd')
         log_path = config.get('log', 'log_path')

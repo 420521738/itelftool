@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.conf.urls import url, include
-from setup import views, ansible, shell, jobs
+from setup import views, ansible, shell, jobs, filetransfer
 
 
 urlpatterns = [
@@ -9,6 +9,11 @@ urlpatterns = [
     url(r'^shell/$', shell.index, name='shell'),
     url(r'^scripts/exec/$', shell.exec_scripts, name='exec_scripts'),
     # This shell功能模块结束
+    
+    # This 文件传输功能模块开始
+    url(r'^filetransfer/$', filetransfer.index, name='filetransfer'),
+    url(r'^filetransfer/exec/$', filetransfer.exec_filetransfer, name='exec_filetransfer'),
+    # This 文件传输功能模块结束
     
     # This ansible功能模块开始
     url(r'ansible/$', ansible.index, name='ansible'),
