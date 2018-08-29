@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+{% load mytags %}
+{% block header-css %}
+{% endblock %}
+
+{% block page-content-title %}
+{% endblock %}
+
+{% block page-nav-tab %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">文件上传结果</li>
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">执行结果</h3>
+          {% if status == 1 %}
+          	<h2 class="box-title" style="color:green">文件上传成功！</h2>
+			{% else %}
+				<h2 class="box-title" style="color:red">文件上传失败！</h2>
+			{% endif %}
+          <div class="box-tools pull-right">
+          </div>
+        </div>
+			
+        <!-- /.box-body -->
+       <a href="{% url 'fileupload' %}"> <li class="btn btn-primary" style="width: 60pt">返回</li></a>
+        <div class="box-footer">
+          <i class="fa fa-info-circle"></i>
+        </div>
+        <!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
+
+    </section>
+
+  </div>
+{% endblock %}
+
+{% block  bottom-js %}
+{% endblock %}

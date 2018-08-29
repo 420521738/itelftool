@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+{% block header-css %}
+    <script src="/static/layer/layer.js"></script>
+    <link rel="stylesheet" href="/static/plugins/select2/select2.min.css">
+    <script src="/static/plugins/select2/select2.full.min.js"></script>
+{% endblock %}
+
+{% block page-content-title %}
+文件上传
+{% endblock %}
+
+{% block page-nav-tab %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">文件上传</li>
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+<div>
+	<form enctype="multipart/form-data" action="/setup/fileupload/exec/" method="post">
+	{% csrf_token %}
+	   <input type="file" name="myfile" multiple="multiple"/>
+	   <br/>
+	   <input type="submit" value="上传"/>
+	</form>
+</div>
+
+<div>
+	<form enctype="multipart/form-data" action="/setup/fileupload/exec/" method="post">
+	{% csrf_token %}
+	   <input type="file" name="myfile" multiple webkitdirectory=""/>
+	   <br/>
+	   <input type="submit" value="上传"/>
+	</form>
+</div>
+{% endblock %}
