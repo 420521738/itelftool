@@ -21,21 +21,60 @@
 
 
 {% block page-content %}
+<p><h3>上传文件</h3></p>
 <div>
 	<form enctype="multipart/form-data" action="/setup/fileupload/exec/" method="post">
 	{% csrf_token %}
-	   <input type="file" name="myfile" multiple="multiple"/>
-	   <br/>
+	   <input id="myfile" type="file" name="myfile" multiple="multiple"/>
+	   <ul id="filelist"></ul>
 	   <input type="submit" value="上传"/>
 	</form>
 </div>
 
+</br></br></br>
+
+<p><h3>上传目录</h3></p>
 <div>
 	<form enctype="multipart/form-data" action="/setup/fileupload/exec/" method="post">
 	{% csrf_token %}
-	   <input type="file" name="myfile" multiple webkitdirectory=""/>
-	   <br/>
+	<input type="file" id="myfiledir" name="myfiledir" webkitdirectory multiple />
+	<input type="hidden" id='directory_value' name='directory_value' value='' /> 
+	<ul id="dirlist"></ul>
 	   <input type="submit" value="上传"/>
 	</form>
 </div>
+
+<script>
+document.getElementById("myfile").addEventListener("change", function(event) {
+  let output = document.getElementById("filelist");
+  let files = event.target.files;
+  //document.getElementById('directory_value').value = files
+  //alert(files)
+  for (let i=0; i<files.length; i++) {
+    let item = document.createElement("li");
+    item.innerHTML = files[i].name;
+    //alert(item.innerHTML)
+    output.appendChild(item);
+  };
+}, false);
+</script>
+
+<script>
+document.getElementById("myfiledir").addEventListener("change", function(event) {
+  let output = document.getElementById("dirlist");
+  let files = event.target.files;
+  //document.getElementById('directory_value').value = files
+  //alert(files)
+  for (let i=0; i<files.length; i++) {
+    let item = document.createElement("li");
+    item.innerHTML = files[i].webkitRelativePath;
+    //alert(item.innerHTML)
+    document.getElementById('directory_value').value = item.innerHTML
+    output.appendChild(item);
+    
+    //document.getElementById('directory_value').value = item.value;
+  };
+}, false);
+</script>
+
 {% endblock %}
