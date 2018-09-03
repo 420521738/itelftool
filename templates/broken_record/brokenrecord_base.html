@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+{% block header-css %}
+	<script src="/static/js/jquery.bootstrap-duallistbox.js"></script>
+	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap-duallistbox.css">
+	<link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
+	<link rel="stylesheet" href="/static/plugins/cxCalendar/css/jquery.cxcalendar.css">
+{% endblock %}
+
+{% block page-content-title %}
+添加故障记录
+{% endblock %}
+
+{% block page-nav-tab %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">添加故障记录</li>
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+  <div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+        </div>
+        <div class="box-body">
+        {% if brokenrecord_id %}
+            <form action="{% url 'brokenrecord_edit' brokenrecord_id %}" method="post">
+        {% else %}
+            <form action="{% url 'brokenrecord_add' %}" method="post">
+        {% endif %}
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{% url 'brokenrecord' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>
+          </form>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <i class="fa fa-info-circle"></i> 请勿重复添加条目
+        </div>
+        <!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
+    </section>
+
+  </div>
+
+    <script>
+    /*
+        var demo1 = $('select[name="broken_department"]').bootstrapDualListbox({
+              nonSelectedListLabel: '可选部门',
+              selectedListLabel: '已选部门',
+              preserveSelectionOnMove: 'moved',
+              moveOnSelect: false
+        });
+
+        var demo2 = $('select[name="maintenance"]').bootstrapDualListbox({
+              nonSelectedListLabel: '可选运维处理人',
+              selectedListLabel: '已选运维处理人',
+              preserveSelectionOnMove: 'moved',
+              moveOnSelect: false
+        });
+        var demo3 = $('select[name="developer"]').bootstrapDualListbox({
+              nonSelectedListLabel: '可选开发处理人',
+              selectedListLabel: '已选开发处理人',
+              preserveSelectionOnMove: 'moved',
+              moveOnSelect: false
+        });
+            */
+    </script>
+
+{% endblock %}
+
+{% block  bottom-js %}
+	<script src="/static/layer/layer.js"></script>
+	<script src="/static/plugins/cxCalendar/js/jquery.cxcalendar.js"></script>
+	<script>
+		//$("#id_occur_time").cxCalendar();
+		$('#id_occur_time,#id_end_time').cxCalendar({
+		  type: 'datetime',
+		  format: 'YYYY-MM-DD HH:mm:ss'
+		});
+		$.cxCalendar.defaults.startDate = 1980;
+		$.cxCalendar.defaults.language = {
+		  monthList: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], 
+		  weekList: ['Sun', 'Mon', 'Tur', 'Wed', 'Thu', 'Fri', 'Sat'] 
+		};
+	</script>
+{% endblock %}

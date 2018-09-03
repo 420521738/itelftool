@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+{% block header-css %}
+	<link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
+{% endblock %}
+
+{% block page-content-title %}
+故障记录
+{% endblock %}
+
+{% block page-nav-tab %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">故障管理</li>
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+<div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <form action="" method="post" id="brokenrecord_form">
+                {% csrf_token %}
+            <div class="box">
+                <div class="box-header">
+                    <div class="col-sm-2" style="padding-left: 0">
+						 <a href="{% url 'brokenrecord_add' %}"><li class="btn btn-success" ><b>添加故障记录</b></li></a>
+                  </div>
+                </div>
+
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <table class="table table-striped table-bordered" id="brokenrecordform">
+                      <thead>
+                        <tr>
+                            <th style="width:8px">
+                                <input id="checkall" type="checkbox" class="i-checks" name="checkall" value="checkall" data-editable='false' onclick="check_all('brokenrecord_form')">
+                            </th>
+                            <th style="width:100px">名称</th>
+                            <th>类型</th>
+                            <th>严重性</th>
+                            <th>状态类型</th>
+                            <th>发生时间</th>
+                            <th>结束时间</th>
+                            <th>业务影响时间</th>
+                            <th>所属产品线</th>        
+                            <th>所属项目</th>    
+                            <th>更新时间</th>
+                            <th>操作</th>
+                        </tr>
+                      </thead>
+                            <tbody>
+                            {% for brokenrecord in all_brokenrecord %}
+                                <tr class="even gradeX">
+                                    <td><input type="checkbox" id="id" class="i-checks" value="{{ brokenrecord.id }}" name="id" /></td>
+                                    <td>{{ brokenrecord.name }}</td>
+                                    <td>{{ brokenrecord.broken_type }} </td>
+                                    <td>{{ brokenrecord.severity_type }} </td>
+                                    <td>{{ brokenrecord.broken_status_type }} </td>
+                                    <td>{{ brokenrecord.occur_time }} </td>
+                                    <td>{{ brokenrecord.end_time }} </td>
+                                    <td>{{ brokenrecord.business_impact_time }} </td>
+                                    <td>{{ brokenrecord.product.name }} </td>
+                                    <td>{{ brokenrecord.project.name }} </td>
+                                    <td>{{ brokenrecord.update_date }} </td>
+                                    <td>
+                                        <a href="{% url "brokenrecord_edit" brokenrecord.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                        <a href="{% url "brokenrecord_del"%}?id={{ brokenrecord.id }}" onclick="return confirm('确认删除该故障记录吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                  </table>
+                  <div class="btn-group">
+                      <input type="button" id="brokenrecord_del" class="btn btn-danger"   name="del_button" value="删除选定故障记录"/>
+                  </div>
+                </div>
+            </div>
+        </form>
+    </section>
+
+</div>
+<script src="/static/plugins/datatables/DataTables-1.10.9/js/jquery.dataTables.min.js"></script>
+<script src="/static/plugins/datatables/DataTables-1.10.9/js/dataTables.bootstrap.min.js"></script>
+<script>
+  $(function () {
+    $('#brokenrecordform').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true
+    });
+  });
+</script>
+
+<script>
+    $('#brokenrecord_del').click(function () {
+        var brokenrecord_id_all = getIDall();
+        if (brokenrecord_id_all == ''){
+            alert("请至少选择一行!");
+            return false;
+        }
+        if (confirm("确定删除?")) {
+            $.ajax({
+                type: "post",
+                data: {brokenrecord_id_all: brokenrecord_id_all,csrfmiddlewaretoken: '{{ csrf_token }}'},
+                url: "{% url 'brokenrecord_del' %}",
+                success: function () {
+                    parent.location.reload();
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
+
+{% block  bottom-js %}
+	<script src="/static/layer/layer.js"></script>
+	<script src="/static/js/base.js"></script>
+{% endblock %}

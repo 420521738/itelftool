@@ -40,6 +40,8 @@ urlpatterns = [
     url(r'^appconf/', include('appconf.urls')),
     # 任务编排url入口
     url(r'^setup/', include('setup.urls')),
+    # 故障记录入口
+    url(r'^brokenrecord/', include('broken_record.urls')),
     # 首页
     # name，简单来说，name 可以用于在 templates，models，views ..... 中得到对应的网址，相当于给网址取了个名字，只要这个名字不变，网址变了也能通过名字获取到。
     url(r'^$',views.index,name="dashboard"),
