@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block header-css %}
+<link rel="stylesheet" type="text/css" href="/static/plugins/datatables/datatables.min.css"/>
+{% endblock %}
+
+{% load custom_tag %}
+
+{% block page-content-title %}
+{{ brokenrecord.name }}
+{% endblock %}
+
+{% block page-nav-tab %}
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="{% url 'brokenrecord' %}">故障记录列表</a></li>
+    <li class="active">故障记录详情</li>
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+
+<div class="tab-base">
+
+    <!--Nav Tabs-->
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a data-toggle="tab" href="#tab-asset-info" aria-expanded="true">详情信息</a>
+        </li>
+        <li class="">
+            <a data-toggle="tab" href="#tab-config" aria-expanded="false">编辑</a>
+        </li>
+    </ul>
+
+    <!--Tabs Content-->
+    <div class="tab-content">
+        <div id="tab-asset-info" class="tab-pane fade active in">
+
+           <table class=" asset-info-table">
+               <tr>
+                   <td class="col-md-2 bold">故障名称</td>
+                   <td class="col-md-4">: {{ brokenrecord.name }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">故障描述</td>
+                   <td class="col-md-4">: {{ brokenrecord.description }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+
+               <tr>
+                   <td class="col-md-2 bold">故障主要归属部门</td>
+                   <td class="col-md-4">: {{ brokenrecord.broken_department }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">运维主要处理人</td>
+                   <td class="col-md-4">: {{ brokenrecord.maintenance }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">开发主要处理人</td>
+                   <td class="col-md-4">: {{ brokenrecord.developer }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+
+               <tr>
+                   <td class="col-md-2 bold">故障类型</td>
+                   <td class="col-md-4">: {{ brokenrecord.broken_type }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">故障严重性</td>
+                   <td class="col-md-4">: {{ brokenrecord.severity_type }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">故障状态类型</td>
+                   <td class="col-md-4">: {{ brokenrecord.broken_status_type }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">所属产品线</td>
+                   <td class="col-md-4">: {{ brokenrecord.product }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">所属项目</td>
+                   <td class="col-md-4">: {{ brokenrecord.project }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">处理过程</td>
+                   <td class="col-md-4">: {{ brokenrecord.process_description }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">预防措施</td>
+                   <td class="col-md-4">: {{ brokenrecord.precaution }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">故障发生时间</td>
+                   <td class="col-md-4">: {{ brokenrecord.occur_time }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">故障结束时间</td>
+                   <td class="col-md-4">: {{ brokenrecord.end_time }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">业务影响时间</td>
+                   <td class="col-md-4">: {{ brokenrecord.business_impact_time }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">记录更新日期</td>
+                   <td class="col-md-4">: {{ brokenrecord.update_date }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+ 
+           </table>
+        </div>
+        
+        <div id="tab-config" class="tab-pane fade">            
+            <p>您可以通过“编辑”来修改此故障记录信息！</p>
+            <h4 class="text-thin"><a class="btn-link" href="/brokenrecord/edit/{{ brokenrecord.id }}/" target="_blank">编辑</a></h4>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+
+{% block bottom-js %}
+<script type="text/javascript" src="/static/plugins/datatables/datatables.min.js"></script>
+{% endblock %}

@@ -40,19 +40,19 @@
                   <table class="table table-striped table-bordered" id="brokenrecordform">
                       <thead>
                         <tr>
-                            <th style="width:8px">
+                            <th style="width:10px">
                                 <input id="checkall" type="checkbox" class="i-checks" name="checkall" value="checkall" data-editable='false' onclick="check_all('brokenrecord_form')">
                             </th>
                             <th style="width:100px">名称</th>
-                            <th>类型</th>
-                            <th>严重性</th>
-                            <th>状态类型</th>
-                            <th>发生时间</th>
-                            <th>结束时间</th>
-                            <th>业务影响时间</th>
-                            <th>所属产品线</th>        
-                            <th>所属项目</th>    
-                            <th>更新时间</th>
+                            <th style="width:100px">故障详情</th>
+                            <th style="width:100px">类型</th>
+                            <th style="width:100px">严重性</th>
+                            <th style="width:100px">状态类型</th>
+                            <th style="width:150px">发生时间</th>
+                            <th style="width:150px">结束时间</th>
+                            <th style="width:100px">业务影响时间</th>
+                            <th style="width:100px">所属产品线</th>        
+                            <th style="width:100px">所属项目</th>    
                             <th>操作</th>
                         </tr>
                       </thead>
@@ -61,6 +61,7 @@
                                 <tr class="even gradeX">
                                     <td><input type="checkbox" id="id" class="i-checks" value="{{ brokenrecord.id }}" name="id" /></td>
                                     <td>{{ brokenrecord.name }}</td>
+                                    <td><a target="_blank" href="/brokenrecord/list/{{ brokenrecord.id }}/">详情</a></td>
                                     <td>{{ brokenrecord.broken_type }} </td>
                                     <td>{{ brokenrecord.severity_type }} </td>
                                     <td>{{ brokenrecord.broken_status_type }} </td>
@@ -69,7 +70,6 @@
                                     <td>{{ brokenrecord.business_impact_time }} </td>
                                     <td>{{ brokenrecord.product.name }} </td>
                                     <td>{{ brokenrecord.project.name }} </td>
-                                    <td>{{ brokenrecord.update_date }} </td>
                                     <td>
                                         <a href="{% url "brokenrecord_edit" brokenrecord.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
                                         <a href="{% url "brokenrecord_del"%}?id={{ brokenrecord.id }}" onclick="return confirm('确认删除该故障记录吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>

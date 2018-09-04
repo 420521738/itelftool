@@ -64,3 +64,12 @@ def brokenrecord_del(request):
             BrokenRrecord.objects.filter(id=brokenrecord_id).delete()
 
     return HttpResponseRedirect(reverse('brokenrecord'))
+
+
+@login_required
+def brokenrecord_detail(request, brokenrecord_id):
+    brokenrecord = BrokenRrecord.objects.get(id=brokenrecord_id)
+    results = {
+        'brokenrecord':  brokenrecord,
+    }
+    return render(request, 'broken_record/broken_record_detail.html', results)
