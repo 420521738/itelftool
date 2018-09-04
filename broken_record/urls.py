@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^add/$', views.brokenrecord_add, name='brokenrecord_add'),
     url(r'^edit/(?P<brokenrecord_id>\d+)/$', views.brokenrecord_edit, name='brokenrecord_edit'),
     url(r'^delete/$', views.brokenrecord_del, name='brokenrecord_del'),
+    url(r'^export/$', views.brokenrecord_export, name='brokenrecord_export'),
 ]

@@ -30,9 +30,11 @@
                 {% csrf_token %}
             <div class="box">
                 <div class="box-header">
-                    <div class="col-sm-2" style="padding-left: 0">
-						 <a href="{% url 'brokenrecord_add' %}"><li class="btn btn-success" ><b>添加故障记录</b></li></a>
+                  <div class="col-sm-2" style="padding-left: 0">
+						 <a href="{% url 'brokenrecord_add' %}"><li class="btn btn-success" ><b>添加记录</b></li></a>
+						 <a href="#" onclick="return brokenrecord_export_excel()"><li name="export" class="btn btn-success search-btn-excel"><b>&nbsp;导出记录&nbsp;</b></li></a>
                   </div>
+                  <div id="export"></div>
                 </div>
 
                 <!-- /.box-header -->
@@ -100,6 +102,26 @@
       "autoWidth": true
     });
   });
+</script>
+
+<script>
+
+    function brokenrecord_export_excel(){
+        var brokenrecord_id_all = getIDall();
+        if (brokenrecord_id_all == ''){
+            if(confirm('您没有勾选，是否导出全部信息？')){
+            		//.serialize()方式将创建标准URL编码表示的文本字符串，也就是将表单内容序列化成一个字符串
+                var args = $("#brokenrecord_form").serialize();
+                window.location = "{% url 'brokenrecord_export' %}?export=all&" + args
+            }else{
+                return false;
+            }
+        }else{
+            var args = $("#brokenrecord_form").serialize();
+            window.location = "{% url 'brokenrecord_export' %}?export=part&" + args
+        }
+    }
+
 </script>
 
 <script>
