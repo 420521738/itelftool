@@ -22,13 +22,20 @@ urlpatterns = [
     url(r'^project/export/$', views.project_export, name='project_export'),
     # 项目管理 结束
     
-    # 负责人管理 开始
+    # 运维负责人管理 开始
     url(r'^appowner/list/$', views.appowner_list, name='appowner_list'),
     url(r'^appowner/add/$', views.appowner_add, name='appowner_add'),
     url(r'^appowner/edit/(?P<appowner_id>\d+)/$', views.appowner_edit, name='appowner_edit'),
     url(r'^appowner/delete/$', views.appowner_del, name='appowner_del'),
     #### 这个是在添加产品线的时候，有个小的标签是添加负责人的标签
     url(r'^appowner/add/mini/$', views.appowner_add_mini, name='appowner_add_mini'),
-    # 负责人管理 结束
+    # 运维负责人管理 结束
+    
+    # 开发负责人管理 开始
+    url(r'^developer/list/$', views.developer_list, name='developer_list'),
+    url(r'^developer/add/$', views.developer_add, name='developer_add'),
+    url(r'^developer/edit/(?P<developer_id>\d+)/$', views.developer_edit, name='developer_edit'),
+    url(r'^developer/delete/$', views.developer_del, name='developer_del'),
+    # 开发负责人管理 结束
 
 ]

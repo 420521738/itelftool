@@ -4,13 +4,16 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from appconf.models import Product, Project, AppOwner
+from broken_record.models import Developer
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from appconf.forms import ProductForm, ProjectForm, AppOwnerForm
+from broken_record.forms import DeveloperForm
 from django.core.urlresolvers import reverse
 import csv
 import datetime
 
 
+# 导出excel，csv所需要转换中文字符
 def str2gb(args):
     """
     :参数 args:
@@ -20,6 +23,7 @@ def str2gb(args):
     return str(args)
 
 
+# 产品线清单功能
 @login_required
 def product_list(request):
     all_product = Product.objects.all()
@@ -29,6 +33,7 @@ def product_list(request):
     return render(request, 'appconf/product_list.html', results)
 
 
+# 添加产品线功能
 @login_required
 def product_add(request):
     if request.method == 'POST':
@@ -46,6 +51,7 @@ def product_add(request):
     return render(request, 'appconf/product_base.html', results)
 
 
+# 产品线信息编辑功能
 @login_required
 def product_edit(request, product_id):
     product = Product.objects.get(id=product_id)
@@ -65,6 +71,7 @@ def product_edit(request, product_id):
     return render(request, 'appconf/product_base.html', results)
 
 
+# 产品线删除功能
 @login_required
 def product_del(request):
     product_id = request.GET.get('id', '')
@@ -79,6 +86,7 @@ def product_del(request):
     return HttpResponseRedirect(reverse('product_list'))
 
 
+# 产品线里的项目清单功能
 @login_required
 def project_list(request, product_id):
     product = Product.objects.get(id=product_id)
@@ -89,6 +97,7 @@ def project_list(request, product_id):
     return render(request, 'appconf/product_project_list.html', results)
 
 
+# 单独的项目清单功能
 @login_required
 def project_projectlist(request):
     all_project = Project.objects.all()
@@ -98,6 +107,7 @@ def project_projectlist(request):
     return render(request, 'appconf/project_list.html', results)
 
 
+# 单独的项目添加功能
 @login_required
 def project_add(request):
     if request.method == 'POST':
@@ -115,6 +125,7 @@ def project_add(request):
     return render(request, 'appconf/project_base.html', results)
 
 
+# 单独的项目编辑功能
 @login_required
 def project_edit(request, project_id):
     project = Project.objects.get(id=project_id)
@@ -134,6 +145,7 @@ def project_edit(request, project_id):
     return render(request, 'appconf/project_base.html', results)
 
 
+# 单独的项目删除功能
 @login_required
 def project_del(request):
     project_id = request.GET.get('project_id', '')
@@ -148,6 +160,7 @@ def project_del(request):
     return HttpResponseRedirect(reverse('project_list'))
 
 
+# 项目导出功能
 @login_required
 def project_export(request):
     export = request.GET.get("export", '')
@@ -183,6 +196,7 @@ def project_export(request):
     return response
 
 
+# 运维负责人清单列表功能
 @login_required
 def appowner_list(request):
     all_app_owner = AppOwner.objects.all()
@@ -192,6 +206,7 @@ def appowner_list(request):
     return render(request, 'appconf/appowner_list.html', results)
 
 
+# 运维负责人添加功能
 @login_required
 def appowner_add(request):
     if request.method == 'POST':
@@ -210,6 +225,7 @@ def appowner_add(request):
     return render(request, 'appconf/appowner_add_edit.html', results)
 
 
+# 运维负责人编辑功能
 @login_required
 def appowner_edit(request, appowner_id, mini=False):
     appowner = AppOwner.objects.get(id=appowner_id)
@@ -230,7 +246,7 @@ def appowner_edit(request, appowner_id, mini=False):
     return render(request, 'appconf/appowner_add_edit.html', results)
 
 
-
+# 运维负责人删除功能
 @login_required
 def appowner_del(request):
     appowner_id = request.GET.get('id', '')
@@ -245,6 +261,7 @@ def appowner_del(request):
     return HttpResponseRedirect(reverse('appowner_list'))
 
 
+# 在添加产品线时，有个附加的添加运维负责人的功能
 @login_required
 def appowner_add_mini(request):
     status = 0
@@ -273,23 +290,65 @@ def appowner_add_mini(request):
     return render(request, 'appconf/appowner_add_edit_mini.html', results)
 
 
+# 开发负责人清单列表功能
+@login_required
+def developer_list(request):
+    all_developer = Developer.objects.all()
+    results = {
+        'all_developer':  all_developer,
+    }
+    return render(request, 'appconf/developer_list.html', results)
 
 
+# 开发负责人添加功能
+@login_required
+def developer_add(request):
+    if request.method == 'POST':
+        form = DeveloperForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('developer_list'))
+    else:
+        form = DeveloperForm()
+
+    results = {
+        'form': form,
+        'request': request,
+    }
+    return render(request, 'appconf/developer_add_edit.html', results)
 
 
+# 开发负责人编辑功能
+@login_required
+def developer_edit(request, developer_id):
+    developer = Developer.objects.get(id=developer_id)
+    if request.method == 'POST':
+        form = DeveloperForm(request.POST, instance=developer)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('developer_list'))
+    else:
+        form = DeveloperForm(instance=developer)
+
+    results = {
+        'form': form,
+        'developer_id': developer_id,
+        'request': request,
+    }
+    return render(request, 'appconf/developer_add_edit.html', results)
 
 
+# 开发负责人删除功能
+@login_required
+def developer_del(request):
+    developer_id = request.GET.get('id', '')
+    if developer_id:
+        Developer.objects.filter(id=developer_id).delete()
 
+    developer_id_all = str(request.POST.get('developer_id_all', ''))
+    if developer_id_all:
+        for developer_id in developer_id_all.split(','):
+            Developer.objects.filter(id=developer_id).delete()
 
-
-
-
-
-
-
-
-
-
-
-
+    return HttpResponseRedirect(reverse('developer_list'))
 

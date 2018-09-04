@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block page-content-title %}
-添加运维负责人
+添加开发负责人
 {% endblock %}
 
 {% block page-nav-tab %}
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <ol class="breadcrumb">
     <li><a href="/">Home</a></li>
-    <li class="active">添加运维负责人</li>
+    <li class="active">添加开发负责人</li>
 </ol>
 {% endblock %}
 
@@ -33,22 +33,16 @@
         <div class="box-header with-border">
         </div>
         <div class="box-body">
-        {% if appowner_id %}
-            <form action="{% url 'appowner_edit' appowner_id %}" method="post">
+        {% if developer_id %}
+            <form action="{% url 'developer_edit' developer_id %}" method="post">
         {% else %}
-            {% if page_type == "whole" %}
-                <form action="{% url 'appowner_add' %}" method="post">
-            {% else %}
-                <form action="{% url 'appowner_add_mini' %}" method="post">
-            {% endif %}
+            <form action="{% url 'developer_add' %}" method="post">
         {% endif %}
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
-        {% if page_type == "whole" %}
-            <a href="{% url 'appowner_list' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>
-        {% endif %}
-          </form>
+        <a href="{% url 'developer_list' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>
+        </form>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

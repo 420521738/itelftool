@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 import csv
 import datetime
 
-
+# 导出excel，csv所需要转换中文字符
 def str2gb(args):
     """
     :参数 args:
@@ -19,6 +19,7 @@ def str2gb(args):
     return str(args)
 
 
+# 故障记录清单首页
 @login_required
 def brokenrecord_list(request):
     all_brokenrecord = BrokenRrecord.objects.all()
@@ -28,6 +29,7 @@ def brokenrecord_list(request):
     return render(request, 'broken_record/broken_record_list.html', results)
 
 
+# 添加故障记录功能
 @login_required
 def brokenrecord_add(request):
     if request.method == 'POST':
@@ -45,6 +47,7 @@ def brokenrecord_add(request):
     return render(request, 'broken_record/brokenrecord_base.html', results)
 
 
+# 编辑故障记录功能
 @login_required
 def brokenrecord_edit(request, brokenrecord_id):
     brokenrecord = BrokenRrecord.objects.get(id=brokenrecord_id)
@@ -64,6 +67,7 @@ def brokenrecord_edit(request, brokenrecord_id):
     return render(request, 'broken_record/brokenrecord_base.html', results)
 
 
+# 删除故障记录功能
 @login_required
 def brokenrecord_del(request):
     brokenrecord_id = request.GET.get('id', '')
@@ -78,6 +82,7 @@ def brokenrecord_del(request):
     return HttpResponseRedirect(reverse('brokenrecord'))
 
 
+# 故障记录详情功能
 @login_required
 def brokenrecord_detail(request, brokenrecord_id):
     brokenrecord = BrokenRrecord.objects.get(id=brokenrecord_id)
@@ -87,6 +92,7 @@ def brokenrecord_detail(request, brokenrecord_id):
     return render(request, 'broken_record/broken_record_detail.html', results)
 
 
+# 导出故障记录功能
 @login_required
 def brokenrecord_export(request):
     export = request.GET.get("export", '')
