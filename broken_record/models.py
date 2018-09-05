@@ -28,6 +28,8 @@ class BrokenRrecord(models.Model):
         (u"操作系统", u"操作系统"),
         (u"域名", u"域名"),
         (u"硬件", u"硬件"),
+        (u"代码BUG", u"代码BUG"),
+        (u"人为误操作", u"人为误操作"),
         (u"其他", u"其他"),
     )
 
