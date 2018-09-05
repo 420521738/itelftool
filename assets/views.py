@@ -19,7 +19,7 @@ from assets.models import IDC,Cabinet, HostGroup
 
 @login_required
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'assets/dashboard.html')
 
 
 # 其中 utils.token_required装饰器为接口认证，这个认证与客户端的认证是一致的才能进行函数执行的操作

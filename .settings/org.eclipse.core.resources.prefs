@@ -22,6 +22,7 @@ encoding//itelftoolClient/core/api_token.py=utf-8
 encoding//lib/log.py=utf-8
 encoding//lib/setup.py=utf-8
 encoding//navi/forms.py=utf-8
+encoding//navi/urls.py=utf-8
 encoding//setup/ansible.py=utf-8
 encoding//setup/filetransfer.py=utf-8
 encoding//setup/fileupload.py=utf-8

@@ -21,6 +21,7 @@ from assets import views
 
 urlpatterns = [
     # 该url包括了客户端执行提交数据的url，也就是接口，后面带？参数的也是匹配这条utl规则
+    url(r'^dashboard/$',views.index,name="dashboard"),
     url(r'report/$', views.asset_report, name='asset_report'),
     # url(r'report/bulk_create/$',views.bulk_create_assets,name='bulk_create_assets' ),
     url(r'report/asset_with_no_asset_id/$', views.asset_with_no_asset_id, name='acquire_asset_id'),

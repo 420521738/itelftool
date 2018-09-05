@@ -18,9 +18,6 @@ import re
 # 打开首页需要先进行登录，使用了django自带的login_required装饰器
 @login_required
 def index(request):
-    # 首页去到index.html页面
-    #timenow = time.asctime(time.localtime(time.time()))
-    #return render(request,'index.html', {'timenow':timenow})
     return render(request,'index.html')
 
 # 登录验证模块

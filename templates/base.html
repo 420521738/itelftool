@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>运维人生CMDB</title>
+	<title>IT精灵工具</title>
 		<!--jQuery [ REQUIRED ]-->
 	<script src="/static/js/jquery-2.1.1.min.js"></script>
 	<!-- 显示系统实时时间的js代码 -->
@@ -97,7 +97,7 @@
 				<!--Brand logo & name-->
 				<!--================================-->
 				<div class="navbar-header">
-					<a href="/" class="navbar-brand">
+					<a href="{% url 'index' %}" class="navbar-brand">
 							<span class="brand-text logo-text" >itelftool</span>
 					</a>
 
@@ -118,162 +118,6 @@
 								<i class="fa fa-navicon fa-lg"></i>
 							</a>
 						</li>
-						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-						<!--End Navigation toogle button-->
-
-
-						<!--Messages Dropdown
-						<li class="dropdown">
-							<a href="#" data-toggle="dropdown" class="dropdown-toggle">
-								<i class="fa fa-envelope fa-lg"></i>
-								<span class="badge badge-header badge-warning">3</span>
-							</a>
-
-							<div class="dropdown-menu dropdown-menu-md with-arrow">
-								<div class="pad-all bord-btm">
-									<p class="text-lg text-muted text-thin mar-no">You have 3 messages.</p>
-								</div>
-								<div class="nano scrollable">
-									<div class="nano-content">
-										<ul class="head-list">
-									
-											<li>
-												<a href="#" class="media">
-													<div class="media-left">
-														<img src="/static/img/av2.png" alt="Profile Picture" class="img-circle img-sm">
-													</div>
-													<div class="media-body">
-														<div class="text-nowrap">Andy sent you a message</div>
-														<small class="text-muted">15 minutes ago</small>
-													</div>
-												</a>
-											</li>
-									
-											<li>
-												<a href="#" class="media">
-													<div class="media-left">
-														<img src="/static/img/av4.png" alt="Profile Picture" class="img-circle img-sm">
-													</div>
-													<div class="media-body">
-														<div class="text-nowrap">Lucy sent you a message</div>
-														<small class="text-muted">30 minutes ago</small>
-													</div>
-												</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-
-								<div class="pad-all bord-top">
-									<a href="#" class="btn-link text-dark box-block">
-										<i class="fa fa-angle-right fa-lg pull-right"></i>Show All Messages
-									</a>
-								</div>
-							</div>
-						</li>
-						-->
-
-
-
-
-						<!--Notification dropdown
-						<li class="dropdown">
-							<a href="#" data-toggle="dropdown" class="dropdown-toggle">
-								<i class="fa fa-bell fa-lg"></i>
-								<span class="badge badge-header badge-danger">1</span>
-							</a>
-
-							<div class="dropdown-menu dropdown-menu-md with-arrow">
-								<div class="pad-all bord-btm">
-									<p class="text-lg text-muted text-thin mar-no">You have 3 messages.</p>
-								</div>
-								<div class="nano scrollable">
-									<div class="nano-content">
-										<ul class="head-list">
-
-											<li>
-												<a href="#">
-													<div class="clearfix">
-														<p class="pull-left">Progressbar</p>
-														<p class="pull-right">70%</p>
-													</div>
-													<div class="progress progress-sm">
-														<div style="width: 70%;" class="progress-bar">
-															<span class="sr-only">70% Complete</span>
-														</div>
-													</div>
-												</a>
-											</li>
-									
-											<li>
-												<a href="#" class="media">
-													<div class="media-left">
-														<span class="icon-wrap icon-circle bg-primary">
-															<i class="fa fa-comment fa-lg"></i>
-														</span>
-													</div>
-													<div class="media-body">
-														<div class="text-nowrap">Circle Icon</div>
-														<small class="text-muted">15 minutes ago</small>
-													</div>
-												</a>
-											</li>
-									
-											<li>
-												<a href="#" class="media">
-											<span class="badge badge-success pull-right">90%</span>
-													<div class="media-left">
-														<span class="icon-wrap icon-circle bg-danger">
-															<i class="fa fa-hdd-o fa-lg"></i>
-														</span>
-													</div>
-													<div class="media-body">
-														<div class="text-nowrap">Circle icon with badge</div>
-														<small class="text-muted">50 minutes ago</small>
-													</div>
-												</a>
-											</li>
-									
-											<li>
-												<a href="#" class="media">
-													<div class="media-left">
-														<span class="icon-wrap bg-info">
-															<i class="fa fa-file-word-o fa-lg"></i>
-														</span>
-													</div>
-													<div class="media-body">
-														<div class="text-nowrap">Square Icon</div>
-														<small class="text-muted">Last Update 8 hours ago</small>
-													</div>
-												</a>
-											</li>
-									
-											<li>
-												<a href="#" class="media">
-											<span class="label label-danger pull-right">New</span>
-													<div class="media-left">
-														<span class="icon-wrap bg-purple">
-															<i class="fa fa-comment fa-lg"></i>
-														</span>
-													</div>
-													<div class="media-body">
-														<div class="text-nowrap">Square icon with label</div>
-														<small class="text-muted">Last Update 8 hours ago</small>
-													</div>
-												</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-
-								<div class="pad-all bord-top">
-									<a href="#" class="btn-link text-dark box-block">
-										<i class="fa fa-angle-right fa-lg pull-right"></i>Show All Notifications
-									</a>
-								</div>
-							</div>
-						</li>
-						-->			
 
 					</ul>
 						
@@ -293,19 +137,6 @@
 
 
 							<div class="dropdown-menu dropdown-menu-md dropdown-menu-right with-arrow panel-default">
-
-								<!-- Dropdown heading  -->
-								<!--  
-								<div class="pad-all bord-btm">
-									<p class="text-lg text-muted text-thin mar-btm">750Gb of 1,000Gb Used</p>
-									<div class="progress progress-sm">
-										<div class="progress-bar" style="width: 70%;">
-											<span class="sr-only">70%</span>
-										</div>
-									</div>
-								</div>
-								-->
-
 
 								<!-- User dropdown menu -->
 								<ul class="head-list">
@@ -582,203 +413,118 @@
 			<!--===================================================-->
 			<nav id="mainnav-container">
 				<div id="mainnav">
-
-					<!--Menu1-->
+				
+					<!--Menu-->
 					<!--================================-->
 					<div id="mainnav-menu-wrap">
 						<div class="nano">
 							<div class="nano-content">
-							
-								<!-- 站点导航菜单栏 -->
 								<ul id="mainnav-menu" class="list-group">
-						
-									<!--Category name-->
-									<li class="list-header">站点导航</li>
-						
-									<!--Menu list item-->
-									<li id="navi" class="">
-										<a href="/navi/">
-											<i class="fa fa-link"></i>
-											<span class="menu-title">站点一览</span>
-										</a>
-									</li>
-									<li id="navi_manage" class="">
-										<a href="/navi/manage/">
-											<i class="fa fa-list-ul"></i>
-											<span class="menu-title">站点编辑</span>
-										</a>
-									</li>
-								</ul>
-								
-								
-								<!-- 故障记录菜单栏 -->
-								<ul id="mainnav-menu" class="list-group">
-						
-									<!--Category name-->
-									<li class="list-header">故障记录</li>
-						
-									<!--Menu list item-->
-									<li id="navi" class="">
-										<a href="/brokenrecord/list/">
-											<i class="fa fa-link"></i>
-											<span class="menu-title">故障列表</span>
-										</a>
-									</li>
-								</ul>
-								
-								
-							
-								<!-- 资产菜单栏 -->
-								<ul id="mainnav-menu" class="list-group">
-						
-									<!--Category name-->
-									<li class="list-header">资产菜单</li>
-						
-									<!--Menu list item-->
+									<!-- 图标库：http://www.fontawesome.com.cn/faicons/ -->
+									<!--菜单列表-->
 									<li class="">
-										<a href="/">
+										<a href="{% url 'index' %}">
 											<i class="fa fa-home"></i>
-											<span class="menu-title">面板中心</span>
+											<span class="menu-title">首页</span>
 										</a>
 									</li>
 						
-									<li id="cmdb" class="">
-										<a href="{% url 'asset_list' %}">
-											<i class="fa fa-tag"></i>
-											<span class="menu-title">资产列表</span>
-										</a>
-									</li>
-
-									<!--
+									<!--站点导航菜单开始-->
 									<li>
 										<a href="#">
-											<i class="fa fa-tag"></i>
+											<i class="fa fa-sitemap"></i>
 											<span class="menu-title">
-												资产中心
+												站点导航
 											</span>
 										</a>
-                                        <ul class="collapse">
-											<li><a href="{% url 'asset_list' %}">资产列表</a></li>
-											 
-											<li class=""><a href="{% url 'asset_category' %}">分类视图</a></li>
-											<li><a href="#">等待扩展</a></li>
-										</ul>
+	                                <ul class="collapse">
+												<li><a href="{% url 'navi' %}">站点一览</a></li>
+												<li><a href="{% url 'manage' %}">站点编辑</a></li>
+											</ul>
 									</li>
-									-->
-						
-									<li class="">
-										<a href="{% url 'event_center' %}">
-											<i class="fa fa-list-ul"></i>
-											<span class="menu-title">事件中心</span>
-										</a>
-									</li>
+									<!--站点导航菜单结束-->
 									
-									<li id="idc" class="">
-										<!-- <a href="{% url 'event_center' %}"> -->
-										<a href="/asset/idc/">
-											<i class="fa fa-list-ul"></i>
-											<span class="menu-title">机房管理</span>
-										</a>
-									</li>
 									
-									<li id="idc" class="">
-										<!-- <a href="{% url 'event_center' %}"> -->
-										<a href="/asset/cabinet/">
-											<i class="fa fa-list-ul"></i>
-											<span class="menu-title">机柜管理</span>
+									<!--故障记录菜单开始-->
+									<li>
+										<a href="#">
+											<i class="fa fa-camera-retro"></i>
+											<span class="menu-title">
+												故障记录
+											</span>
 										</a>
+	                                <ul class="collapse">
+												<li><a href="{% url 'brokenrecord' %}">故障列表</a></li>
+											</ul>
 									</li>
-									
-									<li id="idc" class="">
-										<!-- <a href="{% url 'event_center' %}"> -->
-										<a href="/asset/group/">
-											<i class="fa fa-list-ul"></i>
-											<span class="menu-title">属组管理</span>
+									<!--故障记录菜单结束-->
+
+
+									<!--资产菜单开始-->
+									<li>
+										<a href="#">
+											<i class="fa fa-cubes"></i>
+											<span class="menu-title">
+												资产菜单
+											</span>
 										</a>
+	                                <ul class="collapse">
+												<li><a href="{% url 'dashboard' %}">面板中心</a></li>
+												<li><a href="{% url 'asset_list' %}">资产列表</a></li>
+												<li><a href="{% url 'event_center' %}">事件中心</a></li>
+												<li><a href="{% url 'idc' %}">机房管理</a></li>
+												<li><a href="{% url 'cabinet' %}">机柜管理</a></li>
+												<li><a href="{% url 'group' %}">属组管理</a></li>
+											</ul>
 									</li>
+									<!--资产菜单结束-->
 									
+									
+									<!--应用管理菜单开始-->
+									<li>
+										<a href="#">
+											<i class="fa fa-eye"></i>
+											<span class="menu-title">
+												应用管理
+											</span>
+										</a>
+	                                <ul class="collapse">
+												<li><a href="{% url 'appconf' %}">产品线管理</a></li>
+												<li><a href="{% url 'project_list' %}">项目管理</a></li>
+												<li><a href="{% url 'appowner_list' %}">运维负责人管理</a></li>
+												<li><a href="{% url 'developer_list' %}">开发负责人管理</a></li>
+											</ul>
+									</li>
+									<!--应用管理菜单结束-->
+									
+									
+									<!--任务编排管理菜单开始-->
+									<li>
+										<a href="#">
+											<i class="fa fa-tasks"></i>
+											<span class="menu-title">
+												任务编排
+											</span>
+										</a>
+	                                <ul class="collapse">
+												<li><a href="{% url 'shell' %}">命令执行</a></li>
+												<li><a href="{% url 'ansible' %}">Ansible</a></li>
+												<li><a href="{% url 'fileupload' %}">文件上传</a></li>
+												<li><a href="{% url 'filetransfer' %}">文件分发</a></li>
+												<li><a href="{% url 'job_list' %}">任务调度</a></li>
+											</ul>
+									</li>
+									<!--任务编排管理菜单结束-->
+
+
 								</ul>
-								
-			
-								<!-- 应用管理菜单栏 -->
-								<ul id="mainnav-menu" class="list-group">
-						
-									<!--Category name-->
-									<li class="list-header">应用管理</li>
-						
-									<!--Menu list item-->
-									<li id="navi" class="">
-										<a href="/appconf/">
-											<i class="fa fa-link"></i>
-											<span class="menu-title">产品线管理</span>
-										</a>
-									</li>
-									<li id="navi_manage" class="">
-										<a href="/appconf/project/list/">
-											<i class="fa fa-list-ul"></i>
-											<span class="menu-title">项目管理</span>
-										</a>
-									</li>
-									<li id="navi_manage" class="">
-										<a href="/appconf/appowner/list/">
-											<i class="fa fa-list-ul"></i>
-											<span class="menu-title">运维负责人管理</span>
-										</a>
-									</li>
-									<li id="navi_manage" class="">
-										<a href="{% url 'developer_list' %}">
-											<i class="fa fa-list-ul"></i>
-											<span class="menu-title">开发负责人管理</span>
-										</a>
-									</li>
-								</ul>			
-								
-								
-								<!-- 任务编排管理菜单栏 -->
-								<ul id="mainnav-menu" class="list-group">
-						
-									<!--Category name-->
-									<li class="list-header">任务编排</li>
-						
-									<!--Menu list item-->
-									<li id="navi" class="">
-										<a href="/setup/shell/">
-											<i class="fa fa-link"></i>
-											<span class="menu-title">命令执行</span>
-										</a>
-									</li>
-									<li id="navi" class="">
-										<a href="/setup/ansible/">
-											<i class="fa fa-link"></i>
-											<span class="menu-title">Ansible</span>
-										</a>
-									</li>
-									<li id="navi" class="">
-										<a href="/setup/fileupload/">
-											<i class="fa fa-link"></i>
-											<span class="menu-title">文件上传</span>
-										</a>
-									</li>
-									<li id="navi" class="">
-										<a href="/setup/filetransfer/">
-											<i class="fa fa-link"></i>
-											<span class="menu-title">文件分发</span>
-										</a>
-									</li>
-									<li id="navi" class="">
-										<a href="/setup/job/list/">
-											<i class="fa fa-link"></i>
-											<span class="menu-title">任务调度</span>
-										</a>
-									</li>
+
 
 							</div>
 						</div>
 					</div>
 					<!--================================-->
-					<!--End menu1-->
-					
-	
+					<!--End menu-->
 
 				</div>
 			</nav>
