@@ -1,27 +1,241 @@
 {% extends 'base.html' %}
 {% load custom_tag %}
+
 {% block header-css %}
-
-
+	<link href="/static/plugins/easypiechart/jquery.easy-pie-chart.css" rel="stylesheet" media="screen">
+	<link href="/static/css/index.css" rel="stylesheet">
 {% endblock %}
 
 {% block page-content-title %}
-空白首页
 {% endblock %}
 
 {% block page-nav-tab %}
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <ol class="breadcrumb">
-    <li><a href="/">Home</a></li>
-    <li class="active">资产列表</li>
+    <li><a href="/">总仪表盘</a></li>
 </ol>
 {% endblock %}
 
 
 
 {% block page-content %}
-<div>hello</div>
+
+	 <!-- 仪表盘1开始 -->
+    <div class="container">
+        <div class="bigboxblock">
+            <div class="navbar navbar-inner block-header">
+                <h4>仪表盘1</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-md-offset-1">
+                    <div class="chart" data-percent="73">73%</div>
+                    <div style="margin-top: 10px;margin-bottom: 20px;margin-left: 12px;"><span class="label label-info">月用户活跃度</span>
+                    </div>
+                </div>
+                <div class="col-md-2 col-md-offset-1">
+                    <div class="chart" data-percent="53">53%</div>
+                    <div style="margin-top: 10px;margin-bottom: 20px;margin-left: 15px;"><span class="label label-info">服务器在线率</span>
+                    </div>
+                </div>
+                <div class="col-md-2 col-md-offset-1">
+                    <div class="chart" data-percent="83">83%</div>
+                    <div style="margin-top: 10px;margin-bottom: 20px;margin-left: 12px;"><span class="label label-info">月业务故障率</span>
+                    </div>
+                </div>
+                <div class="col-md-2 col-md-offset-1">
+                    <div class="chart" data-percent="13">13%</div>
+                    <div style="margin-top: 10px;margin-bottom: 20px;margin-left: 10px;"><span class="label label-info">资产信息变更率</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	 <!-- 仪表盘1结束 -->
+
+
+	<!-- 仪表盘2开始 -->
+	<div class="container">
+	    <!-- block -->
+	    <div class="bigboxblock">
+	        <div class="navbar navbar-inner block-header">
+	            <h4>仪表盘2</h4>
+	        </div>
+			    <div class="row">
+			        <div class="col-md-3">
+			            <div class="boxblock">
+			                <div class="boxblock-title">
+			                    <span class="label label-success pull-right">Users</span>
+			                    <h5>用户总数</h5>
+			                </div>
+			                <div class="boxblock-content">
+			                    <h1 style="margin: 0 !important;"><a href="/users/user/">5</a></h1>
+			                </div>
+			            </div>
+			        </div>
+			        <div class="col-md-3">
+			            <div class="boxblock">
+			                <div class="boxblock-title">
+			                    <span class="label label-info pull-right">Hosts</span>
+			                    <h5>主机总数</h5>
+			                </div>
+			                <div class="boxblock-content">
+			                    <h1 style="margin: 0 !important;"><a href="/assets/asset/">2</a></h1>
+			                </div>
+			            </div>
+			        </div>
+			
+			        <div class="col-md-3">
+			            <div class="boxblock">
+			                <div class="boxblock-title">
+			                    <span class="label label-primary pull-right">Online</span>
+			                    <h5>在线用户</h5>
+			                </div>
+			                <div class="boxblock-content">
+			                    <h1 style="margin: 0 !important;"><a href="/terminal/session-online/"> <span id="online_users"></span>1</a></h1>
+			                </div>
+			            </div>
+			        </div>
+			
+			        <div class="col-md-3">
+			            <div class="boxblock" style="margin-right: 12px;">
+			                <div class="boxblock-title">
+			                    <span class="label label-danger pull-right">Connected</span>
+			                    <h5>在线会话</h5>
+			
+			                </div>
+			                <div class="boxblock-content">
+			                        <h1 style="margin: 0 !important;"><a href="/terminal/session-online/"> <span id="online_hosts"></span>1</a></h1>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+	</div>
+	 <!-- 仪表盘2结束 -->
+	 
+	 
+	 
+	<!-- 仪表盘3开始 -->
+	<div class="container">
+	    <!-- block -->
+	    <div class="bigboxblock">
+	        <div class="navbar navbar-inner block-header">
+	            <h4>仪表盘3</h4>
+	        </div>
+			    <div class="row">
+			    	  <!-- 第一列栏栅格开始 -->
+			        <div class="col-md-6">
+			            <div class="boxblock3">
+			                <div class="boxblock-title">
+			                    <span class="label label-success pull-right">近10次登录用户</span>
+			                    <h5>登录记录</h5>
+			                </div>
+			         
+                                <div class="block-content collapse in">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Product</th>
+                                                <th>Date</th>
+                                                <th>Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Coat</td>
+                                                <td>02/02/2013</td>
+                                                <td>$25.12</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Jacket</td>
+                                                <td>01/02/2013</td>
+                                                <td>$335.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Shoes</td>
+                                                <td>01/02/2013</td>
+                                                <td>$29.99</td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>Shoes</td>
+                                                <td>01/02/2013</td>
+                                                <td>$29.99</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+			         
+			         
+			            </div>
+			        </div>
+			          <!-- 第一列栏栅格结束 -->
+			         
+			          <!-- 第二列栏栅格开始 -->
+			        <div class="col-md-6">
+			            <div class="boxblock3" style="margin-right: 12px;">
+			                <div class="boxblock-title">
+			                    <span class="label label-info pull-right">近10次资产变更</span>
+			                    <h5>资产信息变更</h5>
+			                </div>
+			                
+                                <div class="block-content collapse in">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Username</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Mark</td>
+                                                <td>Otto</td>
+                                                <td>@mdo</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Jacob</td>
+                                                <td>Thornton</td>
+                                                <td>@fat</td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Vincent</td>
+                                                <td>Gabriel</td>
+                                                <td>@gabrielva</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+			                
+			                
+			            </div>
+			        </div>
+			          <!-- 第二列栏栅格结束 -->
+			        
+			    </div>
+			</div>
+	</div>
+	 <!-- 仪表盘3结束 -->
+	 
+
+
 {% endblock %}
 
 {% block bottom-js %}
+		  <script src="/static/plugins/easypiechart/jquery.easy-pie-chart.js"></script>
+        <script>
+        $(function() {
+            // Easy pie charts
+            $('.chart').easyPieChart({animate: 1000});
+        });
+        </script>
 {% endblock %}
