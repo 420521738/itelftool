@@ -9,16 +9,66 @@ from django import utils
 from assets.dashboard import AssetDashboard
 from django.contrib.auth.decorators import login_required
 from assets.myauth import UserProfile
-import time
+import time, datetime
 import re
-
+from assets.myauth import LoginRecord
+from assets.models import Asset
+from assets.models import EventLog
+from broken_record.models import BrokenRrecord
 
 
 # 首页模块
 # 打开首页需要先进行登录，使用了django自带的login_required装饰器
 @login_required
 def index(request):
-    return render(request,'index.html')
+    # This 登录记录相关 开始
+    date_time = datetime.datetime.now()
+    login_record = LoginRecord.objects.filter(logintime__month=date_time.month)
+    usercount = UserProfile.objects.all().count()
+    login_user = []
+    for i in login_record:
+        if i.name not in login_user:
+            login_user.append(i.name)
+    login_user_count = len(login_user)  
+    user_activity = '{:.0f}'.format(login_user_count/usercount*100)
+    # This 登录记录相关 结束
+    
+    # This 服务器在线相关 开始
+    assetcount = Asset.objects.all().count()
+    asset_on_count = Asset.objects.filter(status=0).count()
+    asset_on_rate = '{:.0f}'.format(asset_on_count/assetcount*100)
+    # This 服务器在线相关 结束
+    
+    # This 故障率相关 开始
+    broken_record = BrokenRrecord.objects.filter(occur_time__month=date_time.month)
+    impact_time = 0
+    for i in broken_record:
+        a = int(i.business_impact_time.split(u'分')[0])
+        impact_time += a
+    business_impact_time_rate = '{:.2f}'.format((impact_time/(date_time.day*24*60))*100)
+    # This 故障率相关 结束
+    
+    # This 资产变更率相关 开始
+    even_change = EventLog.objects.filter(date__month=date_time.month)
+    even_change_id = []
+    for i in even_change:
+        if i.asset not in even_change_id:
+            even_change_id.append(i.asset)
+    even_change_count= len(even_change_id)
+    even_change_count_rate = '{:.2f}'.format(even_change_count/assetcount*100)
+    # This 资产变更率相关 结束
+    
+    
+    results = {
+        'user_activity': user_activity,
+        'asset_on_rate': asset_on_rate,
+        'business_impact_time_rate': business_impact_time_rate,
+        'even_change_count_rate': even_change_count_rate,
+        'usercount': usercount,
+        'assetcount': assetcount,
+    }
+    return render(request,'index.html', results)
+
 
 # 登录验证模块
 def acc_login(request):
@@ -43,6 +93,10 @@ def acc_login(request):
                         # 这个很重要，是设置用户登录后session保存多久，这里设置了30分钟，30分钟后需要重新登录
                         request.session.set_expiry(60*300)
                         #print 'session expires at :',request.session.get_expiry_date()
+                        # This 用户登录记录到数据库
+                        user = request.user
+                        ipaddr = request.META['REMOTE_ADDR']
+                        LoginRecord.objects.create(loginsource=ipaddr, name=user)
                         # 验证通过，返回首页
                         return HttpResponseRedirect('/')
                     else:
@@ -55,6 +109,10 @@ def acc_login(request):
                         auth.login(request,user)
                         # 这个很重要，是设置用户登录后session保存多久，这里设置了30分钟，30分钟后需要重新登录
                         request.session.set_expiry(60*300)
+                        # This 用户登录记录到数据库
+                        user = request.user
+                        ipaddr = request.META['REMOTE_ADDR']
+                        LoginRecord.objects.create(loginsource=ipaddr, name=user)
                         return HttpResponseRedirect('/')
             else:
                 return render(request,'login.html',{'login_err': '您输入的验证码错误，请重新输入！'})

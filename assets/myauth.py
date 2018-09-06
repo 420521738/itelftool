@@ -120,3 +120,15 @@ class UserProfile(AbstractBaseUser,PermissionsMixin):
         return self.name
 
     objects = UserManager()
+    
+    
+class LoginRecord(models.Model):
+    name = models.ForeignKey(
+            UserProfile,
+            null=False,
+            blank=False,
+            verbose_name=u"登录用户"
+    )
+    logintime = models.DateTimeField(u'登录时间', auto_now_add=True)
+    loginsource = models.GenericIPAddressField(u'登录来源IP', blank=True, null=True)
+    

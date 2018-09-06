@@ -28,23 +28,23 @@
             </div>
             <div class="row">
                 <div class="col-md-2 col-md-offset-1">
-                    <div class="chart" data-percent="73">73%</div>
+                    <div class="chart" data-percent="{{user_activity}}">{{user_activity}}%</div>
                     <div style="margin-top: 10px;margin-bottom: 20px;margin-left: 12px;"><span class="label label-info">月用户活跃度</span>
                     </div>
                 </div>
                 <div class="col-md-2 col-md-offset-1">
-                    <div class="chart" data-percent="53">53%</div>
+                    <div class="chart" data-percent="{{asset_on_rate}}">{{asset_on_rate}}%</div>
                     <div style="margin-top: 10px;margin-bottom: 20px;margin-left: 15px;"><span class="label label-info">服务器在线率</span>
                     </div>
                 </div>
                 <div class="col-md-2 col-md-offset-1">
-                    <div class="chart" data-percent="83">83%</div>
+                    <div class="chart" data-percent="{{business_impact_time_rate}}">{{business_impact_time_rate}}%</div>
                     <div style="margin-top: 10px;margin-bottom: 20px;margin-left: 12px;"><span class="label label-info">月业务故障率</span>
                     </div>
                 </div>
                 <div class="col-md-2 col-md-offset-1">
-                    <div class="chart" data-percent="13">13%</div>
-                    <div style="margin-top: 10px;margin-bottom: 20px;margin-left: 10px;"><span class="label label-info">资产信息变更率</span>
+                    <div class="chart" data-percent="{{even_change_count_rate}}">{{even_change_count_rate}}%</div>
+                    <div style="margin-top: 10px;margin-bottom: 20px;margin-left: 5px;"><span class="label label-info">月资产信息变更率</span>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
 			                    <h5>用户总数</h5>
 			                </div>
 			                <div class="boxblock-content">
-			                    <h1 style="margin: 0 !important;"><a href="/users/user/">5</a></h1>
+			                    <h1 style="margin: 0 !important;"><a target="_blank" href="/admin/assets/userprofile/">{{usercount}}</a></h1>
 			                </div>
 			            </div>
 			        </div>
@@ -76,10 +76,10 @@
 			            <div class="boxblock">
 			                <div class="boxblock-title">
 			                    <span class="label label-info pull-right">Hosts</span>
-			                    <h5>主机总数</h5>
+			                    <h5>资产总数</h5>
 			                </div>
 			                <div class="boxblock-content">
-			                    <h1 style="margin: 0 !important;"><a href="/assets/asset/">2</a></h1>
+			                    <h1 style="margin: 0 !important;"><a href="{% url 'asset_list' %}">{{assetcount}}</a></h1>
 			                </div>
 			            </div>
 			        </div>
