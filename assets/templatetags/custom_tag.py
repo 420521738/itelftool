@@ -1,5 +1,4 @@
 #_*_coding:utf-8_*_
-__author__ = 'jieli'
 import datetime
 from  django.core.urlresolvers import reverse as url_reverse
 
@@ -40,7 +39,9 @@ def get_table_column(column, table_obj):
         column_name = table_obj.model_class._meta.get_field(column).verbose_name
     except Exception as e:
         print("ee",e)
-        column_name = getattr(table_obj.model_class,column)
+        #column_name = getattr(table_obj.model_class,column)
+        # This 这里按原来的获取方式的话，提示没有这个字段
+        column_name = u'事件类型'
     return  column_name
 
 

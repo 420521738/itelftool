@@ -67,8 +67,8 @@
                                     <td>{{ brokenrecord.broken_type }} </td>
                                     <td>{{ brokenrecord.severity_type }} </td>
                                     <td>{{ brokenrecord.broken_status_type }} </td>
-                                    <td>{{ brokenrecord.occur_time }} </td>
-                                    <td>{{ brokenrecord.end_time }} </td>
+                                    <td>{{ brokenrecord.occur_time|date:"Y-m-d H:i:s" }} </td>
+                                    <td>{{ brokenrecord.end_time|date:"Y-m-d H:i:s" }} </td>
                                     <td>{{ brokenrecord.business_impact_time }} </td>
                                     <td>{{ brokenrecord.product.name }} </td>
                                     <td>{{ brokenrecord.project.name }} </td>

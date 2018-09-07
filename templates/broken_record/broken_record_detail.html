@@ -115,13 +115,13 @@
                </tr>
                <tr>
                    <td class="col-md-2 bold">故障发生时间</td>
-                   <td class="col-md-4">: {{ brokenrecord.occur_time }}</td>
+                   <td class="col-md-4">: {{ brokenrecord.occur_time|date:"Y-m-d H:i:s" }}</td>
                    <td class="col-md-2 bold"></td>
                    <td class="col-md-4"></td>
                </tr>
                <tr>
                    <td class="col-md-2 bold">故障结束时间</td>
-                   <td class="col-md-4">: {{ brokenrecord.end_time }}</td>
+                   <td class="col-md-4">: {{ brokenrecord.end_time|date:"Y-m-d H:i:s" }}</td>
                    <td class="col-md-2 bold"></td>
                    <td class="col-md-4"></td>
                </tr>
@@ -133,7 +133,7 @@
                </tr>
                <tr>
                    <td class="col-md-2 bold">记录更新日期</td>
-                   <td class="col-md-4">: {{ brokenrecord.update_date }}</td>
+                   <td class="col-md-4">: {{ brokenrecord.update_date|date:"Y-m-d H:i:s" }}</td>
                    <td class="col-md-2 bold"></td>
                    <td class="col-md-4"></td>
                </tr>
