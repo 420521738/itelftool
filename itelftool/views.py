@@ -11,10 +11,12 @@ from django.contrib.auth.decorators import login_required
 from assets.myauth import UserProfile
 import time, datetime
 import re
+from django.contrib.sessions.models import Session
 from assets.myauth import LoginRecord
-from assets.models import Asset
+from assets.models import Asset, IDC
 from assets.models import EventLog
 from broken_record.models import BrokenRrecord
+from appconf.models import Product, Project
 
 
 # 首页模块
@@ -24,7 +26,7 @@ def index(request):
     # This 登录记录相关 开始
     date_time = datetime.datetime.now()
     login_record = LoginRecord.objects.filter(logintime__month=date_time.month)
-    usercount = UserProfile.objects.all().count()
+    usercount = UserProfile.objects.count()
     login_user = []
     for i in login_record:
         if i.name not in login_user:
@@ -34,7 +36,7 @@ def index(request):
     # This 登录记录相关 结束
     
     # This 服务器在线相关 开始
-    assetcount = Asset.objects.all().count()
+    assetcount = Asset.objects.count()
     asset_on_count = Asset.objects.filter(status=0).count()
     asset_on_rate = '{:.0f}'.format(asset_on_count/assetcount*100)
     # This 服务器在线相关 结束
@@ -58,6 +60,38 @@ def index(request):
     even_change_count_rate = '{:.2f}'.format(even_change_count/assetcount*100)
     # This 资产变更率相关 结束
     
+    # This 在线用户统计相关 开始
+    # This获取没有过期的session
+    sessions =Session.objects.filter(expire_date__gte=datetime.datetime.now())
+    uid_list = []
+    # This 获取session中的userid
+    for session in sessions:
+        data = session.get_decoded()
+        uid_list.append(data.get('_auth_user_id', None))
+    # Thist 根据userid查询user
+    online_user = UserProfile.objects.filter(id__in=uid_list)
+    online_user_count = len(online_user)
+    # This 在线用户统计相关 结束
+    
+    # This 机房相关 开始
+    idc_count = IDC.objects.count()
+    # This 机房相关 结束
+    
+    # This 产品线、项目相关 开始
+    product_count = Product.objects.count()
+    project_count = Project.objects.count()
+    # This 产品线、项目相关 结束
+    
+    # This 登录详细信息相关 开始
+    # This 以logintime降序排列，前面加个横杠就是降序
+    login_record_10 = LoginRecord.objects.order_by('-logintime')[:10]
+    # This 登录详细信息相关 结束
+    
+    # This 变更记录详细信息相关 开始
+    # This 以logintime降序排列，前面加个横杠就是降序
+    event_log_10 = EventLog.objects.order_by('-date')[:10]
+    # This 变更记录详细信息相关 结束
+    
     
     results = {
         'user_activity': user_activity,
@@ -66,6 +100,14 @@ def index(request):
         'even_change_count_rate': even_change_count_rate,
         'usercount': usercount,
         'assetcount': assetcount,
+        'online_user': online_user,
+        'online_user_count': online_user_count,
+        'idc_count': idc_count,
+        'product_count': product_count,
+        'project_count': project_count,
+        'login_record_10': login_record_10,
+        'event_log_10': event_log_10,
+        
     }
     return render(request,'index.html', results)
 

@@ -38,6 +38,8 @@ urlpatterns = [
     url(r'^navi/', include('navi.urls')),
     # 应用管理url入口
     url(r'^appconf/', include('appconf.urls')),
+    # 用户管理url入口
+    url(r'^accounts/', include('accounts.urls')),
     # 任务编排url入口
     url(r'^setup/', include('setup.urls')),
     # 故障记录入口

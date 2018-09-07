@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+{% block header-css %}
+	<link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
+{% endblock %}
+
+{% block page-content-title %}
+在线用户
+{% endblock %}
+
+{% block page-nav-tab %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">在线用户列表</li>
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+<div>
+    <!-- Main content -->
+    <section class="content">
+            <div class="box">
+            
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <table class="table table-striped table-bordered" id="dataform">
+                      <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>账号（邮箱）</th>
+                            <th>状态</th>
+                            <th>是否管理员</th>
+                            <th>角色</th>
+                            <th>最后登录时间</th>
+                        </tr>
+                      </thead>
+                            <tbody>
+                                {% for i in online_user %}
+                                    <tr class="even gradeX">
+                                        <td>{{ i.name }}</td>
+                                        <td>{{ i.email }}</td>
+                                        <td>
+                                            {% if i.is_active %}
+                                                <span class="label label-success">启用</span>
+                                            {% else %}
+                                                <span class="label label-danger">禁用</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if i.is_admin %}
+                                                <span class="label label-success">是</span>
+                                            {% else %}
+                                                <span class="label label-danger">否</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ i.role|default:"----" }}</td>
+                                        <td>{{ i.last_login|date:"Y-m-d H:i:s" }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                  </table>
+                </div>
+             </div>
+          </section>
+</div>      
+                
+
+<script src="/static/plugins/datatables/DataTables-1.10.9/js/jquery.dataTables.min.js"></script>
+<script src="/static/plugins/datatables/DataTables-1.10.9/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+  $(function () {
+    $('#dataform').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true
+    });
+  });
+</script>
+{% endblock %}
+
+{% block  bottom-js %}
+{% endblock %}
