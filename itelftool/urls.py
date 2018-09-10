@@ -48,14 +48,10 @@ urlpatterns = [
     # name，简单来说，name 可以用于在 templates，models，views ..... 中得到对应的网址，相当于给网址取了个名字，只要这个名字不变，网址变了也能通过名字获取到。
     url(r'^$',views.index,name="index"),
     # 登录页
-    url(r'^login/$',views.acc_login,name='login'),
+    url(r'^login/$',views.acc_login, name='login'),
     # 验证码功能
     url(r'^verifycode/$', VerifyCode.verifycode),
     # 退出页
-    url(r'^logout/$', views.logout),
-    # 密码修改页
-    url(r'^changepwd/$', views.changepwd, name='changepwd'),
-    # 用户个人信息
-    url(r'^userinfo/$', views.userinfo, name='userinfo'),
+    url(r'^logout/$', views.logout, name='logout'),
 
 ]

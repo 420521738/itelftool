@@ -143,7 +143,7 @@
 								<!-- User dropdown menu -->
 								<ul class="head-list">
 									<li>
-										<a href="/userinfo/">
+										<a href="{% url 'userinfo' %}">
 											<i class="fa fa-user fa-fw fa-lg"></i> 个人中心
 										</a>
 									</li>
@@ -156,7 +156,7 @@
 									</li>
 									-->
 									<li>
-										<a href="/changepwd/">
+										<a href="{% url 'change_password' %}">
 											<span class="label label-success pull-right">New</span>
 											<i class="fa fa-gear fa-fw fa-lg"></i> 修改密码
 										</a>
@@ -528,7 +528,8 @@
 											</span>
 										</a>
 	                                <ul class="collapse">
-												<li><a href="{% url 'user_online_list' %}">在线用户</a></li>
+												<li><a href="{% url 'user_online_list' %}">在线用户列表</a></li>
+												<li><a href="{% url 'user_list' %}">用户管理</a></li>
 											</ul>
 									</li>
 									<!--用户管理菜单结束-->
