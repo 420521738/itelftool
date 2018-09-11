@@ -29,4 +29,7 @@ IT精灵工具首页简洁面板：<br/><br/>
 ![image](https://raw.githubusercontent.com/wiki/420521738/itelftool/%E4%BB%BB%E5%8A%A1%E7%BC%96%E6%8E%92.png)
 <br/><br/>
 
+用户管理面板：<br/><br/>
+![image](https://raw.githubusercontent.com/wiki/420521738/itelftool/%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E8%8F%9C%E5%8D%95.png)
+<br/><br/>
 
