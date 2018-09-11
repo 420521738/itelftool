@@ -3,6 +3,7 @@
 
 from django.conf.urls import url, include
 from accounts import user
+from accounts import role
 
 urlpatterns = [
     # 用户管理 开始
@@ -16,5 +17,12 @@ urlpatterns = [
     # 用户个人信息
     url(r'^user/userinfo$', user.userinfo, name='userinfo'),
     # 用户管理 结束
+
+    # 角色管理 开始
+    url(r'^role/list/$', role.role_list, name='role_list'),
+    url(r'^role/add/$', role.role_add, name='role_add'),
+    url(r'^role/edit/(?P<ids>\d+)/$', role.role_edit, name='role_edit'),
+    url(r'^role/delete/(?P<ids>\d+)/$', role.role_del, name='role_del'),
+    # 角色管理 结束
 
 ]

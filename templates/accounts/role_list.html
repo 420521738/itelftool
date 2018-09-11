@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+
+{% block header-css %}
+	<link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
+{% endblock %}
+
+{% block page-content-title %}
+用户角色管理
+{% endblock %}
+
+{% block page-nav-tab %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">用户角色管理</li>
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+
+<div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <form action="" method="post" id="role_form">
+                {% csrf_token %}
+            <div class="box">
+                <div class="box-header">
+                    <div class="col-sm-2" style="padding-left: 0">
+						 <a href="{% url 'role_add' %}"><li class="btn btn-success" ><b>添加角色</b></li></a>
+                  </div>
+                </div>
+
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <table class="table table-striped table-bordered" id="dataform">
+                      <thead>
+                        <tr>
+                            <th style="width:200px">角色名称</th>
+                            <th>操作</th>
+                        </tr>
+                      </thead>
+                            <tbody>
+                            {% for i in all_role %}
+                                <tr style="font-size: 13px;">
+                                    <td>{{ i.name }} </td>
+
+                                    <td>
+                                        <a href="{% url "role_edit" i.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                        <a href="{% url "role_del" i.id %}" onclick="return confirm('确认删除角色吗？？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                  </table>
+                </div>
+            </div>
+        </form>
+    </section>
+        <!-- /.content -->
+{#用于接收user_edit.html中layui子层的传值#}
+<input id="handle_status" value="" hidden="hidden">
+</div>
+
+<script src="/static/plugins/datatables/DataTables-1.10.9/js/jquery.dataTables.min.js"></script>
+<script src="/static/plugins/datatables/DataTables-1.10.9/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+  $(function () {
+    $('#dataform').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true
+    });
+  });
+</script>
+
+<script>
+function checkSubmit() {
+    if (!confirm("确定删除？")) {
+        window.event.returnValue = false;
+    }
+}
+</script>
+{% endblock %}
+
+
+
+{% block  bottom-js %}
+{% endblock %}
