@@ -9,8 +9,7 @@ from assets.myauth import UserProfile
 import datetime
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
-from accounts.forms import AddUserForm, EditUserForm, ChangePasswordForm
-
+from accounts.forms import AddUserForm, EditUserForm,EditSuperUserForm, ChangePasswordForm
 
 
 # 前端个人中心功能
@@ -22,7 +21,7 @@ def userinfo(request):
     return render(request,'userinfo.html',{'userinfo': userInfo})
 
 
-
+# 在线用户展示功能
 @login_required()
 def user_online_list(request):
     # This 在线用户统计相关 开始
@@ -42,6 +41,7 @@ def user_online_list(request):
     return render(request, 'accounts/user_online_list.html', results)
 
 
+# 用户列表展示功能
 @login_required()
 def user_list(request):
     all_user = get_user_model().objects.all()
@@ -51,6 +51,7 @@ def user_list(request):
     return render(request, 'accounts/user_list.html', results)
 
 
+# 增加用户功能
 @login_required
 def user_add(request):
     if request.method == 'POST':
@@ -69,6 +70,7 @@ def user_add(request):
     return render(request, 'accounts/user_add.html', results)
 
 
+# 用户删除功能
 @login_required
 def user_del(request, ids):
     if ids:
@@ -76,7 +78,7 @@ def user_del(request, ids):
     return HttpResponseRedirect(reverse('user_list'))
 
 
-
+# 用户编辑功能
 @login_required
 def user_edit(request, ids):
     user = get_user_model().objects.get(id=ids)
@@ -92,6 +94,7 @@ def user_edit(request, ids):
     return render(request, 'accounts/user_edit.html', locals())
 
 
+# 用户编辑里的用户密码重置功能
 @login_required
 def reset_password(request, ids):
     user = get_user_model().objects.get(id=ids)
@@ -106,6 +109,7 @@ def reset_password(request, ids):
     return render(request, 'accounts/reset_password.html', results)
 
 
+# 密码修改功能
 @login_required
 def change_password(request):
     if request.method == 'POST':
@@ -121,3 +125,29 @@ def change_password(request):
     }
     return render(request, 'accounts/change_password.html', results)
 
+
+# 管理员设定列表功能
+@login_required()
+def superuser_list(request):
+    all_superuser = get_user_model().objects.all()
+    results = {
+        'all_user':  all_superuser,
+    }
+    return render(request, 'accounts/superuser_list.html', results)
+
+
+# 管理员设定编辑功能
+@login_required
+def superuser_edit(request, ids):
+    user = get_user_model().objects.get(id=ids)
+    username = user.name
+    if request.method == 'POST':
+        form = EditSuperUserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            status = 1
+        else:
+            status = 2
+    else:
+        form = EditSuperUserForm(instance=user)
+    return render(request, 'accounts/superuser_edit.html', locals())

@@ -9,7 +9,7 @@ from accounts.forms import RoleListForm
 from accounts.models import RoleList
 
 
-
+# 角色列表功能
 @login_required
 def role_list(request):
     all_role = RoleList.objects.all()
@@ -18,6 +18,8 @@ def role_list(request):
     }
     return render(request, 'accounts/role_list.html', results)
 
+
+# 增加角色功能
 @login_required
 def role_add(request):
     if request.method == "POST":
@@ -36,6 +38,7 @@ def role_add(request):
     return render(request, 'accounts/role_add.html', results)
 
 
+# 角色编辑功能
 @login_required
 def role_edit(request, ids):
     iRole = RoleList.objects.get(id=ids)
@@ -56,6 +59,7 @@ def role_edit(request, ids):
     return render(request, 'accounts/role_edit.html', results)
 
 
+# 角色删除功能
 @login_required
 def role_del(request, ids):
     RoleList.objects.filter(id=ids).delete()

@@ -8,6 +8,7 @@ from broken_record.forms import BrokenRrecordForm
 from django.core.urlresolvers import reverse
 import csv
 import datetime
+from accounts.permission import permission_verify
 
 # 导出excel，csv所需要转换中文字符
 def str2gb(args):
@@ -21,6 +22,7 @@ def str2gb(args):
 
 # 故障记录清单首页
 @login_required
+@permission_verify()
 def brokenrecord_list(request):
     all_brokenrecord = BrokenRrecord.objects.all()
     results = {

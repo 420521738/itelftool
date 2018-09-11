@@ -8,6 +8,8 @@ from django.contrib.auth.models import (
 )
 import django
 from django import utils
+from accounts.models import RoleList
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, name, password=None):
@@ -60,6 +62,7 @@ class UserProfile(AbstractBaseUser,PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
+    role = models.ForeignKey(RoleList, null=True, blank=True)
     name = models.CharField(max_length=32)
     token = models.CharField(u'token', max_length=128,default=None,blank=True,null=True)
     department = models.CharField(u'部门', max_length=32,default=None,blank=True,null=True)

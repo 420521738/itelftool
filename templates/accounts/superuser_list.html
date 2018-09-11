@@ -6,14 +6,14 @@
 {% endblock %}
 
 {% block page-content-title %}
-用户管理
+超级管理员设定
 {% endblock %}
 
 {% block page-nav-tab %}
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <ol class="breadcrumb">
     <li><a href="/">Home</a></li>
-    <li class="active">用户管理</li>
+    <li class="active">超级管理员设定</li>
 </ol>
 {% endblock %}
 
@@ -31,11 +31,6 @@
         <form action="" method="post" id="user_form">
                 {% csrf_token %}
             <div class="box">
-                <div class="box-header">
-                    <div class="col-sm-2" style="padding-left: 0">
-						 <a href="{% url 'user_add' %}"><li class="btn btn-success" ><b>添加用户</b></li></a>
-                  </div>
-                </div>
 
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -43,10 +38,9 @@
                       <thead>
                         <tr>
                             <th>姓名</th>
-                            <th>账号（邮箱）</th>
+                            <th>是否普通管理员</th>
+                            <th>是否超级管理员</th>
                             <th>状态</th>
-                            <th>角色</th>
-                            <th>最后登录时间</th>
                             <th>操作</th>
                         </tr>
                       </thead>
@@ -54,7 +48,20 @@
                                 {% for i in all_user %}
                                     <tr class="even gradeX">
                                         <td>{{ i.name }}</td>
-                                        <td>{{ i.email }}</td>
+                                        <td>
+                                            {% if i.is_admin %}
+                                                <span class="label label-success">是</span>
+                                            {% else %}
+                                                <span class="label label-danger">否</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if i.is_superuser %}
+                                                <span class="label label-success">是</span>
+                                            {% else %}
+                                                <span class="label label-danger">否</span>
+                                            {% endif %}
+                                        </td>
                                         <td>
                                             {% if i.is_active %}
                                                 <span class="label label-success">启用</span>
@@ -62,12 +69,9 @@
                                                 <span class="label label-danger">禁用</span>
                                             {% endif %}
                                         </td>
-                                        <td>{{ i.role|default:"----" }}</td>
-                                        <td>{{ i.last_login|date:"Y-m-d H:i:s" }}</td>
                                         <td class="text-center" data-editable='false'>
-                                        <a href="#"><li class="btn btn-sm btn-info" onclick="return tanchu(this.value)" value="{{ i.id }}">编辑</li></a>
-                                        <a value="{% url 'user_del' i.id %}" class="btn btn-sm btn-danger user_del">删除</a>
-                                    </td>
+                                       	  <a href="#"><li class="btn btn-sm btn-info" onclick="return tanchu(this.value)" value="{{ i.id }}">编辑</li></a>
+                                    	 </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -96,22 +100,16 @@
     });
   });
 </script>
-<script>
-function checkSubmit() {
-    if (!confirm("确定删除？")) {
-        window.event.returnValue = false;
-    }
-}
-</script>
+
 <script>
 function tanchu(n){
     layer.open({
     type: 2,
-    title: '用户信息修改',
+    title: '管理员设定更改',
     closeBtn: 1,
     area: ['700px', '550px'],
     shadeClose: true, //点击遮罩关闭
-    content: ['/accounts/user/edit/' + n,],
+    content: ['/accounts/superuser/edit/' + n,],
     end:function(){
             var handle_status = $("#handle_status").val();
             if ( handle_status == '1' ) {
@@ -132,23 +130,6 @@ function tanchu(n){
         }
   });
 }
-</script>
-
-<script>
-    $(document).ready(function(){
-        $('.user_del').click(function(){
-            var row = $(this).closest('tr');
-            if (confirm("确定删除?")) {
-                $.get(
-                        $(this).attr('value'),
-                        {},
-                        function (data) {
-                            row.remove()
-                        }
-                )
-            }
-        });
-    });
 </script>
 
 {% endblock %}
