@@ -25,7 +25,11 @@ from appconf.models import Product, Project
 def index(request):
     # This 登录记录相关 开始
     date_time = datetime.datetime.now()
-    login_record = LoginRecord.objects.filter(logintime__month=date_time.month)
+    year_month = time.strftime('%Y-%m',time.localtime(time.time()))
+    login_record = LoginRecord.objects.filter(logintime__contains=year_month)
+    #login_record = LoginRecord.objects.filter()[:2]
+    for e in login_record:
+        print(e.logintime)
     usercount = UserProfile.objects.count()
     login_user = []
     for i in login_record:
@@ -42,7 +46,7 @@ def index(request):
     # This 服务器在线相关 结束
     
     # This 故障率相关 开始
-    broken_record = BrokenRrecord.objects.filter(occur_time__month=date_time.month)
+    broken_record = BrokenRrecord.objects.filter(occur_time__contains=year_month)
     impact_time = 0
     for i in broken_record:
         a = int(i.business_impact_time.split(u'分')[0])
@@ -51,7 +55,7 @@ def index(request):
     # This 故障率相关 结束
     
     # This 资产变更率相关 开始
-    even_change = EventLog.objects.filter(date__month=date_time.month)
+    even_change = EventLog.objects.filter(date__contains=year_month)
     even_change_id = []
     for i in even_change:
         if i.asset not in even_change_id:

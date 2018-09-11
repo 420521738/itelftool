@@ -31,12 +31,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '+euai7bpjfy$t8%$o5v%*cqwd%y1k86izt9wh7umo&k%6p7*5a'
 
 
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_RESULT_BACKEND = 'django-db'
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'Asia/Shanghai'
-
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -66,6 +60,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'setup',
     'broken_record',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -156,12 +151,12 @@ LANGUAGE_CODE = 'en-us'
 #TIME_ZONE = 'UTC'
 TIME_ZONE = 'Asia/Shanghai'
 
-
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = False
+USE_TZ = True  # 如果只是内部使用的系统，这行建议为false，不然会有时区问题
+
 
 
 # Static files (CSS, JavaScript, Images)
@@ -182,3 +177,14 @@ TOKEN_TIMEOUT = 120
 
 # 覆盖原来的登录模块，指定如果未登录，那么则跳到默认的登录页/login/
 LOGIN_URL = '/login/'
+
+
+# celery
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TASK_SERIALIZER = 'json'
+#CELERY_ENABLE_UTC = False
+#CELERY_TIMEZONE = 'Asia/Shanghai'
+
+
+
