@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from lib.log import log
 from lib.setup import get_scripts
 import logging
+from accounts.permission import permission_verify
+
 scripts_dir = get_dir("s_path")
 level = get_dir("log_level")
 log_path = get_dir("log_path")
@@ -16,6 +18,7 @@ log("setup.log", level, log_path)
 
 
 @login_required()
+@permission_verify()
 def index(request):
     all_host = Asset.objects.all()
     all_group = HostGroup.objects.all()
@@ -24,6 +27,7 @@ def index(request):
 
 
 @login_required()
+@permission_verify()
 def exec_scripts(request):
     ret = []
     if request.method == 'POST':

@@ -9,70 +9,6 @@ from accounts.models import RoleList, PermissionList
 from assets.models import UserProfile
 
 
-# 权限列表功能，说白了就是一个个url或者一组url
-@login_required
-def permission_list(request):
-    all_permission = PermissionList.objects.all()
-    results = {
-        'all_permission':  all_permission,
-    }
-    return render(request, 'accounts/permission_list.html', results)
-
-
-# 增加权限功能，其实就是增加url的限制
-@login_required
-def permission_add(request):
-    if request.method == "POST":
-        form = PermissionListForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('permission_list'))
-    else:
-        form = PermissionListForm()
-
-    results = {
-        'form': form,
-        'request': request,
-    }
-    return render(request, 'accounts/permission_add.html', results)
-
-
-# 权限编辑功能
-@login_required
-def permission_edit(request, ids):
-    iPermission = PermissionList.objects.get(id=ids)
-
-    if request.method == "POST":
-        form = PermissionListForm(request.POST, instance=iPermission)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('permission_list'))
-    else:
-        form = PermissionListForm(instance=iPermission)
-
-    results = {
-        'ids': ids,
-        'form': form,
-        'request': request,
-    }
-    return render(request, 'accounts/permission_edit.html', results)
-
-
-# 权限删除功能
-@login_required
-def permission_del(request, ids):
-    PermissionList.objects.filter(id=ids).delete()
-    return HttpResponseRedirect(reverse('permission_list'))
-
-
-# 如果加了权限判断的装饰器，判断无权限的话，就会执行这个权限拒绝功能，也就是返回一个无权限告知页面
-@login_required
-def permission_deny(request):
-    results = {
-        'request': request,
-    }
-    return render(request, 'accounts/permission_deny.html', results)
-
 
 # 权限判断装饰器
 def permission_verify():
@@ -112,3 +48,74 @@ def permission_verify():
             return view_func(request, *args, **kwargs)
         return _wrapped_view
     return decorator
+
+
+
+# 权限列表功能，说白了就是一个个url或者一组url
+@login_required
+@permission_verify()
+def permission_list(request):
+    all_permission = PermissionList.objects.all()
+    results = {
+        'all_permission':  all_permission,
+    }
+    return render(request, 'accounts/permission_list.html', results)
+
+
+# 增加权限功能，其实就是增加url的限制
+@login_required
+@permission_verify()
+def permission_add(request):
+    if request.method == "POST":
+        form = PermissionListForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('permission_list'))
+    else:
+        form = PermissionListForm()
+
+    results = {
+        'form': form,
+        'request': request,
+    }
+    return render(request, 'accounts/permission_add.html', results)
+
+
+# 权限编辑功能
+@login_required
+@permission_verify()
+def permission_edit(request, ids):
+    iPermission = PermissionList.objects.get(id=ids)
+
+    if request.method == "POST":
+        form = PermissionListForm(request.POST, instance=iPermission)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('permission_list'))
+    else:
+        form = PermissionListForm(instance=iPermission)
+
+    results = {
+        'ids': ids,
+        'form': form,
+        'request': request,
+    }
+    return render(request, 'accounts/permission_edit.html', results)
+
+
+# 权限删除功能
+@login_required
+@permission_verify()
+def permission_del(request, ids):
+    PermissionList.objects.filter(id=ids).delete()
+    return HttpResponseRedirect(reverse('permission_list'))
+
+
+# 如果加了权限判断的装饰器，判断无权限的话，就会执行这个权限拒绝功能，也就是返回一个无权限告知页面
+@login_required
+def permission_deny(request):
+    results = {
+        'request': request,
+    }
+    return render(request, 'accounts/permission_deny.html', results)
+

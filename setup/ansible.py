@@ -12,6 +12,7 @@ import logging
 from lib.log import log
 from lib.setup import get_playbook, get_roles
 from assets.models import NIC
+from accounts.permission import permission_verify
 
 # var info
 ansible_dir = get_dir("a_path")
@@ -42,6 +43,7 @@ def write_role_vars(roles, vargs):
 
 
 @login_required()
+@permission_verify()
 def index(request):
     all_host = Asset.objects.all()
     all_group = HostGroup.objects.all()
@@ -51,6 +53,7 @@ def index(request):
 
 
 @login_required()
+@permission_verify()
 def playbook(request):
     ret = []
     # temp.yml是在页面选择roles时，就创建一个临时的playbook，仅做一次性执行，每次都会不一样
@@ -166,6 +169,7 @@ def playbook(request):
 
 # This 如果用户在页面上选择执行ansible命令的话
 @login_required()
+@permission_verify()
 def ansible_command(request):
     command_list = []
     ret = []
@@ -194,6 +198,7 @@ def ansible_command(request):
 
 # This 这个功能是将组以及主机都查询出来，然后按照一定的格式，将查询出来的组以及主机写入ansible的hosts文件中
 @login_required()
+@permission_verify()
 def host_sync(request):
     group = HostGroup.objects.all()
     ansible_file = open(ansible_dir+"/hosts", "w")

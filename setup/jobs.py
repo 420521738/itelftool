@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from setup.forms import PeriodicTaskForm, IntervalForm, CrontabForm, TaskResultForm
 from subprocess import Popen, PIPE
 import os, time
+from accounts.permission import permission_verify
 
 
 def get_object(model, **kwargs):
@@ -27,12 +28,14 @@ def get_object(model, **kwargs):
 
 
 @login_required
+@permission_verify()
 def index(request):
     jobs_info = PeriodicTask.objects.all()
     return render(request, 'setup/job_list.html', locals())
 
 
 @login_required()
+@permission_verify()
 def job_add(request):
     if request.method == "POST":
         a_form = PeriodicTaskForm(request.POST)
@@ -52,6 +55,7 @@ def job_add(request):
 
 
 @login_required
+@permission_verify()
 def job_edit(request, ids):
     status = 0
     obj = get_object(PeriodicTask, id=ids)
@@ -70,6 +74,7 @@ def job_edit(request, ids):
 
 
 @login_required()
+@permission_verify()
 def job_del(request):
     if request.method == 'POST':
         jobs = request.POST.getlist('jobs_check', [])
@@ -81,12 +86,14 @@ def job_del(request):
 
 
 @login_required()
+@permission_verify()
 def job_interval_list(request):
     interval_info = IntervalSchedule.objects.all()
     return render(request, 'setup/interval_list.html', locals())
 
 
 @login_required()
+@permission_verify()
 def job_interval_add(request):
     if request.method == "POST":
         a_form = IntervalForm(request.POST)
@@ -106,6 +113,7 @@ def job_interval_add(request):
 
 
 @login_required
+@permission_verify()
 def job_interval_edit(request, ids):
     status = 0
     obj = get_object(IntervalSchedule, id=ids)
@@ -124,6 +132,7 @@ def job_interval_edit(request, ids):
 
 
 @login_required
+@permission_verify()
 def job_interval_del(request):
     temp_name = "setup/setup-header.html"
     if request.method == 'POST':
@@ -136,12 +145,14 @@ def job_interval_del(request):
 
 
 @login_required()
+@permission_verify()
 def job_crontab_list(request):
     crontab_info = CrontabSchedule.objects.all()
     return render(request, 'setup/crontab_list.html', locals())
 
 
 @login_required()
+@permission_verify()
 def job_crontab_add(request):
     if request.method == "POST":
         a_form = CrontabForm(request.POST)
@@ -160,6 +171,7 @@ def job_crontab_add(request):
         return render(request, "setup/crontab_add.html", locals())
     
 @login_required
+@permission_verify()
 def job_crontab_edit(request, ids):
     status = 0
     obj = get_object(CrontabSchedule, id=ids)
@@ -178,6 +190,7 @@ def job_crontab_edit(request, ids):
     
 
 @login_required
+@permission_verify()
 def job_crontab_del(request):
     if request.method == 'POST':
         crontabs = request.POST.getlist('cron_check', [])
@@ -189,12 +202,14 @@ def job_crontab_del(request):
 
 
 @login_required()
+@permission_verify()
 def job_result_list(request):
     result_info = TaskResult.objects.all().order_by("-id")
     return render(request, 'setup/result_list.html', locals())
 
 
 @login_required
+@permission_verify()
 def job_result_edit(request, ids):
     status = 0
     obj = get_object(TaskResult, id=ids)
@@ -213,6 +228,7 @@ def job_result_edit(request, ids):
 
 
 @login_required
+@permission_verify()
 def job_result_del(request):
     if request.method == 'POST':
         results = request.POST.getlist('jobresult_check', [])
@@ -224,6 +240,7 @@ def job_result_del(request):
 
 
 @login_required
+@permission_verify()
 def job_backend(request):
     celery_file = os.path.exists('/var/opt/itelftool/pid/w1.pid')
     beat_file = os.path.exists('/var/opt/itelftool/pid/beat.pid')
@@ -243,6 +260,7 @@ def job_backend(request):
 
 
 @login_required
+@permission_verify()
 def job_backend_task(request, name, action):
     cmd = "service "+name+" "+action
     Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)

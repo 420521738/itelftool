@@ -11,6 +11,7 @@ from broken_record.forms import DeveloperForm
 from django.core.urlresolvers import reverse
 import csv
 import datetime
+from accounts.permission import permission_verify
 
 
 # 导出excel，csv所需要转换中文字符
@@ -25,6 +26,7 @@ def str2gb(args):
 
 # 产品线清单功能
 @login_required
+@permission_verify()
 def product_list(request):
     all_product = Product.objects.all()
     results = {
@@ -35,6 +37,7 @@ def product_list(request):
 
 # 添加产品线功能
 @login_required
+@permission_verify()
 def product_add(request):
     if request.method == 'POST':
         form = ProductForm(request.POST)
@@ -53,6 +56,7 @@ def product_add(request):
 
 # 产品线信息编辑功能
 @login_required
+@permission_verify()
 def product_edit(request, product_id):
     product = Product.objects.get(id=product_id)
     if request.method == 'POST':
@@ -73,6 +77,7 @@ def product_edit(request, product_id):
 
 # 产品线删除功能
 @login_required
+@permission_verify()
 def product_del(request):
     product_id = request.GET.get('id', '')
     if product_id:
@@ -88,6 +93,7 @@ def product_del(request):
 
 # 产品线里的项目清单功能
 @login_required
+@permission_verify()
 def project_list(request, product_id):
     product = Product.objects.get(id=product_id)
     projects = product.project_set.all()
@@ -99,6 +105,7 @@ def project_list(request, product_id):
 
 # 单独的项目清单功能
 @login_required
+@permission_verify()
 def project_projectlist(request):
     all_project = Project.objects.all()
     results = {
@@ -109,6 +116,7 @@ def project_projectlist(request):
 
 # 单独的项目添加功能
 @login_required
+@permission_verify()
 def project_add(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST)
@@ -127,6 +135,7 @@ def project_add(request):
 
 # 单独的项目编辑功能
 @login_required
+@permission_verify()
 def project_edit(request, project_id):
     project = Project.objects.get(id=project_id)
     if request.method == 'POST':
@@ -147,6 +156,7 @@ def project_edit(request, project_id):
 
 # 单独的项目删除功能
 @login_required
+@permission_verify()
 def project_del(request):
     project_id = request.GET.get('project_id', '')
     if project_id:
@@ -162,6 +172,7 @@ def project_del(request):
 
 # 项目导出功能
 @login_required
+@permission_verify()
 def project_export(request):
     export = request.GET.get("export", '')
     project_id_list = request.GET.getlist("id", '')
@@ -198,6 +209,7 @@ def project_export(request):
 
 # 运维负责人清单列表功能
 @login_required
+@permission_verify()
 def appowner_list(request):
     all_app_owner = AppOwner.objects.all()
     results = {
@@ -208,6 +220,7 @@ def appowner_list(request):
 
 # 运维负责人添加功能
 @login_required
+@permission_verify()
 def appowner_add(request):
     if request.method == 'POST':
         form = AppOwnerForm(request.POST)
@@ -227,6 +240,7 @@ def appowner_add(request):
 
 # 运维负责人编辑功能
 @login_required
+@permission_verify()
 def appowner_edit(request, appowner_id, mini=False):
     appowner = AppOwner.objects.get(id=appowner_id)
     if request.method == 'POST':
@@ -248,6 +262,7 @@ def appowner_edit(request, appowner_id, mini=False):
 
 # 运维负责人删除功能
 @login_required
+@permission_verify()
 def appowner_del(request):
     appowner_id = request.GET.get('id', '')
     if appowner_id:
@@ -263,6 +278,7 @@ def appowner_del(request):
 
 # 在添加产品线时，有个附加的添加运维负责人的功能
 @login_required
+@permission_verify()
 def appowner_add_mini(request):
     status = 0
     owner_id = 0
@@ -292,6 +308,7 @@ def appowner_add_mini(request):
 
 # 开发负责人清单列表功能
 @login_required
+@permission_verify()
 def developer_list(request):
     all_developer = Developer.objects.all()
     results = {
@@ -302,6 +319,7 @@ def developer_list(request):
 
 # 开发负责人添加功能
 @login_required
+@permission_verify()
 def developer_add(request):
     if request.method == 'POST':
         form = DeveloperForm(request.POST)
@@ -320,6 +338,7 @@ def developer_add(request):
 
 # 开发负责人编辑功能
 @login_required
+@permission_verify()
 def developer_edit(request, developer_id):
     developer = Developer.objects.get(id=developer_id)
     if request.method == 'POST':
@@ -340,6 +359,7 @@ def developer_edit(request, developer_id):
 
 # 开发负责人删除功能
 @login_required
+@permission_verify()
 def developer_del(request):
     developer_id = request.GET.get('id', '')
     if developer_id:

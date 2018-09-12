@@ -5,15 +5,18 @@ from .models import navi
 from django.shortcuts import render
 from navi.forms import navi_form
 from django.contrib.auth.decorators import login_required
+from accounts.permission import permission_verify
 
 
 @login_required()
+@permission_verify()
 def index(request):
     allnavi = navi.objects.all()
     return render(request, "navi/index.html", {'allnavi': allnavi})
 
 
 @login_required()
+@permission_verify()
 def add(request):
     if request.method == "POST":
         # 如果请求的方法是post，那么则使用navi_form获取传送过来的数据，再判断数据是否合法
@@ -35,6 +38,7 @@ def add(request):
 
 
 @login_required()
+@permission_verify()
 def delete(request):
     if request.method == 'POST':
         # 获取在站点编辑页选中的checkbox框的id，可能有多个，所以选择getlist
@@ -48,12 +52,14 @@ def delete(request):
 
 
 @login_required()
+@permission_verify()
 def manage(request):
     allnavi = navi.objects.all()
     return render(request, "navi/manage.html", {'allnavi': allnavi})
 
 
 @login_required()
+@permission_verify()
 def edit(request):
     if request.method == 'GET':
         # id是js里tanchu function传过来的，将选中编辑的id传过来，并在数据库中获取该id的数据，传给edit.html页面
@@ -63,6 +69,7 @@ def edit(request):
 
 
 @login_required()
+@permission_verify()
 def save(request):
     if request.method == 'POST':
         # 先获取从edit页面传过来的id，name,desc,url的值

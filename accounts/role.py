@@ -7,10 +7,12 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from accounts.forms import RoleListForm
 from accounts.models import RoleList
+from accounts.permission import permission_verify
 
 
 # 角色列表功能
 @login_required
+@permission_verify()
 def role_list(request):
     all_role = RoleList.objects.all()
     results = {
@@ -21,6 +23,7 @@ def role_list(request):
 
 # 增加角色功能
 @login_required
+@permission_verify()
 def role_add(request):
     if request.method == "POST":
         form = RoleListForm(request.POST)
@@ -40,6 +43,7 @@ def role_add(request):
 
 # 角色编辑功能
 @login_required
+@permission_verify()
 def role_edit(request, ids):
     iRole = RoleList.objects.get(id=ids)
     if request.method == "POST":
@@ -61,6 +65,7 @@ def role_edit(request, ids):
 
 # 角色删除功能
 @login_required
+@permission_verify()
 def role_del(request, ids):
     RoleList.objects.filter(id=ids).delete()
     return HttpResponseRedirect(reverse('role_list'))

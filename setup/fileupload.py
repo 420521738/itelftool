@@ -10,6 +10,8 @@ from django.contrib.auth.decorators import login_required
 from lib.log import log
 from lib.setup import get_files
 import logging
+from accounts.permission import permission_verify
+
 uploadfile_dir = get_dir("f_path")
 level = get_dir("log_level")
 log_path = get_dir("log_path")
@@ -17,11 +19,13 @@ log("setup.log", level, log_path)
 
 
 @login_required()
+@permission_verify()
 def index(request):
     return render(request, 'setup/fileupload.html', locals())
 
 
 @login_required()
+@permission_verify()
 def fileupload_result(request):
     if request.method == "POST":    # 请求方法为POST时，进行处理  
         myFiles =request.FILES.getlist("myfile", None)    # 获取上传的文件，如果没有文件，则默认为None

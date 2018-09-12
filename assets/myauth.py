@@ -62,7 +62,8 @@ class UserProfile(AbstractBaseUser,PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
-    role = models.ForeignKey(RoleList, null=True, blank=True)
+    # on_delete=models.SET_NULL,只有当null=True的时候 ，被删除的时候将内容置空
+    role = models.ForeignKey(RoleList, null=True, blank=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=32)
     token = models.CharField(u'token', max_length=128,default=None,blank=True,null=True)
     department = models.CharField(u'部门', max_length=32,default=None,blank=True,null=True)

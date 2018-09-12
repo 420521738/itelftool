@@ -33,6 +33,7 @@ def brokenrecord_list(request):
 
 # 添加故障记录功能
 @login_required
+@permission_verify()
 def brokenrecord_add(request):
     if request.method == 'POST':
         form = BrokenRrecordForm(request.POST)
@@ -51,6 +52,7 @@ def brokenrecord_add(request):
 
 # 编辑故障记录功能
 @login_required
+@permission_verify()
 def brokenrecord_edit(request, brokenrecord_id):
     brokenrecord = BrokenRrecord.objects.get(id=brokenrecord_id)
     if request.method == 'POST':
@@ -71,6 +73,7 @@ def brokenrecord_edit(request, brokenrecord_id):
 
 # 删除故障记录功能
 @login_required
+@permission_verify()
 def brokenrecord_del(request):
     brokenrecord_id = request.GET.get('id', '')
     if brokenrecord_id:
@@ -86,6 +89,7 @@ def brokenrecord_del(request):
 
 # 故障记录详情功能
 @login_required
+@permission_verify()
 def brokenrecord_detail(request, brokenrecord_id):
     brokenrecord = BrokenRrecord.objects.get(id=brokenrecord_id)
     results = {
@@ -96,6 +100,7 @@ def brokenrecord_detail(request, brokenrecord_id):
 
 # 导出故障记录功能
 @login_required
+@permission_verify()
 def brokenrecord_export(request):
     export = request.GET.get("export", '')
     brokenrecord_id_list = request.GET.getlist("id", '')

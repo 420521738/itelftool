@@ -14,10 +14,12 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from assets.forms import IdcForm, CabinetForm, GroupForm
 from assets.models import IDC,Cabinet, HostGroup
+from accounts.permission import permission_verify
 
 
 
 @login_required
+@permission_verify()
 def index(request):
     return render(request, 'assets/dashboard.html')
 
@@ -89,6 +91,7 @@ def acquire_asset_id_test(request):
 
 # 资产列表页，资产列表展示
 @login_required
+@permission_verify()
 def asset_list(request):
     # 获取资产，tables的table_filter函数就是用来找出过滤条件，筛选出对应资产
     asset_obj_list = tables.table_filter(request, admin.AssetAdmin, models.Asset)
@@ -120,6 +123,7 @@ def asset_list(request):
 
 
 @login_required
+@permission_verify()
 def get_asset_list(request):
     asset_dic = asset_handle.fetch_asset_list()
     print(asset_dic)
@@ -128,6 +132,7 @@ def get_asset_list(request):
 
 
 @login_required
+@permission_verify()
 def asset_category(request):
     category_type = request.GET.get("category_type")
     if not category_type: category_type = 'server'
@@ -140,6 +145,7 @@ def asset_category(request):
 
 
 @login_required
+@permission_verify()
 def asset_event_logs(request, asset_id):
     if request.method == "GET":
         log_list = asset_handle.fetch_asset_event_logs(asset_id)
@@ -147,6 +153,7 @@ def asset_event_logs(request, asset_id):
 
 
 @login_required
+@permission_verify()
 def asset_detail(request, asset_id):
     if request.method == "GET":
         try:
@@ -169,6 +176,7 @@ def get_dashboard_data(request):
 
 
 @login_required
+@permission_verify()
 def event_center(request):
     '''事件中心'''
     
@@ -200,12 +208,14 @@ def event_center(request):
     
 
 @login_required()
+@permission_verify()
 def idc(request):
     idc_info = models.IDC.objects.all()
     return render(request, 'assets/idc.html', locals())
 
 
 @login_required()
+@permission_verify()
 def idc_add(request):
     if request.method == "POST":
         idc_form = IdcForm(request.POST)
@@ -223,6 +233,7 @@ def idc_add(request):
         return render(request, "assets/idc_base.html", locals())
 
 @login_required()
+@permission_verify()
 def idc_del(request):
     idc_id = request.GET.get('id', '')
     if idc_id:
@@ -236,6 +247,7 @@ def idc_del(request):
     return render(request, "assets/idc.html", locals())
 
 @login_required()
+@permission_verify()
 def idc_edit(request, idc_id):
     project = IDC.objects.get(id=idc_id)
     if request.method == 'POST':
@@ -256,6 +268,7 @@ def idc_edit(request, idc_id):
     return render(request, 'assets/idc_base.html', results)
 
 @login_required()
+@permission_verify()
 def cabinet_list(request, cabinet_id):
     cab = IDC.objects.get(id=cabinet_id)
     cabinets = cab.cabinet_set.all()
@@ -266,6 +279,7 @@ def cabinet_list(request, cabinet_id):
 
 
 @login_required()
+@permission_verify()
 def cabinet(request):
     allcabinet = Cabinet.objects.all()
     context = {
@@ -275,6 +289,7 @@ def cabinet(request):
 
 
 @login_required()
+@permission_verify()
 def cabinet_add(request):
     if request.method == "POST":
         cabinet_form = CabinetForm(request.POST)
@@ -293,6 +308,7 @@ def cabinet_add(request):
 
 
 @login_required()
+@permission_verify()
 def cabinet_del(request):
     cabinet_id = request.GET.get('id', '')
     if cabinet_id:
@@ -308,6 +324,7 @@ def cabinet_del(request):
 
 
 @login_required()
+@permission_verify()
 def cabinet_edit(request, cabinet_id):
     project = Cabinet.objects.get(id=cabinet_id)
     if request.method == 'POST':
@@ -328,6 +345,7 @@ def cabinet_edit(request, cabinet_id):
 
 
 @login_required
+@permission_verify()
 def server_list(request, cabinet_id):
     cab = Cabinet.objects.get(id=cabinet_id)
     servers = cab.serverList.all()
@@ -339,6 +357,7 @@ def server_list(request, cabinet_id):
 
 
 @login_required
+@permission_verify()
 def group(request):
     allgroup = HostGroup.objects.all()
     context = {
@@ -348,6 +367,7 @@ def group(request):
 
 
 @login_required
+@permission_verify()
 def group_add(request):
     if request.method == "POST":
         group_form = GroupForm(request.POST)
@@ -366,6 +386,7 @@ def group_add(request):
 
 
 @login_required
+@permission_verify()
 def group_edit(request, group_id):
     project = HostGroup.objects.get(id=group_id)
     if request.method == 'POST':
@@ -386,6 +407,7 @@ def group_edit(request, group_id):
 
 
 @login_required
+@permission_verify()
 def group_del(request):
     group_id = request.GET.get('id', '')
     if group_id:
@@ -400,6 +422,7 @@ def group_del(request):
 
 
 @login_required
+@permission_verify()
 def groupserver_list(request, group_id):
     grp = HostGroup.objects.get(id=group_id)
     servers = grp.serverList.all()

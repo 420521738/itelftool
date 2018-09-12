@@ -10,10 +10,12 @@ import datetime
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from accounts.forms import AddUserForm, EditUserForm,EditSuperUserForm, ChangePasswordForm
+from accounts.permission import permission_verify
 
 
 # 前端个人中心功能
 @login_required
+@permission_verify()
 def userinfo(request):
     username = request.user
     userInfo = UserProfile.objects.get(email=username)
@@ -23,6 +25,7 @@ def userinfo(request):
 
 # 在线用户展示功能
 @login_required()
+@permission_verify()
 def user_online_list(request):
     # This 在线用户统计相关 开始
     # This获取没有过期的session
@@ -43,6 +46,7 @@ def user_online_list(request):
 
 # 用户列表展示功能
 @login_required()
+@permission_verify()
 def user_list(request):
     all_user = get_user_model().objects.all()
     results = {
@@ -53,6 +57,7 @@ def user_list(request):
 
 # 增加用户功能
 @login_required
+@permission_verify()
 def user_add(request):
     if request.method == 'POST':
         form = AddUserForm(request.POST)
@@ -72,6 +77,7 @@ def user_add(request):
 
 # 用户删除功能
 @login_required
+@permission_verify()
 def user_del(request, ids):
     if ids:
         get_user_model().objects.filter(id=ids).delete()
@@ -80,6 +86,7 @@ def user_del(request, ids):
 
 # 用户编辑功能
 @login_required
+@permission_verify()
 def user_edit(request, ids):
     user = get_user_model().objects.get(id=ids)
     if request.method == 'POST':
@@ -96,6 +103,7 @@ def user_edit(request, ids):
 
 # 用户编辑里的用户密码重置功能
 @login_required
+@permission_verify()
 def reset_password(request, ids):
     user = get_user_model().objects.get(id=ids)
     newpassword = get_user_model().objects.make_random_password(length=10, allowed_chars='abcdefghjklmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXY0123456789,.?!@#$%^&*')
@@ -111,6 +119,7 @@ def reset_password(request, ids):
 
 # 密码修改功能
 @login_required
+@permission_verify()
 def change_password(request):
     if request.method == 'POST':
         form = ChangePasswordForm(user=request.user, data=request.POST)
@@ -128,6 +137,7 @@ def change_password(request):
 
 # 管理员设定列表功能
 @login_required()
+@permission_verify()
 def superuser_list(request):
     all_superuser = get_user_model().objects.all()
     results = {
@@ -138,6 +148,7 @@ def superuser_list(request):
 
 # 管理员设定编辑功能
 @login_required
+@permission_verify()
 def superuser_edit(request, ids):
     user = get_user_model().objects.get(id=ids)
     username = user.name
