@@ -44,4 +44,7 @@ encoding//setup/shell.py=utf-8
 encoding//setup/tasks.py=utf-8
 encoding//setup/urls.py=utf-8
 encoding//setup/views.py=utf-8
+encoding//webshell/consumers.py=utf-8
+encoding//webshell/urls.py=utf-8
+encoding//webshell/views.py=utf-8
 encoding/needtodo.txt=UTF-8

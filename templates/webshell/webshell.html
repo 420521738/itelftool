@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IT精灵工具webshell</title>
+
+    <link href="/static/plugins/awesomeStyle/awesome.css" rel="stylesheet">
+
+    <link href="/static/plugins/xterm/dist/xterm.css" rel="stylesheet" type="text/css"/>
+    <style>
+        body {
+            padding-bottom: 30px;
+        }
+
+        .terminal {
+            border: #000 solid 5px;
+            font-family: cursive;
+        {#                font-family: Arial, Helvetica, Tahoma ,"Monaco", "DejaVu Sans Mono", "Liberation Mono", sans-serif;#}{#                font-family: Tahoma, Helvetica, Arial, sans-serif;#}{#                font-family: "\5B8B\4F53","","Monaco", "DejaVu Sans Mono", "Liberation Mono", "Microsoft YaHei", monospace;#} font-size: 15px;
+        {#                color: #f0f0f0;#} background: #000;
+        {#                width: 893px;#}{#                height: 550px;#} box-shadow: rgba(0, 0, 0, 0.8) 2px 2px 20px;
+        }
+
+        .reverse-video {
+            color: #000;
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+	<input id="info" type='text' value="{{serverinfo}}" hidden="hidden">
+	<div id="terms"></div>
+</body>
+
+<script src="/static/plugins/xterm/dist/xterm.js"></script>
+<script>
+    var socket = new WebSocket('ws://' + window.location.host + '/ws/');
+
+    socket.onopen = function () {
+    	  var info = document.getElementById("info").value;
+		  socket.send(info);
+        var term = new Terminal();
+        term.open(document.getElementById('terms'));
+        term.write('欢迎使用IT精灵工具webshell!  ')
+        
+        term.on('data', function (data) {
+            //console.log(data);
+            //var lendata = data.length
+            //console.log(lendata)
+            //if(lendata=1){
+            //term.write(data)
+            //}else{
+            socket.send(data);
+            //}
+
+        });
+
+        socket.onmessage = function (msg) {
+            //console.log(msg);
+            //console.log(msg.data);
+            term.write(msg.data);
+        };
+        
+        socket.onerror = function (e) {
+            console.log(e);
+        };
+
+        socket.onclose = function (e) {
+            console.log(e);
+            term.destroy();
+        };
+    };
+
+</script>
+
+</html>
