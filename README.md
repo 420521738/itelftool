@@ -5,7 +5,7 @@ itelftool IT精灵工具，二次开发cmdb.
 <br/><br/>
 
 IT精灵工具首页简洁面板：<br/><br/>
-![image](https://raw.githubusercontent.com/wiki/420521738/itelftool/%E4%BB%AA%E8%A1%A8%E7%9B%98.png)
+![image](https://github.com/420521738/itelftool/blob/master/screenshots/%E4%BB%AA%E8%A1%A8%E7%9B%98.png)
 <br/><br/>
 
 站点导航以及站点管理面板：<br/><br/>
