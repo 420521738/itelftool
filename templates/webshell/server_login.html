@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+
+{% block header-css %}
+	<link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
+{% endblock %}
+
+{% block page-content-title %}
+帐号密码登录服务器
+{% endblock %}
+
+{% block page-nav-tab %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">帐号密码登录服务器</li>
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+
+  <div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+        </div>
+        <div class="box-body">
+      <form target="_blank" action="{% url 'shell_terminal_server_login' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-success" style="width: 60pt" value="登录">&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="reset" class="btn btn-danger" style="width: 60pt" value="清空">&nbsp;&nbsp;&nbsp;&nbsp;
+          </form>
+        </div>
+      </div>
+      <!-- /.box -->
+    </section>
+
+  </div>
+
+{% endblock %}
+
+{% block  bottom-js %}
+	<script src="/static/layer/layer.js"></script>
+{% endblock %}

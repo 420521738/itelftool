@@ -27,6 +27,7 @@
     </style>
 </head>
 <body>
+	<!-- 这个隐藏类型的input是为了在打开终端terminal的时候，往终端里传对应服务器的帐号密码端口ip地址，这样就可以自动登录了 -->
 	<input id="info" type='text' value="{{serverinfo}}" hidden="hidden">
 	<div id="terms"></div>
 </body>
@@ -35,13 +36,18 @@
 <script>
     var socket = new WebSocket('ws://' + window.location.host + '/ws/');
 
+	//打开新的终端页面
     socket.onopen = function () {
+    	  //这里的info是获取body里id为info的信息，也就是第一次传进来的对应服务器的帐号密码端口ip地址
     	  var info = document.getElementById("info").value;
+    	  //往终端传输对应服务器的帐号密码端口ip地址，实现自动登录
 		  socket.send(info);
         var term = new Terminal();
         term.open(document.getElementById('terms'));
+          //页面欢迎语
         term.write('欢迎使用IT精灵工具webshell!  ')
         
+         //实时监控屏幕输入并传回后台进行比对，一个个字符都传
         term.on('data', function (data) {
             //console.log(data);
             //var lendata = data.length
@@ -53,17 +59,20 @@
             //}
 
         });
-
+        
+		 //从后台传回来的数据实时展示在屏幕terminal上
         socket.onmessage = function (msg) {
             //console.log(msg);
             //console.log(msg.data);
             term.write(msg.data);
         };
         
+         //如果出现错误，就在客户端的console上打印错误消息
         socket.onerror = function (e) {
             console.log(e);
         };
-
+	
+		 //关闭terminal
         socket.onclose = function (e) {
             console.log(e);
             term.destroy();

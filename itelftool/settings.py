@@ -45,6 +45,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    # This 官方说channels这个app要放在最上面第一行，不然可能会与其他的app有冲突
     'channels',
     'webshell',
     'django.contrib.admin',
@@ -190,9 +191,11 @@ CELERY_TASK_SERIALIZER = 'json'
 
 
 
-# Channels
+# Django Channels
+# WebShell功能相关
+# 这里指定的是websocket请求的入口指定到itelftool下的routing.application函数
 ASGI_APPLICATION = 'itelftool.routing.application'
-
+# Channel层使用redis来存储chennel
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
