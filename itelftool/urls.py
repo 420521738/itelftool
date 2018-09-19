@@ -46,6 +46,8 @@ urlpatterns = [
     url(r'^brokenrecord/', include('broken_record.urls')),
    # Webshell入口
    url(r'^webshell/', include('webshell.urls')),
+   # This 域名管理入口
+   url(r'^domain/', include('domain.urls')),
     # 首页
     # name，简单来说，name 可以用于在 templates，models，views ..... 中得到对应的网址，相当于给网址取了个名字，只要这个名字不变，网址变了也能通过名字获取到。
     url(r'^$',views.index,name="index"),
