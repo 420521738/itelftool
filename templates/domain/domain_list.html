@@ -59,13 +59,20 @@
                                     <td>{{ domain.name }} </td>
                                     <td>{{ domain.ctime|date:"Y-m-d" }} </td>
                                     <td>{{ domain.etime|date:"Y-m-d" }} </td>
-                                    <td>{{ domain.ip }} </td>
+                                    <td>
+                                    	{% if domain.ip == '0.0.0.0' %}
+                                    				暂无信息
+                                    	{% else %}
+                                    		{{ domain.ip }}
+                                    	{% endif %}
+                                    </td>
                                     <td>{{ domain.ip_source }} </td>
                                     <td>{{ domain.domain_record_num }} </td>
                                     <td>{{ domain.domain_nature }} </td>
                                     <td>{{ domain.domain_company }} </td>
                                     <td>
-                                        <a href="{% url "product_del"%}?id={{ product.id }}" onclick="return confirm('确认删除产品线吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                        <a value="{% url 'domain_del' domain.id %}" class="btn btn-sm btn-danger domain_del">删除</a>
+                                        <a value="{% url 'domain_update' domain.id %}" class="btn btn-sm btn-success domain_update">更新</a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -93,36 +100,40 @@
 </script>
 
 <script>
-    $('#product_del').click(function () {
-        var product_id_all = getIDall();
-        if (product_id_all == ''){
-            alert("请至少选择一行!");
-            return false;
-        }
-        if (confirm("确定删除?")) {
-            $.ajax({
-                type: "post",
-                data: {product_id_all: product_id_all,csrfmiddlewaretoken: '{{ csrf_token }}'},
-                url: "{% url 'product_del' %}",
-                success: function () {
-                    parent.location.reload();
-                }
-            });
-        }
+    $(document).ready(function(){
+        $('.domain_del').click(function(){
+            var row = $(this).closest('tr');
+            if (confirm("确定删除?")) {
+                $.get(
+                        $(this).attr('value'),
+                        {},
+                        function (data) {
+                            row.remove()
+                        }
+                )
+            }
+        });
     });
 </script>
 
 <script>
-function popWin(product_id){
-  layer.open({
-      type: 2,
-      title: '项目列表',
-      area: ['700px', '500px'],
-      shadeClose: true, //点击遮罩关闭
-      content: ['/appconf/product/project_list/' + product_id]
-  });
-}
+    $(document).ready(function(){
+        $('.domain_update').click(function(){
+            var row = $(this).closest('tr');
+            if (confirm("确定从站长之家同步域名信息到数据库中?")) {
+                $.get(
+                        $(this).attr('value'),
+                        {},
+                        function (data) {
+                            history.go(0)
+                        }
+                )
+            }
+        });
+    });
 </script>
+
+
 {% endblock %}
 
 {% block  bottom-js %}

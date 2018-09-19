@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block header-css %}
+<link rel="stylesheet" type="text/css" href="/static/plugins/datatables/datatables.min.css"/>
+{% endblock %}
+
+{% load custom_tag %}
+
+{% block page-content-title %}
+{{ name }} 域名信息查询结果
+{% endblock %}
+
+{% block page-nav-tab %}
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">实时查询 {{ name }} 域名信息结果</li>
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+
+<div class="tab-base">
+
+    <!--Nav Tabs-->
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a data-toggle="tab" href="#tab-asset-info" aria-expanded="true">查询结果</a>
+        </li>
+    </ul>
+
+    <!--Tabs Content-->
+    <div class="tab-content">
+        <div id="tab-asset-info" class="tab-pane fade active in">
+
+           <table class=" asset-info-table">
+               <tr>
+                   <td class="col-md-2 bold">域</td>
+                   <td class="col-md-4">: {{ comment }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">域名</td>
+                   <td class="col-md-4">: {{ name }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+
+               <tr>
+                   <td class="col-md-2 bold">域名注册时间</td>
+                   <td class="col-md-4">: {{ ctime }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">域名过期时间</td>
+                   <td class="col-md-4">: {{ etime }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">域名解析IP</td>
+                   <td class="col-md-4">: {{ ip }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+
+               <tr>
+                   <td class="col-md-2 bold">域名解析IP来源</td>
+                   <td class="col-md-4">: {{ ip_source }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">域名备案号</td>
+                   <td class="col-md-4">: {{ domain_record_num }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">域名性质</td>
+                   <td class="col-md-4">: {{ domain_nature }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+               <tr>
+                   <td class="col-md-2 bold">域名所属公司</td>
+                   <td class="col-md-4">: {{ domain_company }}</td>
+                   <td class="col-md-2 bold"></td>
+                   <td class="col-md-4"></td>
+               </tr>
+
+           </table>
+        </div>
+       
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+
+{% block bottom-js %}
+<script type="text/javascript" src="/static/plugins/datatables/datatables.min.js"></script>
+{% endblock %}
