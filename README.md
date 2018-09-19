@@ -40,3 +40,10 @@ WebShell登录管理：<br/><br/>
 <br/>手机WebShell界面：<br/>
 ![image](https://github.com/420521738/itelftool/blob/master/screenshots/PhoneWebshell.png)
 <br/><br/>
+
+域名管理面板：<br/><br/>
+![image](https://github.com/420521738/itelftool/blob/master/screenshots/DomainManagement.png)
+<br/><br/>
+域名实时查询功能展示：<br/><br/>
+![image](https://github.com/420521738/itelftool/blob/master/screenshots/DomainSearchResult.png)
+<br/><br/>
