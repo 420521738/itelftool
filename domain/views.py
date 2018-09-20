@@ -10,7 +10,7 @@ from domain.models import DomainRrecord
 from domain.domain import get_domain_info
 
 
-# 用户列表展示功能
+# 域名列表展示功能
 @login_required()
 @permission_verify()
 def domain_list(request):
@@ -21,12 +21,14 @@ def domain_list(request):
     return render(request, 'domain/domain_list.html', results)
 
 
+# 添加域名，自动爬取站长之家数据，并写入数据库的功能
 @login_required
 @permission_verify()
 def domain_add(request):
     if request.method == 'POST':
         comment = request.POST.get('comment')
         name = request.POST.get('name')
+        # get_domain_info是爬取域名数据的接口，返回的是一个字典，这个字典包含了域名的相关信息
         domain_info = get_domain_info(comment,name)[0]
         DomainRrecord.objects.create(comment=domain_info['comment'],name=domain_info['name'],ctime=domain_info['ctime'],etime=domain_info['etime'],ip=domain_info['ip'],ip_source=domain_info['ip_source'],domain_record_num=domain_info['domain_record_num'],domain_nature=domain_info['domain_nature'],domain_company=domain_info['domain_company'])
         return HttpResponseRedirect(reverse('domain_list'))
@@ -38,6 +40,7 @@ def domain_add(request):
     return render(request, 'domain/domain_add.html', results)
 
 
+# 域名信息删除的功能
 @login_required
 @permission_verify()
 def domain_del(request, id):
@@ -45,7 +48,7 @@ def domain_del(request, id):
     return HttpResponseRedirect(reverse('domain_list'))
 
 
-
+# 域名信息更新的功能，因为爬取回来的域名信息写入到了我们自己的数据库，不能保持实时更新，所以需要增加这个更新的功能
 @login_required
 @permission_verify()
 def domain_update(request, id):
@@ -57,13 +60,14 @@ def domain_update(request, id):
     return HttpResponseRedirect(reverse('domain_list'))
 
 
-
+# 域名信息实时查询的输入界面功能
 @login_required
 @permission_verify()
 def domain_search_input(request):
     return render(request, 'domain/domain_search.html')
 
 
+# 域名信息实时查询处理，并返回结果到页面的功能
 @login_required
 @permission_verify()
 def domain_search_result(request):

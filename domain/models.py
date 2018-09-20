@@ -5,7 +5,9 @@ from __future__ import unicode_literals
 from django.db import models
 
 
+# 建域名信息表，用于保存爬取回来的域名信息
 class DomainRrecord(models.Model):
+    # comment 域我设置了唯一性，所以不能添加相同的域
     comment = models.CharField(u"域", max_length=50, unique=True, null=False, blank=False)
     name = models.CharField(u"域名地址", max_length=50, null=False, blank=False)
     ctime = models.DateTimeField(u'域名创建时间', null=False, blank=False)
