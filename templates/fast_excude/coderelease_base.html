@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load custom_tag %}
+
 {% block header-css %}
 	<script src="/static/js/jquery.bootstrap-duallistbox.js"></script>
 	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap-duallistbox.css">
@@ -7,20 +8,21 @@
 {% endblock %}
 
 {% block page-content-title %}
-项目管理
+添加或编辑上线项目
 {% endblock %}
 
 {% block page-nav-tab %}
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <ol class="breadcrumb">
     <li><a href="/">Home</a></li>
-    <li class="active">项目管理</li>
+    <li class="active">上线项目编辑</li>
 </ol>
 {% endblock %}
 
 
 
 {% block page-content %}
+
   <div>
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -36,14 +38,15 @@
         </div>
         <div class="box-body">
         {% if project_id %}
-            <form action="{% url 'project_edit' project_id %}" method="post">
+            <form action="{% url 'coderelease_edit' project_id %}" method="post">
         {% else %}
-            <form action="{% url 'project_add' %}" method="post">
+            <form action="{% url 'coderelease_add' %}" method="post">
         {% endif %}
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'project_list' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>
+        <p></p>
+        <input type="submit" class="btn btn-primary" style="width: 60pt" value="保存">&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{% url 'coderelease' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>
           </form>
         </div>
         <!-- /.box-body -->
@@ -64,6 +67,8 @@
               moveOnSelect: false
         });
     </script>
+
+
 {% endblock %}
 
 {% block  bottom-js %}

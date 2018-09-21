@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'broken_record',
     'accounts',
     'domain',
+    'fast_excute',
 ]
 
 MIDDLEWARE = [

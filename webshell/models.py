@@ -30,4 +30,4 @@ class webshell(models.Model):
     memo = models.TextField(u'备注', null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.ipaddr
