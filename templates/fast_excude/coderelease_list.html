@@ -170,6 +170,7 @@ function taskstop(args) {
         var pb = document.getElementById("progress_bar_"+args);
         pb.style.display = "none";
         $.get("/fastexcute/coderelease/taskstop/"+args+"/",function(data,status){
+        	alert(data)
         });
     }
 }

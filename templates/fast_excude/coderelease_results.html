@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>执行日志查看</title>
+    <script src="/static/js/jquery-2.1.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/dist/js/app.min.js"></script>
+    <script src="/static/layer/layer.js"></script>
+    <script src="/static/js/base.js"></script>
+    <script src="/static/plugins/datatables/DataTables-1.10.9/js/jquery.dataTables.min.js"></script>
+    <script src="/static/plugins/datatables/DataTables-1.10.9/js/dataTables.bootstrap.min.js"></script>
+    
+	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/static/ionicons/css/ionicons.min.css">
+	<link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
+	<link rel="stylesheet" href="/static/dist/css/skins/skin-yellow-light.css">
+	<link rel="stylesheet" href="/static/css/loading.css">
+</head>
+<body>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+
+        <div class="box-body">
+        <div id="log_ret">
+        </div>
+        <div id="loading">
+            <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+            <span class="sr-only">执行日志加载中...</span>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <i class="fa fa-info-circle"></i>
+        </div>
+        <!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
+</div>
+    </section>
+
+  </div>
+</body>
+<script>
+    var v1 = window.setInterval("status()",2000);
+
+    function status() {
+            $.get("/fastexcute/coderelease/log2/{{ project_id }}/",function(data){
+                document.getElementById("log_ret").innerHTML = data;
+                //滚动条自动向下滑动
+                $(function(){
+                      var h = $(document).height()-$(window).height();
+                      $(document).scrollTop(h);
+                });
+            });
+
+            $.get("/fastexcute/coderelease/status/{{ project_id }}/",function(data){
+                var ret = JSON.parse(data);
+                if (ret.status == false) {
+                    // stop the v1 timer 停用计时器以减少查询
+                    window.clearInterval(v1);
+                    document.getElementById("loading").innerHTML = "<hr>";
+
+                }
+
+            });
+    }
+</script>
+</html>

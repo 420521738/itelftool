@@ -15,5 +15,6 @@ urlpatterns = [
     url(r'^coderelease/deploy/(?P<project_id>\d+)/$', views.coderelease_deploy, name='coderelease_deploy'),
     url(r'^coderelease/taskstop/(?P<project_id>\d+)/$', views.coderelease__stop, name='coderelease__stop'),
     url(r'^coderelease/log/(?P<project_id>\d+)/$', views.coderelease_log, name='coderelease_log'),
+    url(r'^coderelease/log2/(?P<project_id>\d+)/$', views.coderelease_log2, name='coderelease_log2'),
     # 项目上线 结束
 ]

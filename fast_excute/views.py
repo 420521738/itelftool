@@ -92,8 +92,6 @@ def coderelease_del(request):
 
 
 
-
-
 @login_required
 @permission_verify()
 def coderelease_deploy(request, project_id):
@@ -115,11 +113,40 @@ def coderelease_deploy(request, project_id):
 @login_required()
 @permission_verify()
 def coderelease__stop(request, project_id):
-    pass
+    project = Fastexcude.objects.get(id=project_id)
+    project.bar_data = 0
+    project.status = False
+    project.save()
+    return HttpResponse("上线任务终止成功！")
 
 
 
 @login_required()
 @permission_verify()
 def coderelease_log(request, project_id):
-    pass
+    project = Fastexcude.objects.get(id=project_id)
+    results = {
+        'project': project,
+        'project_id': project_id,
+        'request': request,
+    }
+    return render(request, "fast_excude/coderelease_results.html", results)
+
+
+@login_required()
+@permission_verify()
+def coderelease_log2(request, project_id):
+    ret = []
+    project = Fastexcude.objects.get(id=project_id)
+    name = project.name
+    try:
+        job_workspace = "/var/opt/itelftool/fastexcute/workspace/{0}/".format(name)
+        log_file = job_workspace + 'logs/deploy.log'
+        with open(log_file, 'r') as f:
+            line = f.readlines()
+        for l in line:
+            a = l + "<br>"
+            ret.append(a)
+    except IOError:
+        ret = "正在读取日志，请稍等...<br>"
+    return HttpResponse(ret)
