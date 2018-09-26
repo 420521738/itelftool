@@ -8,6 +8,7 @@ from broken_record.forms import BrokenRrecordForm
 from django.core.urlresolvers import reverse
 import csv
 import datetime
+from django.utils import timezone
 from accounts.permission import permission_verify
 
 # 导出excel，csv所需要转换中文字符
@@ -128,5 +129,5 @@ def brokenrecord_export(request):
         writer.writerow([str2gb(broken_record.name), str2gb(broken_record.description), str2gb(broken_record.broken_department), str2gb(broken_record.maintenance),
                          str2gb(broken_record.developer), str2gb(broken_record.broken_type), str2gb(broken_record.severity_type),str2gb(broken_record.broken_status_type),
                          str2gb(broken_record.product), str2gb(broken_record.project), str2gb(broken_record.process_description),str2gb(broken_record.precaution),
-                         broken_record.occur_time, broken_record.end_time, str2gb(broken_record.business_impact_time), broken_record.update_date])
+                         timezone.localtime(broken_record.occur_time).strftime("%Y-%m-%d %H:%M:%S"), timezone.localtime(broken_record.end_time).strftime("%Y-%m-%d %H:%M:%S"), str2gb(broken_record.business_impact_time), timezone.localtime(broken_record.update_date).strftime("%Y-%m-%d %H:%M:%S")])
     return response
