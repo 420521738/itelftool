@@ -17,4 +17,9 @@ urlpatterns = [
     url(r'^coderelease/log/(?P<project_id>\d+)/$', views.coderelease_log, name='coderelease_log'),
     url(r'^coderelease/log2/(?P<project_id>\d+)/$', views.coderelease_log2, name='coderelease_log2'),
     # 项目上线 结束
+    
+    # 执行记录 开始
+    url(r'^coderelease/record/$', views.coderelease_record, name='coderelease_record'),
+    url(r'^coderelease/record/export/$', views.coderelease_record_export, name='coderelease_record_export'),
+    # 执行记录 结束
 ]

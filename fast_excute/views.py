@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from accounts.permission import permission_verify
 from fast_excute.models import Fastexcude
+from fast_excute.models import FastexcudeRecord
 from lib.tools import pages
 from fast_excute.forms import FastexcudeFrom
 from fast_excute.tasks import deploy
@@ -13,6 +14,18 @@ import json
 import time
 import os
 import datetime
+from django.utils import timezone
+import csv
+
+
+# 导出excel，csv所需要转换中文字符
+def str2gb(args):
+    """
+    :参数 args:
+    :返回: GB2312编码
+    """
+    #return str(args).encode('gb2312')
+    return str(args)
 
 
 @login_required()
@@ -95,18 +108,21 @@ def coderelease_del(request):
 @login_required
 @permission_verify()
 def coderelease_deploy(request, project_id):
+    excudeuser = request.user.name
     project = Fastexcude.objects.get(id=project_id)
     project.bar_data = 10
     name = project.name
     serverip = project.server.ipaddr
     project.status = True
-    project.excude_time = datetime.datetime.now()
+    #project.excude_time = datetime.datetime.now()
+    excudetime = datetime.datetime.now()
+    project.excude_time = excudetime
     project.save()
     time.sleep(2)
     os.system("mkdir -p /var/opt/itelftool/fastexcute/workspace/{0}/logs".format(name))
     project.bar_data = 15
     project.save()
-    deploy(name, serverip, project_id)
+    deploy(name, serverip, project_id, excudetime, excudeuser)
     return HttpResponse("ok")
 
 
@@ -114,9 +130,18 @@ def coderelease_deploy(request, project_id):
 @permission_verify()
 def coderelease__stop(request, project_id):
     project = Fastexcude.objects.get(id=project_id)
-    project.bar_data = 0
+    
+    # This 执行信息记录
+    excudeuser = request.user.name
+    excudetime = datetime.datetime.now()
+    name = project.name
+    serverip = project.server.ipaddr
+    FastexcudeRecord.objects.create(excudename=name, excudeuser=excudeuser, excudeserver=serverip, excude_time=excudetime, excudestatus=False)
+    
+    project.bar_data = 99
     project.status = False
     project.save()
+    
     return HttpResponse("上线任务终止成功！")
 
 
@@ -150,3 +175,48 @@ def coderelease_log2(request, project_id):
     except IOError:
         ret = "正在读取日志，请稍等...<br>"
     return HttpResponse(ret)
+
+
+
+@login_required
+@permission_verify()
+def coderelease_record(request):
+    all_records = FastexcudeRecord.objects.all()
+    results = {
+        'all_records':  all_records,
+    }
+    return render(request, 'fast_excude/coderelease_records.html', results)
+
+
+
+@login_required
+@permission_verify()
+def coderelease_record_export(request):
+    export = request.GET.get("export", '')
+    coderelease_record_id_list = request.GET.getlist("id", '')
+    if export == "part":
+        if coderelease_record_id_list:
+            coderelease_record_find = []
+            for coderelease_record_id in coderelease_record_id_list:
+                coderelease_record_item = FastexcudeRecord.objects.get(id=coderelease_record_id)
+                if coderelease_record_item:
+                    coderelease_record_find.append(coderelease_record_item)
+
+    if export == "all":
+        coderelease_record_find = FastexcudeRecord.objects.all()
+
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')
+    file_name = 'FastExcudeRrecord_' + now + '.csv'
+    response['Content-Disposition'] = "attachment; filename="+file_name
+    writer = csv.writer(response, dialect='excel')
+    writer.writerow([str2gb(u'执行项目名'), str2gb(u'执行结果'), str2gb(u'执行人'), str2gb(u'执行服务器'), str2gb(u'执行时间'), ])
+    for coderelease_record in coderelease_record_find:
+        if coderelease_record.excudestatus:
+            excudestatus = '成功'
+        else:
+            excudestatus = '失败'
+        writer.writerow([str2gb(coderelease_record.excudename), str2gb(excudestatus), str2gb(coderelease_record.excudeuser), coderelease_record.excudeserver, timezone.localtime(coderelease_record.excude_time).strftime("%Y-%m-%d %H:%M:%S") ])
+    return response
+
+

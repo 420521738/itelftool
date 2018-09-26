@@ -19,7 +19,7 @@ class Fastexcude(models.Model):
             blank=False,
             verbose_name=u"执行服务器"
     )
-    shell = models.CharField(max_length=255, verbose_name=u"命令", null=False, blank=False)
+    shell = models.CharField(max_length=255, verbose_name=u"命令（如有多个命令，一行写一个命令，按序执行）", null=False, blank=False)
     excude_time = models.DateTimeField(u'最新执行时间', null=True, blank=True)
     update_date = models.DateTimeField(u'配置更新时间', blank=True, auto_now=True)
     
@@ -27,5 +27,17 @@ class Fastexcude(models.Model):
     def __str__(self):
         return self.name
     
+
+
+class FastexcudeRecord(models.Model):
+    excudename = models.CharField(u"执行项", max_length=50, null=False, blank=False)
+    excudeuser = models.CharField(u"执行人", max_length=50, null=False, blank=False)
+    excudeserver = models.GenericIPAddressField(u'执行服务器', blank=False, null=False)
+    excude_time = models.DateTimeField(u'执行时间', null=True, blank=True)
+    excudestatus = models.BooleanField(verbose_name=u"执行结果", default=False)
+    
+    
+    def __str__(self):
+        return self.excudename
 
 

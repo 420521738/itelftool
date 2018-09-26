@@ -57,7 +57,7 @@
                             </th>
                             <th>执行名</th>
                             <th>执行状态</th>
-                            <th>Progress</th>
+                            <th>执行进度</th>
                             <th>最新执行时间</th>
                             <th>操作</th>
                         </tr>
@@ -68,7 +68,12 @@
                                     <td><input type="checkbox" id="id" class="i-checks" value="{{ project.id }}" name="id" /></td>
                                     <td>{{ project.name }} </td>
                                     <td>
-                                            <i class="fa fa-circle" aria-hidden="true" style="color:#2D93CA;"></i>
+                                        <!-- <i class="fa fa-circle" aria-hidden="true" style="color:#2D93CA;"></i> -->
+                                        {% if project.status == False %}
+                                        		<div><h5 style="color:black" id="delopy_status_{{ project.id }}"></h5></div>
+                                        {% else %}
+                                          	<div><h5 style="color:black" id="delopy_status_{{ project.id }}"></h5></div>
+                                        {% endif %}
                                     </td>
                                     <td>
                                     {% if project.status == False %}
@@ -84,7 +89,7 @@
                                     </td>
                                     <td>{{ project.excude_time |date:"Y-m-d H:i:s" }} </td>
                                     <td>
-                                        <a href="#"><li onclick="return deploy(this.value);" class="btn btn-sm btn-default" value="{{ project.id }}">部署</li></a>
+                                        <a href="#"><li onclick="return deploy(this.value);" class="btn btn-sm btn-default" value="{{ project.id }}">执行</li></a>
                                         <a href="#"><li onclick="return taskstop(this.value);" class="btn btn-sm btn-default" value="{{ project.id }}">终止</li></a>
                                         <a href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return tanchu(this.value)" value="{{ project.id  }}">日志</li></a>
                                         <a href="{% url "coderelease_edit" project.id %}"><span class="btn btn-sm btn-default">编辑</span></a>
@@ -185,6 +190,26 @@ function taskstop(args) {
                 var width = parseInt(ret.bar_data);
                 var progress_bar = document.getElementById("pb_{{ project.id }}");
                 progress_bar.style.width = width+"px";
+                
+                var status = ret.status;
+                var delopystatus = document.getElementById("delopy_status_{{ project.id }}");
+                if (status == false && width == 130) {
+		            	delopystatus.style.color = "green";
+		            	delopystatus.innerHTML = "执行完成";
+	            	}
+	            	else if (status == false && width == 0) {
+		            	delopystatus.style.color = "#996633";
+		            	delopystatus.innerHTML = "从未执行";
+	            	}
+	            	else if (status == true) {
+		            	delopystatus.style.color = "#0000FF";
+		            	delopystatus.innerHTML = "正在执行";
+	            	}
+	            	else {
+		            	delopystatus.style.color = "#FF0000";
+		            	delopystatus.innerHTML = "执行失败";
+	            	}
+	            
             });
         {% endfor %}
     }
