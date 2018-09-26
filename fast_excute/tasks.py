@@ -57,7 +57,9 @@ def deploy(name, serverip, project_id, excudetime, excudeuser):
             p1.bar_data = 99
             p1.status = False
             p1.save()
-            FastexcudeRecord.objects.create(excudename=name, excudeuser=excudeuser, excudeserver=serverip, excude_time=excudetime, excudestatus=False)
+            with open(log_path + log_name, 'r') as f:
+                    all_log_info = f.read()
+            FastexcudeRecord.objects.create(excudename=name, excudeuser=excudeuser, excudeserver=serverip, excude_time=excudetime, excudestatus=False, excudelog=all_log_info)
             return data
         
     p1.bar_data = 110
@@ -70,7 +72,9 @@ def deploy(name, serverip, project_id, excudetime, excudeuser):
     p1.bar_data = 130
     p1.status = False
     p1.save()
-    FastexcudeRecord.objects.create(excudename=name, excudeuser=excudeuser, excudeserver=serverip, excude_time=excudetime, excudestatus=True)
+    with open(log_path + log_name, 'r') as f:
+        all_log_info = f.read()
+    FastexcudeRecord.objects.create(excudename=name, excudeuser=excudeuser, excudeserver=serverip, excude_time=excudetime, excudestatus=True, excudelog=all_log_info)
     return data
 
 

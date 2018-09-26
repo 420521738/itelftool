@@ -35,6 +35,7 @@ class FastexcudeRecord(models.Model):
     excudeserver = models.GenericIPAddressField(u'执行服务器', blank=False, null=False)
     excude_time = models.DateTimeField(u'执行时间', null=True, blank=True)
     excudestatus = models.BooleanField(verbose_name=u"执行结果", default=False)
+    excudelog = models.TextField(u'执行日志', null=True, blank=True)
     
     
     def __str__(self):

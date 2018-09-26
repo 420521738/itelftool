@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+{% load mytags %}
+
+{% block header-css %}
+<link rel="stylesheet" type="text/css" href="/static/plugins/datatables/datatables.min.css"/>
+{% endblock %}
+
+{% block page-content-title %}
+{{ codereleaserecord.excudename }} 在 {{ codereleaserecord.excude_time |date:"Y-m-d H:i:s" }} 的详细更新过程日志
+{% endblock %}
+
+{% block page-nav-tab %}
+<ol class="breadcrumb">
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+
+<div class="tab-base">
+
+    <!--Nav Tabs-->
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a data-toggle="tab" href="#tab-asset-info" aria-expanded="true">日志详情信息</a>
+        </li>
+    </ul>
+
+    <!--Tabs Content-->
+    <div class="tab-content">
+        <div id="tab-asset-info" class="tab-pane fade active in">
+
+           <table class=" asset-info-table">
+               <tr>
+                   <td class="col-md-4">: {{ codereleaserecord.excudelog|res_splict|safe }}</td>
+               </tr>
+ 
+           </table>
+        </div>
+        
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+
+{% block bottom-js %}
+<script type="text/javascript" src="/static/plugins/datatables/datatables.min.js"></script>
+{% endblock %}

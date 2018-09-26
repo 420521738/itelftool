@@ -21,5 +21,6 @@ urlpatterns = [
     # 执行记录 开始
     url(r'^coderelease/record/$', views.coderelease_record, name='coderelease_record'),
     url(r'^coderelease/record/export/$', views.coderelease_record_export, name='coderelease_record_export'),
+    url(r'^coderelease/logdetail/(?P<codereleaserecord_id>\d+)/$', views.coderelease_logdetail, name='coderelease_logdetail'),
     # 执行记录 结束
 ]

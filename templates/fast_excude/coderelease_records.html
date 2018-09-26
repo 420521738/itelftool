@@ -49,6 +49,7 @@
                             <th>执行人</th>
                             <th>执行服务器</th>
                             <th>执行时间</th>
+                            <th>执行日志</th>
                         </tr>
                       </thead>
                             <tbody>
@@ -66,6 +67,7 @@
                                     <td>{{ record.excudeuser }} </td>
                                     <td>{{ record.excudeserver }} </td>
                                     <td>{{ record.excude_time | date:"Y-m-d H:i:s" }} </td>
+                                    <td><a target="_blank" href="{% url "coderelease_logdetail" record.id %}">查看详情</a></td>
                                 </tr>
                             {% endfor %}
                             </tbody>

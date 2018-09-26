@@ -220,3 +220,14 @@ def coderelease_record_export(request):
     return response
 
 
+
+@login_required
+@permission_verify()
+def coderelease_logdetail(request, codereleaserecord_id):
+    codereleaserecord = FastexcudeRecord.objects.get(id=codereleaserecord_id)
+    results = {
+        'codereleaserecord':  codereleaserecord,
+    }
+    return render(request, 'fast_excude/coderelease_logdetail.html', results)
+
+
