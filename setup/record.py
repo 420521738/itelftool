@@ -10,7 +10,7 @@ from setup.models import TaskRecord
 @login_required()
 @permission_verify()
 def record_list(request):
-    all_records = TaskRecord.objects.all()
+    all_records = TaskRecord.objects.all().order_by('-tasktime')
     results = {
         'all_records': all_records,
     }

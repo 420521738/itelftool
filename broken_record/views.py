@@ -25,7 +25,7 @@ def str2gb(args):
 @login_required
 @permission_verify()
 def brokenrecord_list(request):
-    all_brokenrecord = BrokenRrecord.objects.all()
+    all_brokenrecord = BrokenRrecord.objects.all().order_by('-occur_time')
     results = {
         'all_brokenrecord':  all_brokenrecord,
     }

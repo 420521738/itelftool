@@ -194,7 +194,7 @@ def coderelease_log2(request, project_id):
 @login_required
 @permission_verify()
 def coderelease_record(request):
-    all_records = FastexcudeRecord.objects.all()
+    all_records = FastexcudeRecord.objects.all().order_by('-excude_time')
     results = {
         'all_records':  all_records,
     }
