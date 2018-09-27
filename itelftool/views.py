@@ -17,6 +17,7 @@ from assets.models import Asset, IDC
 from assets.models import EventLog
 from broken_record.models import BrokenRrecord
 from appconf.models import Product, Project
+from fast_excute.models import FastexcudeRecord
 
 
 # 首页模块
@@ -91,6 +92,11 @@ def index(request):
     login_record_10 = LoginRecord.objects.order_by('-logintime')[:10]
     # This 登录详细信息相关 结束
     
+    # This 版本发布相关 开始
+    # This 以logintime降序排列，前面加个横杠就是降序
+    fastexcude_record_10 = FastexcudeRecord.objects.order_by('-excude_time')[:10]
+    # This 版本发布相关 结束
+    
     # This 变更记录详细信息相关 开始
     # This 以logintime降序排列，前面加个横杠就是降序
     event_log_10 = EventLog.objects.order_by('-date')[:10]
@@ -111,6 +117,7 @@ def index(request):
         'project_count': project_count,
         'login_record_10': login_record_10,
         'event_log_10': event_log_10,
+        'fastexcude_record_10': fastexcude_record_10,
         
     }
     return render(request,'index.html', results)

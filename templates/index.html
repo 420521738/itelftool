@@ -152,7 +152,7 @@
 	            <h4>仪表盘3</h4>
 	        </div>
 			    <div class="row">
-			    	  <!-- 第一列栏栅格开始 -->
+			    	  <!-- 第一行第一列栏栅格开始 -->
 			        <div class="col-md-6">
 			            <div class="boxblock3">
 			                <div class="boxblock-title">
@@ -163,7 +163,7 @@
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
+                                                <!-- <th>ID</th> -->
                                                 <th>登录用户</th>
                                                 <th>登录时间</th>
                                                 <th>来源IP</th>
@@ -172,7 +172,7 @@
                                         <tbody>
                                         	{% for login_re in login_record_10 %}
                                             <tr>
-                                                <td>{{login_re.id}}</td>                 
+                                                <!-- <td>{{login_re.id}}</td> -->                 
                                                 <td>{{login_re.name.name}}</td>
                                                 <td>{{login_re.logintime|date:"Y-m-d H:i:s"}}</td>
                                                 <td>{{login_re.loginsource}}</td>
@@ -186,11 +186,58 @@
 			         
 			            </div>
 			        </div>
-			          <!-- 第一列栏栅格结束 -->
+			          <!-- 第一行第一列栏栅格结束 -->
 			         
-			          <!-- 第二列栏栅格开始 -->
+			    	  <!-- 第一行第二列栏栅格开始 -->
 			        <div class="col-md-6">
 			            <div class="boxblock3" style="margin-right: 12px;">
+			                <div class="boxblock-title">
+			                    <h4>版本发布记录（最近10次版本发布记录）</h4>
+			                </div>
+			         
+                                <div class="block-content collapse in">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>发布项目</th>
+                                                <th>发布结果</th>
+                                                <th>发布人</th>
+                                                <th>发布时间</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	{% for fastexcude_re in fastexcude_record_10 %}
+                                            <tr>
+                                                <td>{{fastexcude_re.excudename}}</td>    
+				                                   <td>
+				                                        {% if fastexcude_re.excudestatus %}
+				                                            <span class="label label-success">成功</span>
+				                                        {% else %}
+				                                            <span class="label label-danger">失败</span>
+				                                        {% endif %}
+				                                   </td>       
+                                                <td>{{fastexcude_re.excudeuser}}</td>
+                                                <td>{{fastexcude_re.excude_time|date:"Y-m-d H:i:s"}}</td>
+                                            </tr>
+                                         {% endfor %}                 
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+			         
+			         
+			            </div>
+			        </div>
+			          <!-- 第一行第二列栏栅格结束 -->
+	        
+			    </div>
+			    
+			    
+			    <div class="row">
+			         
+			          <!-- 第二行第一列栏栅格开始 -->
+			        <div class="col-md-6">
+			            <div class="boxblock3">
 			                <div class="boxblock-title">
 			                    <h4>资产信息变更（最近10次资产变更记录）</h4>
 			                </div>
@@ -221,9 +268,13 @@
 			                
 			            </div>
 			        </div>
-			          <!-- 第二列栏栅格结束 -->
+			          <!-- 第二行第一列栏栅格结束 -->
+
 			        
 			    </div>
+
+			    
+			    
 			</div>
 	</div>
 	 <!-- 仪表盘3结束 -->
