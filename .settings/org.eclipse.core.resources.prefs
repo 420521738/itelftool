@@ -54,6 +54,7 @@ encoding//setup/fileupload.py=utf-8
 encoding//setup/forms.py=utf-8
 encoding//setup/jobs.py=utf-8
 encoding//setup/models.py=utf-8
+encoding//setup/record.py=utf-8
 encoding//setup/shell.py=utf-8
 encoding//setup/tasks.py=utf-8
 encoding//setup/urls.py=utf-8

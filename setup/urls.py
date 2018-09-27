@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.conf.urls import url, include
-from setup import views, ansible, shell, jobs, filetransfer, fileupload
+from setup import views, ansible, shell, jobs, filetransfer, fileupload, record
 
 
 urlpatterns = [
@@ -46,4 +46,9 @@ urlpatterns = [
     url(r'^job/backend/task/(?P<name>\w+)/(?P<action>\w+)$', jobs.job_backend_task, name='job_backend_task'),
     url(r'^job/result/edit/(?P<ids>\d+)/$', jobs.job_result_edit, name='job_result_edit'),
     # This 任务编排（定时任务）功能模块开始
+    
+    # This 任务编排操作记录模块开始
+    url(r'^record/list/$', record.record_list, name='record_list'),
+    url(r'^record/export/$', record.record_export, name='record_export'),
+    # This 任务编排操作记录模块结束
 ]

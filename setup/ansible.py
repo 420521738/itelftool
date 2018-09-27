@@ -13,6 +13,8 @@ from lib.log import log
 from lib.setup import get_playbook, get_roles
 from assets.models import NIC
 from accounts.permission import permission_verify
+from setup.models import TaskRecord
+import datetime
 
 # var info
 ansible_dir = get_dir("a_path")
@@ -55,6 +57,12 @@ def index(request):
 @login_required()
 @permission_verify()
 def playbook(request):
+    
+    # This 总体记录功能
+    tasktype = 'Ansible'
+    taskuser = request.user.name
+    tasktime = datetime.datetime.now()
+    
     ret = []
     # temp.yml是在页面选择roles时，就创建一个临时的playbook，仅做一次性执行，每次都会不一样
     if os.path.exists(ansible_dir + '/temp.yml'):
@@ -89,12 +97,16 @@ def playbook(request):
                         f.writelines(flist)
                     # This 执行刚刚创建的临时playbook，并将输出信息记录到date中，并返回到ret里面
                     cmd = "ansible-playbook"+" " + ansible_dir+'/temp.yml'
-                    p = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
-                    data = p.communicate()
+                    pcmd = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
+                    data = pcmd.communicate()
                     ret.append(data)
                     for d in data:
                         logging.info(d)
                     logging.info("==========ansible tasks end============")
+                    
+                # This 局部记录功能
+                taskinfo = '在服务器：{}  上执行Ansible的角色 ：{}'.format(host, roles)
+                
             else:
                 for h in host:
                     for p in pbook:
@@ -117,7 +129,9 @@ def playbook(request):
                         for d in data:
                             logging.info(d)
                         logging.info("==========ansible tasks end============")
-            return render(request, 'setup/result.html', locals())
+                        
+                # This 局部记录功能
+                taskinfo = '在服务器：{}  上执行Ansible的剧本 ：{}'.format(host, pbook)
 
         if group:
             if roles:
@@ -136,12 +150,16 @@ def playbook(request):
                     f.writelines(flist)
                     f.close()
                     cmd = "ansible-playbook"+" " + ansible_dir+'/temp.yml'
-                    p = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
-                    data = p.communicate()
+                    pcmd = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
+                    data = pcmd.communicate()
                     ret.append(data)
                     for d in data:
                         logging.info(d)
                     logging.info("==========ansible tasks end============")
+                    
+                # This 局部记录功能
+                taskinfo = '在服务器组：{}  上执行Ansible的角色 ：{}'.format(group, roles)
+                    
             else:
                 for g in group:
                     for p in pbook:
@@ -164,13 +182,31 @@ def playbook(request):
                         for d in data:
                             logging.info(d)
                         logging.info("==========ansible tasks end============")
-            return render(request, 'setup/result.html', locals())
+                        
+                # This 局部记录功能
+                taskinfo = '在服务器组：{}  上执行Ansible的剧本 ：{}'.format(group, pbook)
+                
+        # This 总体记录功能
+        status = pcmd.returncode
+        if status == 0:
+            taskstatus = True
+        else:
+            taskstatus = False
+        TaskRecord.objects.create(tasktype=tasktype, taskuser=taskuser, tasktime=tasktime, taskstatus=taskstatus, taskinfo=taskinfo)
+                        
+        return render(request, 'setup/result.html', locals())
 
 
 # This 如果用户在页面上选择执行ansible命令的话
 @login_required()
 @permission_verify()
 def ansible_command(request):
+    
+    # This 总体记录功能
+    tasktype = 'Ansible'
+    taskuser = request.user.name
+    tasktime = datetime.datetime.now()
+    
     command_list = []
     ret = []
     count = 1
@@ -183,9 +219,21 @@ def ansible_command(request):
                 p = Popen(command, stdout=PIPE, stderr=PIPE,shell=True)
                 data = p.communicate()
                 ret.append(data)
+                
+                # This 局部记录功能
+                status = p.returncode
+                if status == 0:
+                    taskstatus = True
+                else:
+                    taskstatus = False
+                    
             else:
                 data = "your command " + str(count) + "  is invalid!"
                 ret.append(data)
+                
+                # This 局部记录功能
+                taskstatus = False
+                
             count += 1
             logging.info("==========ansible tasks start==========")
             logging.info("User:"+request.user.name)
@@ -193,6 +241,12 @@ def ansible_command(request):
             for d in data:
                 logging.info(d)
             logging.info("==========ansible tasks end============")
+            
+                
+        # This 总体记录功能
+        taskinfo = '直接执行Ansible命令： {}'.format(mcommand)
+        TaskRecord.objects.create(tasktype=tasktype, taskuser=taskuser, tasktime=tasktime, taskstatus=taskstatus, taskinfo=taskinfo)
+            
         return render(request, 'setup/result.html', locals())
 
 

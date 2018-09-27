@@ -8,6 +8,8 @@ from setup.forms import PeriodicTaskForm, IntervalForm, CrontabForm, TaskResultF
 from subprocess import Popen, PIPE
 import os, time
 from accounts.permission import permission_verify
+import datetime
+from setup.models import TaskRecord
 
 
 def get_object(model, **kwargs):
@@ -37,16 +39,30 @@ def index(request):
 @login_required()
 @permission_verify()
 def job_add(request):
+    
+    # This 总体记录功能
+    tasktype = '调度任务'
+    taskuser = request.user.name
+    tasktime = datetime.datetime.now()
+    
     if request.method == "POST":
+        # This 局部记录功能
+        taskinfo = '添加调度任务： {}'.format(request.POST['name'])
         a_form = PeriodicTaskForm(request.POST)
         if a_form.is_valid():
             a_form.save()
             tips = u"增加成功！"
             display_control = ""
+            # This 局部记录功能
+            taskstatus = True
+            TaskRecord.objects.create(tasktype=tasktype, taskuser=taskuser, tasktime=tasktime, taskstatus=taskstatus, taskinfo=taskinfo)
             return redirect("/setup/job/list/")
         else:
             tips = u"增加失败！"
             display_control = ""
+            # This 局部记录功能
+            taskstatus = False
+            TaskRecord.objects.create(tasktype=tasktype, taskuser=taskuser, tasktime=tasktime, taskstatus=taskstatus, taskinfo=taskinfo)
             return render(request, "setup/job_add.html", locals())
     else:
         display_control = "none"
@@ -57,16 +73,29 @@ def job_add(request):
 @login_required
 @permission_verify()
 def job_edit(request, ids):
+    # This 总体记录功能
+    tasktype = '调度任务'
+    taskuser = request.user.name
+    tasktime = datetime.datetime.now()
+    
     status = 0
     obj = get_object(PeriodicTask, id=ids)
 
     if request.method == 'POST':
+        # This 局部记录功能
+        taskinfo = '编辑调度任务： {}'.format(request.POST['name'])
         form = PeriodicTaskForm(request.POST, instance=obj)
         if form.is_valid():
             form.save()
             status = 1
+            # This 局部记录功能
+            taskstatus = True
+            TaskRecord.objects.create(tasktype=tasktype, taskuser=taskuser, tasktime=tasktime, taskstatus=taskstatus, taskinfo=taskinfo)
         else:
             status = 2
+            # This 局部记录功能
+            taskstatus = False
+            TaskRecord.objects.create(tasktype=tasktype, taskuser=taskuser, tasktime=tasktime, taskstatus=taskstatus, taskinfo=taskinfo)
     else:
         form = PeriodicTaskForm(instance=obj)
 
@@ -76,11 +105,24 @@ def job_edit(request, ids):
 @login_required()
 @permission_verify()
 def job_del(request):
+    # This 总体记录功能
+    tasktype = '调度任务'
+    taskuser = request.user.name
+    tasktime = datetime.datetime.now()
+    
     if request.method == 'POST':
         jobs = request.POST.getlist('jobs_check', [])
         if jobs:
             for n in jobs:
+                # This 局部记录功能
+                task = PeriodicTask.objects.get(id=n)
+                taskname = task.name
+                taskinfo = '删除调度任务： ' + taskname
                 PeriodicTask.objects.filter(id=n).delete()
+                # This 局部记录功能
+                taskstatus = True
+                TaskRecord.objects.create(tasktype=tasktype, taskuser=taskuser, tasktime=tasktime, taskstatus=taskstatus, taskinfo=taskinfo)
+            
     jobs_info = PeriodicTask.objects.all()
     return render(request, "setup/job_list.html", locals())
 

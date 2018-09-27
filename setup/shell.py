@@ -10,6 +10,8 @@ from lib.log import log
 from lib.setup import get_scripts
 import logging
 from accounts.permission import permission_verify
+from setup.models import TaskRecord
+import datetime
 
 scripts_dir = get_dir("s_path")
 level = get_dir("log_level")
@@ -29,6 +31,11 @@ def index(request):
 @login_required()
 @permission_verify()
 def exec_scripts(request):
+    # This 总体记录功能
+    tasktype = '命令执行'
+    taskuser = request.user.name
+    tasktime = datetime.datetime.now()
+    
     ret = []
     if request.method == 'POST':
         server = request.POST.getlist('mserver', [])
@@ -36,6 +43,7 @@ def exec_scripts(request):
         scripts = request.POST.getlist('mscripts', [])
         args = request.POST.getlist('margs')
         command = request.POST.get('mcommand')
+
         if server:
             if scripts:
                 for name in server:
@@ -53,12 +61,17 @@ def exec_scripts(request):
                             pass
                         cmd = "ssh chenqiufei@"+ip+" "+'"sh /tmp/{} {}"'.format(s, args)
                         p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
-                        data = p.communicate()
+                        data = p.communicate()                   
+                            
                         ret.append(data)
                         logging.info("Scripts:"+s)
                         for d in data:
                             logging.info(d)
                     logging.info("==========Script End============")
+                    
+                # This 局部记录功能
+                taskinfo = '在服务器：{}  上执行脚本 ：{}'.format(server, scripts)
+                
             else:
                 for name in server:
                     host = Asset.objects.get(name=name)
@@ -78,6 +91,10 @@ def exec_scripts(request):
                         for d in data:
                             logging.info(d)
                     logging.info("==========Shell End============")
+                    
+                # This 局部记录功能
+                taskinfo = '在服务器：{}  上执行命令： {}'.format(server, command)
+                
         if group:
             if scripts:
                 for g in group:
@@ -110,6 +127,10 @@ def exec_scripts(request):
                             for d in data:
                                 logging.info(d)
                     logging.info("==========Script End============")
+                    
+                # This 局部记录功能
+                taskinfo = '在服务器组：{}  上执行脚本 ：{}'.format(group, scripts)
+                    
             else:
                 command_list = []
                 command_list = command.split('\n')
@@ -138,4 +159,16 @@ def exec_scripts(request):
                             for d in data:
                                 logging.info(d)
                     logging.info("==========Shell End============")
+                    
+                # This 局部记录功能
+                taskinfo = '在服务器组：{}  上执行命令： {}'.format(group, command)
+                
+        # This 总体记录功能
+        status = p.returncode
+        if status == 0:
+            taskstatus = True
+        else:
+            taskstatus = False
+        TaskRecord.objects.create(tasktype=tasktype, taskuser=taskuser, tasktime=tasktime, taskstatus=taskstatus, taskinfo=taskinfo)
+                
         return render(request, 'setup/shell_result.html', locals())
