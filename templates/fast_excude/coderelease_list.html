@@ -43,7 +43,7 @@
             <div class="box">
                 <div class="box-header">
                     <div class="col-sm-2" style="padding-left: 0">
-						 <a href="{% url 'coderelease_add' %}"><li class="btn btn-success" ><b>添加上线项目</b></li></a>
+						 <a href="{% url 'coderelease_add' %}"><li class="btn btn-success" ><b>添加代码发布项目</b></li></a>
                   </div>
                 </div>
 
@@ -63,12 +63,12 @@
                         </tr>
                       </thead>
                             <tbody>
-                            {% for project in projects.object_list %}
+                            {% for project in all_project %}
                                 <tr class="even gradeX">
                                     <td><input type="checkbox" id="id" class="i-checks" value="{{ project.id }}" name="id" /></td>
                                     <td>{{ project.name }} </td>
                                     <td>
-                                        <!-- <i class="fa fa-circle" aria-hidden="true" style="color:#2D93CA;"></i> -->
+                                        <!-- This 执行状态的实时判断，注意这里的id不要写死，要用变量结合字符串设置id，否则下面的js无法轮询 -->
                                         {% if project.status == False %}
                                         		<div><h5 style="color:black" id="delopy_status_{{ project.id }}"></h5></div>
                                         {% else %}
@@ -99,9 +99,7 @@
                             {% endfor %}
                             </tbody>
                   </table>
-                <div class="row">
-                    {% include 'paginator.html' %}
-                </div>
+
                   <div class="btn-group">
                       <input type="button" id="project_del" class="btn btn-danger"   name="del_button" value="删除项目"/>
                   </div>
@@ -118,13 +116,12 @@
 <script>
   $(function () {
     $('#projectform').DataTable({
-        //"aLengthMenu":[5,10],
-        "paging": false,
-        "lengthChange": false,
-        "searching": true,
-        "ordering": true,
-        "info": false,
-        "autoWidth": true
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true
     });
   });
 </script>
@@ -148,7 +145,9 @@
         }
     });
 </script>
+
 <script>
+//在上面的html里，点击“日志”按钮，就会触发tanchu这个函数，n是项目的id，html传过来的
 function tanchu(n){
     layer.open({
     type: 2,
@@ -156,6 +155,7 @@ function tanchu(n){
     closeBtn: 1,
     area: ['600px', '400px'],
     shadeClose: true, //点击遮罩关闭
+    //请求/fastexcute/coderelease/log/n，其中n是项目的id
     content: ['/fastexcute/coderelease/log/' + n]
   });
 }
@@ -164,16 +164,20 @@ function tanchu(n){
 <script>
 function deploy(args) {
     if (confirm("确定执行？")) {
+    	//如果确定执行，那么则更改执行进度中的样式，会有一个块状的长条出来
         var pb = document.getElementById("progress_bar_"+args);
         pb.style.display = "block";
+        //请求/fastexcute/coderelease/deploy/n，其中n是项目的id，执行之后该js执行完成
         $.get("/fastexcute/coderelease/deploy/"+args+"/",function(data,status){
         });
     }
 }
 function taskstop(args) {
     if (confirm("确定清理任务状态？")) {
+    	//清理正在执行的任务，执行进度的长条隐藏
         var pb = document.getElementById("progress_bar_"+args);
         pb.style.display = "none";
+        //请求/fastexcute/coderelease/taskstop/n，并且将该请求的返回至alert出来，我定义的是“上线任务终止成功！”
         $.get("/fastexcute/coderelease/taskstop/"+args+"/",function(data,status){
         	alert(data)
         });
@@ -181,30 +185,36 @@ function taskstop(args) {
 }
 </script>
 <script>
+	//以下是一个定时期任务，每隔3秒钟执行一次status函数
     var v1 = window.setInterval("status()",3000);
-
     function status() {
         {% for project in all_project %}
             $.get("/fastexcute/coderelease/status/{{ project.id }}/",function(data){
+            		//这一块的js是指定进度的进度条显示情况
                 var ret = JSON.parse(data);
                 var width = parseInt(ret.bar_data);
                 var progress_bar = document.getElementById("pb_{{ project.id }}");
                 progress_bar.style.width = width+"px";
                 
+                	//这一块的js是执行状态的实时变更功能，通过判断status的值以及进度条的长度值来判断执行状态，并且给状态信息添加颜色显示
                 var status = ret.status;
                 var delopystatus = document.getElementById("delopy_status_{{ project.id }}");
+                	//定义如果status为false以及进度条长度为130（满值为130），则是执行成功，并显示绿色字体
                 if (status == false && width == 130) {
 		            	delopystatus.style.color = "green";
 		            	delopystatus.innerHTML = "执行完成";
 	            	}
+	            	//定义如果status为false以及进度条长度为0（满值为130），则是从未执行，并显示深橘色字体
 	            	else if (status == false && width == 0) {
 		            	delopystatus.style.color = "#996633";
 		            	delopystatus.innerHTML = "从未执行";
 	            	}
+	            	//定义如果status为true，则是正在执行，并显示蓝色字体
 	            	else if (status == true) {
 		            	delopystatus.style.color = "#0000FF";
 		            	delopystatus.innerHTML = "正在执行";
 	            	}
+	            	//定义如果都不符合上述的情况，则是执行失败，并显示红色字体，我定义的执行失败的进度条值是99，在后台程序中会看到我设置了99
 	            	else {
 		            	delopystatus.style.color = "#FF0000";
 		            	delopystatus.innerHTML = "执行失败";
