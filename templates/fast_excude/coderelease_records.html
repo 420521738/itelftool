@@ -100,6 +100,7 @@
         if (fastexcuderecord_id_all == ''){
             if(confirm('您没有勾选，是否导出全部执行记录信息？')){
             		//.serialize()方式将创建标准URL编码表示的文本字符串，也就是将表单内容序列化成一个字符串
+            		//以下的args其实就是csrf_token信息以及选中的项目id信息
                 var args = $("#fastexcuderecord_form").serialize();
                 window.location = "{% url 'coderelease_record_export' %}?export=all&" + args
             }else{

@@ -51,9 +51,10 @@
   </div>
 </body>
 <script>
+	//这是一个日志实时查看的定时期
     var v1 = window.setInterval("status()",2000);
-
     function status() {
+    			//请求/fastexcute/coderelease/log2/{{ project_id }}/，这个才是真正获取日志的请求
             $.get("/fastexcute/coderelease/log2/{{ project_id }}/",function(data){
                 document.getElementById("log_ret").innerHTML = data;
                 //滚动条自动向下滑动
@@ -62,7 +63,7 @@
                       $(document).scrollTop(h);
                 });
             });
-
+				//判断该项目的执行状态，如果为false，也就是该项目执行完了，或者被中断了，就不再继续实时获取日志
             $.get("/fastexcute/coderelease/status/{{ project_id }}/",function(data){
                 var ret = JSON.parse(data);
                 if (ret.status == false) {

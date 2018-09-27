@@ -7,7 +7,6 @@ from django.core.urlresolvers import reverse
 from accounts.permission import permission_verify
 from fast_excute.models import Fastexcude
 from fast_excute.models import FastexcudeRecord
-from lib.tools import pages
 from fast_excute.forms import FastexcudeFrom
 from fast_excute.tasks import deploy
 import json
@@ -28,16 +27,20 @@ def str2gb(args):
     return str(args)
 
 
+# 项目上线列表
 @login_required()
 @permission_verify()
 def coderelease(request):
     all_project = []
     all_project = Fastexcude.objects.all()
-    project_list, p, projects, page_range, current_page, show_first, show_end, end_page = pages(all_project, request)
-    return render(request, 'fast_excude/coderelease_list.html', locals())
+    results = {
+        'all_project': all_project,
+        'request': request,
+    }
+    return render(request, 'fast_excude/coderelease_list.html', results)
 
 
-
+# 项目添加
 @login_required
 @permission_verify()
 def coderelease_add(request):
@@ -56,6 +59,7 @@ def coderelease_add(request):
     return render(request, 'fast_excude/coderelease_base.html', results)
 
 
+# 项目执行状态查询
 @login_required()
 @permission_verify()
 def coderelease_status(request, project_id):
@@ -63,11 +67,12 @@ def coderelease_status(request, project_id):
     bar_data = project.bar_data
     status_val = project.status
     ret = {"bar_data": bar_data, "status": status_val}
+    # This 将数据序列花再返回给列表页的js进行处理和使用
     data = json.dumps(ret)
     return HttpResponse(data)
 
 
-
+# 项目编辑
 @login_required
 @permission_verify()
 def coderelease_edit(request, project_id):
@@ -88,6 +93,7 @@ def coderelease_edit(request, project_id):
     return render(request, 'fast_excude/coderelease_base.html', results)
 
 
+# 项目删除
 @login_required
 @permission_verify()
 def coderelease_del(request):
@@ -103,16 +109,17 @@ def coderelease_del(request):
     return HttpResponseRedirect(reverse('coderelease'))
 
 
-
-
+# 项目执行
 @login_required
 @permission_verify()
 def coderelease_deploy(request, project_id):
     excudeuser = request.user.name
     project = Fastexcude.objects.get(id=project_id)
+    # This 前端页面点击执行后，将进度条长度设置为10px，这个进度只要设置合理，长度多少没关系
     project.bar_data = 10
     name = project.name
     serverip = project.server.ipaddr
+    # This 前端页面点击执行后，设置status为True，因为默认是Flase是不在执行
     project.status = True
     #project.excude_time = datetime.datetime.now()
     excudetime = datetime.datetime.now()
@@ -122,10 +129,13 @@ def coderelease_deploy(request, project_id):
     os.system("mkdir -p /var/opt/itelftool/fastexcute/workspace/{0}/logs".format(name))
     project.bar_data = 15
     project.save()
+    # This 调用deploy去执行这个任务
+    # This 其中name，serverip，excudetime，excudeuser 都是执行艘需要记录的字段，所以把这些字段传给deploy，等执行完成或者执行失败后就进行记录
     deploy(name, serverip, project_id, excudetime, excudeuser)
     return HttpResponse("ok")
 
 
+# 项目停止
 @login_required()
 @permission_verify()
 def coderelease__stop(request, project_id):
@@ -136,8 +146,10 @@ def coderelease__stop(request, project_id):
     excudetime = datetime.datetime.now()
     name = project.name
     serverip = project.server.ipaddr
+    # This 这个是执行记录，如果是被终止的，就不写日志信息，以防读取到上一次执行的日志
     FastexcudeRecord.objects.create(excudename=name, excudeuser=excudeuser, excudeserver=serverip, excude_time=excudetime, excudestatus=False)
     
+    # This 执行被终止，就当作执行失败
     project.bar_data = 99
     project.status = False
     project.save()
@@ -145,7 +157,7 @@ def coderelease__stop(request, project_id):
     return HttpResponse("上线任务终止成功！")
 
 
-
+# 项目查看日志中间人功能
 @login_required()
 @permission_verify()
 def coderelease_log(request, project_id):
@@ -158,6 +170,7 @@ def coderelease_log(request, project_id):
     return render(request, "fast_excude/coderelease_results.html", results)
 
 
+# 日志实时显示功能
 @login_required()
 @permission_verify()
 def coderelease_log2(request, project_id):
@@ -177,7 +190,7 @@ def coderelease_log2(request, project_id):
     return HttpResponse(ret)
 
 
-
+# 执行记录展示
 @login_required
 @permission_verify()
 def coderelease_record(request):
@@ -188,7 +201,7 @@ def coderelease_record(request):
     return render(request, 'fast_excude/coderelease_records.html', results)
 
 
-
+# 执行记录导出
 @login_required
 @permission_verify()
 def coderelease_record_export(request):
@@ -212,6 +225,7 @@ def coderelease_record_export(request):
     writer = csv.writer(response, dialect='excel')
     writer.writerow([str2gb(u'执行项目名'), str2gb(u'执行结果'), str2gb(u'执行人'), str2gb(u'执行服务器'), str2gb(u'执行时间'), ])
     for coderelease_record in coderelease_record_find:
+        # This 判断执行状态的值，才能定义执行成功或者失败的中文字符
         if coderelease_record.excudestatus:
             excudestatus = '成功'
         else:
@@ -220,7 +234,8 @@ def coderelease_record_export(request):
     return response
 
 
-
+# 每次更新的执行过程详情查看
+# 这里的codereleaserecord_id，与fast_excute里面的url中的变量需要相同
 @login_required
 @permission_verify()
 def coderelease_logdetail(request, codereleaserecord_id):
