@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+{% block header-css %}
+    <script src="/static/layer/layer.js"></script>
+    <link rel="stylesheet" href="/static/plugins/select2/select2.min.css">
+	<link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
+    <script src="/static/plugins/select2/select2.full.min.js"></script>
+{% endblock %}
+
+{% block page-content-title %}
+添加监控图组
+{% endblock %}
+
+{% block page-nav-tab %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">添加监控图组</li>
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+
+  <div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+        </div>
+        <div class="box-body">
+      <form action="{% url 'graph_group_add' %}" method="post">
+        {% csrf_token %}
+        <!-- {{ form.as_p }}  -->
+			<p> 
+			   <label for="groupname"><h5>监控图组名称：</h5></label>
+			   <input required id="groupname" type="text" name="groupname" maxlength="100" />
+			</p>
+			<p> 
+			   <label for="graphid"><h5>手动输入监控图id（逗号分隔）：</h5></label>
+			   <textarea rows="6" cols="60" id="graphid" name="graphid">
+			   </textarea>
+			</p>
+			
+          <div class="form-group">
+            <label for="graphgroup"><h5>选择监控图id：</h5></label>
+            <select id="graphgroup" name="graphgroup" class="form-control" multiple="multiple" data-placeholder="选择图片id" style="width: 100%;">
+                {% for i in mydictlist %}
+                		{% for key, value in i.items %}
+                    	  {% if key == 'hostname' %}
+                    	  {% elif key == 'hostid' %}
+                    	  {% else %}
+                    	  	<option value="{{value}}">{{ i.hostname }}->{{key}}->{{value}}</option>
+                    	  {% endif %}
+                    	{% endfor %}
+                {% endfor %}
+            </select>
+          </div>
+        
+        <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{% url 'graph_group_list' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>
+          </form>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <i class="fa fa-info-circle"></i> 请勿重复添加条目
+        </div>
+        <!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
+    </section>
+
+  </div>
+
+<script>
+  $(function () {
+    $("#graphgroup").select2().on("select2:select", function () { $("#graphid").prop("disabled", true); });
+    $("#graphgroup").select2().on("select2:unselect", function () { $("#graphid").prop("disabled", false); });
+    });
+</script>
+
+{% endblock %}
+
+{% block  bottom-js %}
+{% endblock %}

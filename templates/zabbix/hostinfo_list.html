@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+
+{% block header-css %}
+{% endblock %}
+
+{% block page-content-title %}
+zabbix所监控主机信息
+{% endblock %}
+
+{% block page-nav-tab %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">所监控主机信息</li>
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+<div>
+	
+                <div class="box-body">
+                  <table class="table table-striped table-bordered" id="dataform">
+                      <thead>
+                        <tr>
+                            <th>主机名</th>
+                            <th>主机id</th>
+                            <th>主机graphid</th>
+                        </tr>
+                      </thead>
+                            <tbody>
+                                {% for i in mydictlist %}
+	                                    <tr class="even gradeX">
+	                                        <td>
+														{{i.hostname}}
+	                                        </td>
+	                                        <td>
+														{{i.hostid}}
+	                                        </td>
+	                                        <td>
+	                                        	{% for key, value in i.items %}
+	                                        	  {% if key == 'hostname' %}
+	                                        	  {% elif key == 'hostid' %}
+	                                        	  {% else %}
+	                                        	  	<p>{{key}}:{{value}}</p>
+	                                        	  {% endif %}
+	                                        	{%endfor%}
+	                                        </td>
+	                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                  </table>
+                </div>
+	
+</div>
+{% endblock %}
+
+{% block  bottom-js %}
+{% endblock %}

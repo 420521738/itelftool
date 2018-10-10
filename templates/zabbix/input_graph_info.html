@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+
+{% block header-css %}
+	<link rel="stylesheet" href="/static/plugins/cxCalendar/css/jquery.cxcalendar.css">
+	<script src="/static/layer/layer.js"></script>
+	<link rel="stylesheet" href="/static/plugins/select2/select2.min.css">
+	<script src="/static/plugins/select2/select2.full.min.js"></script>
+{% endblock %}
+
+{% block page-content-title %}
+输入需要生成的zabbix监控图信息
+{% endblock %}
+
+{% block page-nav-tab %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+
+  <div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+        </div>
+        <div class="box-body">
+      <form action="{% url 'sendgraph_info' %}" method="post">
+        {% csrf_token %}
+			<p> 
+			   <label for="starttime"><h5>开始时间：</h5></label>
+			   <input required id="starttime" type="text" name="starttime" maxlength="100" />
+			</p>
+			<p> 
+			   <label for="endtime"><h5>结束时间：</h5></label>
+			   <input required id="endtime" type="text" name="endtime" maxlength="100" />
+			</p>
+			<p> 
+			   <label for="graphid"><h5>手动输入监控图id（逗号分隔）：</h5></label>
+			   <!-- <input required id="graphid" type="textarea" name="graphid" maxlength="256" /> -->
+			   <textarea rows="6" cols="60" id="graphid" name="graphid">
+			   </textarea>
+			</p>
+			
+			
+          <div class="form-group">
+            <label><h5>监控图组：</h5></label>
+            <select id="graphgroup" name="graphgroup" class="form-control" multiple="multiple" data-placeholder="监控图组选择" style="width: 100%;">
+                {% for g in monitor_group %}
+                    <option value="{{ g.graphids }}">{{ g.groupname }}</option>
+                {% endfor %}
+            </select>
+          </div>
+			
+
+        <input type="submit" class="btn btn-primary" style="width: 60pt" value="生成监控图">&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{% url 'input_graph_info' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>
+      </form>
+      
+        </div>
+
+      </div>
+      <!-- /.box -->
+    </section>
+
+  </div>
+  
+<script>
+  $(function () {
+  		$("#graphgroup").select2().on("select2:select", function () { $("#graphid").prop("disabled", true); });
+    });
+</script>
+  
+  
+{% endblock %}
+
+{% block  bottom-js %}
+	<script src="/static/layer/layer.js"></script>
+	<script src="/static/plugins/cxCalendar/js/jquery.cxcalendar.js"></script>
+	<script>
+		//$("#id_occur_time").cxCalendar();
+		$('#starttime,#endtime').cxCalendar({
+		  type: 'datetime',
+		  format: 'YYYY-MM-DD HH:mm:ss'
+		});
+		$.cxCalendar.defaults.startDate = 1980;
+		$.cxCalendar.defaults.language = {
+		  monthList: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], 
+		  weekList: ['Sun', 'Mon', 'Tur', 'Wed', 'Thu', 'Fri', 'Sat'] 
+		};
+	</script>
+{% endblock %}

@@ -46,6 +46,8 @@ urlpatterns = [
     url(r'^brokenrecord/', include('broken_record.urls')),
    # Webshell入口
    url(r'^webshell/', include('webshell.urls')),
+   # Zabbix入口
+   url(r'^zabbix/', include('zabbix.urls')),
    # This 域名管理入口
    url(r'^domain/', include('domain.urls')),
    # This 便捷执行入口

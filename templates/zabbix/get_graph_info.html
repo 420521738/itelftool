@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+{% load mytags %}
+{% block header-css %}
+{% endblock %}
+
+{% block page-content-title %}
+监控图生成结果
+{% endblock %}
+
+{% block page-nav-tab %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+</ol>
+{% endblock %}
+
+
+
+{% block page-content %}
+<div>
+	<h4 style="color:green">zabbix图像已经生成！</h4>
+	<h5>此次监控时间为： <span style="color:green">{{starttime|date:"Y-m-d H:i:s"}}</span> 至 <span style="color:green">{{endtime|date:"Y-m-d H:i:s"}}</span></h5>
+	<h5>监控图所在的目录是：{{image_dir}}</h5>
+	<h5>此次监控图列表如下：</h5>
+	<h6>{{ data|res_splict|safe }}</h6>
+	
+</div>
+{% endblock %}
+
+{% block  bottom-js %}
+{% endblock %}

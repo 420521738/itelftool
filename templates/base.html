@@ -552,6 +552,25 @@
 									<!--webshell菜单结束-->
 									
 									
+									<!--zabbix管理菜单开始-->
+									<li>
+										<a href="#">
+											<i class="fa fa-flag"></i>
+											<span class="menu-title">
+												Zabbix管理
+											</span>
+										</a>
+	                                <ul class="collapse">
+												<li><a href="{% url 'hostinfo_list' %}">监控项id查阅</a></li>
+												<li><a href="{% url 'graph_group_list' %}">监控图组管理</a></li>
+												<li><a href="{% url 'input_graph_info' %}">生成监控图</a></li>
+												<li><a href="#">生成数据报表</a></li>
+											</ul>
+									</li>
+									<!--zabbix管理菜单结束-->
+									
+									
+									
 									<!--用户管理菜单开始-->
 									<li>
 										<a href="#">

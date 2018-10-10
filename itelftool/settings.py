@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'accounts',
     'domain',
     'fast_excute',
+    'zabbix',
 ]
 
 MIDDLEWARE = [
