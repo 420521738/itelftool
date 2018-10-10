@@ -1,0 +1,630 @@
+﻿<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Style-Type" content="text/css" />
+		<meta name="generator" content="Aspose.Words for .NET 15.1.0.0" />
+		<title>2018年9月份服务器使用情况报表</title>
+	</head>
+	
+	<body>
+		<div>
+		
+			<p style="font-size:15pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<span style="font-family:宋体; font-size:20pt; font-weight:bold">2018年9月份服务器使用情况报表</span>
+			</p>
+			<br/><br/>
+		
+			<p>
+				<h5 style="font-family:宋体; font-size:10.5pt; font-weight:bold">注意(可进行编辑)：</h5>
+				<textarea type='text' rows="3" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">备注1：中山联通机房分析时间为2018-09-01 00:00:00 to 2018-10-01 00:00:00</textarea>
+			</p>
+			<br/>
+			
+			<div style="font-family:宋体; font-size:10.5pt">
+			<h5 style="font-family:宋体; font-size:10.5pt; font-weight:bold">要点介绍</h5>
+			<p><a href="#id-1">1、主机可用率</a></p>
+			<p><a href="#id-2">2、服务可用率</a></p>
+			<p><a href="#id-3">3、业务故障率</a></p>
+			<p><a href="#id-4">4、机房流量使用情况</a></p>
+			<p><a href="#id-5">5、存储空间使用情况</a></p>
+			<p><a href="#id-6">6、存储磁盘io使用情况</a></p>
+			<p><a href="#id-7">7、ESXI集群CPU使用情况</a></p>
+			<p><a href="#id-8">8、ESXI集群IO等待情况</a></p>
+			<p><a href="#id-9">9、ESXI集群内存使用情况</a></p>
+			<p><a href="#id-10">10、ESXI集群网络状态使用情况</a></p>
+			<p><a href="#id-11">11、中山联通机房虚拟主机CPU状态</a></p>
+			<p><a href="#id-12">12、中山联通机房虚拟主机Iowait状态</a></p>
+			<p><a href="#id-13">13、中山联通机房虚拟主机系统负载状态</a></p>
+			<p><a href="#id-14">14、Nginx吞吐率</a></p>
+			<p><a href="#id-15">15、星星打车访问状态码</a></p>
+			<p><a href="#id-16">16、整体报告精简汇总分析</a></p>
+			</div>
+			<br/><br/>
+			
+			
+			
+			<p id="id-1">
+				<span style="font-family:宋体; font-size:12pt; font-weight:bold">1、主机可用率如下所示</span>
+			</p>
+					
+			<p style="font-size:10.5pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<img src="png/1.png" width="554" height="302" />
+			</p>
+			<br/>
+			<p>
+				<h5 style="font-family:宋体; font-size:10.5pt; font-weight:bold">分析总结(可进行编辑)：</h5>
+				<textarea type='text' rows="7" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    本月中山联通机房物理主机以及虚拟主机平均可用率均为___%，本月未发生物理主机或虚拟主机故障。
+
+    注：主机可用率数据来源于nagiso监控系统的可控性统计模块。
+				</textarea>
+			</p>
+			<br/><br/>
+			
+			
+			
+			<p id="id-2">
+				<span style="font-family:宋体; font-size:12pt; font-weight:bold">2、服务可用率如下所示</span>
+			</p>
+					
+			<p style="font-size:10.5pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<img src="png/2.png" width="554" height="302" />
+			</p>
+			<br/>
+			<p>
+				<h5 style="font-family:宋体; font-size:10.5pt; font-weight:bold">分析总结(可进行编辑)：</h5>
+				<textarea type='text' rows="7" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    本月中山联通机房服务可用性为__%，其可用性较上月下降了__%，降幅较小。
+	
+    仅有__%的服务严重告警主要是来自于监控系统的负载以及io超出了严重警告的阈值。经查明，上述主要的告警均是来自于本月7号的nagiso监控系统故障，已于当天处理完成，现在已无问题。
+
+    注：服务可用率数据来源于nagiso监控系统的可控性统计模块。
+				</textarea>
+			</p>
+			<br/><br/>
+			
+			
+			<p id="id-3">
+				<span style="font-family:宋体; font-size:12pt; font-weight:bold">3、业务故障率如下所示</span>
+			</p>
+					
+			<p style="font-size:10.5pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<img src="png/3.png" width="554" height="302" />
+			</p>
+			<br/>
+			<p>
+				<h5 style="font-family:宋体; font-size:10.5pt; font-weight:bold">分析总结(可进行编辑)：</h5>
+				<textarea type='text' rows="7" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    本月共发生__次故障，但是对业务均没有产生影响，因为影响业务时间为__，本月的业务故障率为__，业务正常率为__%。
+
+    注：业务故障率数据来源于《2018年故障记录统计表》。
+				</textarea>
+			</p>
+			<br/><br/>
+		
+		
+			<p id="id-4">
+				<span style="font-family:宋体; font-size:12pt; font-weight:bold">4、机房流量使用情况如下所示</span>
+			</p>
+					
+			<p style="font-size:10.5pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<img src="png/4.png" width="554" height="302" />
+			</p>
+			<br/>
+			<p>
+				<h5 style="font-family:宋体; font-size:10.5pt; font-weight:bold">分析总结(可进行编辑)：</h5>
+				<textarea type='text' rows="7" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    本月，中山联通机房的带宽值基本上都是处于__M以内的平稳状态，带宽使用情况较上月有少量下降。总体而言，带宽使用情况从本月来看还是在可控范围之内，并无异常。
+				</textarea>
+			</p>
+			<br/><br/>
+			
+			
+			
+			<p id="id-5">
+				<span style="font-family:宋体; font-size:12pt; font-weight:bold">5、存储空间使用情况如下所示</span>
+			</p>
+					
+			<p style="font-size:10.5pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<img src="png/5.png" width="554" height="302" />
+			</p>
+			<br/>
+			<p>
+				<h5 style="font-family:宋体; font-size:10.5pt; font-weight:bold">分析总结(可进行编辑)：</h5>
+				<textarea type='text' rows="7" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    总空间18.56 T，已使用空间__T（__%），未分配空间__T（__%），距离存储警报阀值仍可用空间为__T（未分配空间-总空间*10%）。
+	
+    本月以来，从存储剩余空间来看，本月并未消耗存储容量，反而存储剩余容量有所回收，其原因在于存储的回收速度大于存储的消耗速度，再加上这段时间业务属于稳定期，并无新增业务，所以对存储的消耗并不多。
+				</textarea>
+			</p>
+			<br/><br/>
+			
+			
+			<p id="id-6">
+				<span style="font-family:宋体; font-size:12pt; font-weight:bold">6、存储磁盘io使用情况如下所示</span>
+			</p>
+					
+			<p style="font-size:10.5pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<img src="png/6.png" width="554" height="302" />
+			</p>
+			<br/>
+			<p>
+				<h5 style="font-family:宋体; font-size:10.5pt; font-weight:bold">分析总结(可进行编辑)：</h5>
+				<textarea type='text' rows="15" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    目前情况下，读取延时基本上是__ms~__ms左右，偶尔情况瞬间达到__ms左右，写入延时基本上在__ms以内，本月读取延时较上月持平；写入延时情况较上月持平。
+	
+    总的读写速度基本在__MB/s以内，包括读取和写入，较上月持平，仍属于较低耗用，并无异常情况。
+	
+    读的iops较低，日常耗用（非均值）不到__，较上月持平；写的iops维持在平稳值__以内，较上月有少量下降。根据该存储的配置（随机读写可达4100），目前状态仍是正常状态，并保持稳定。
+	
+    注：每周六晚上11:30开始，第一从库均会进行数据库备份任务，备份任务执行时间大约1.5小时，因此在该持续的1.5小时以内，各项指标会飙高后恢复正常，该情况为已知且正常。
+				</textarea>
+			</p>
+			<br/><br/>
+			
+			
+			<p id="id-7">
+				<span style="font-family:宋体; font-size:12pt; font-weight:bold">7、ESXI集群CPU使用情况如下所示</span>
+			</p>
+			<p style="font-size:10.5pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<img src="png/873.png" width="554" height="302" />
+				<img src="png/881.png" width="554" height="302" />
+				<img src="png/889.png" width="554" height="302" />
+				<img src="png/901.png" width="554" height="302" />
+				<img src="png/909.png" width="554" height="302" />
+				<img src="png/913.png" width="554" height="302" />
+				<img src="png/845.png" width="554" height="302" />
+				<img src="png/825.png" width="554" height="302" />
+				<img src="png/853.png" width="554" height="302" />
+				<img src="png/865.png" width="554" height="302" />
+			</p>
+			<br/>
+			<p>
+				<h5 style="font-family:宋体; font-size:10.5pt; font-weight:bold">分析总结(可进行编辑)：</h5>
+				<textarea type='text' rows="10" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    在本月来看，除了宿主机172.31.4.7以外，其余所有的宿主机CPU使用率都算是较小的，都在CPU频率线左右或以下，较上月持平，CPU利用较为平稳，并无特殊情况。
+	
+    上述提到的宿主机172.31.4.7在本月7号突然出现CPU暴涨数倍的情况，经查明是由于当天在其上运行的监控系统虚拟主机（172.31.5.1）出现CPU以及IO的暴涨导致，该问题已查明并于当时进行处理解决，并做好了预防措施。
+				</textarea>
+			</p>
+			<br/><br/>
+			
+			
+			<p id="id-8">
+				<span style="font-family:宋体; font-size:12pt; font-weight:bold">8、ESXI集群IO等待情况如下所示</span>
+			</p>
+					
+			<p style="font-size:10.5pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<img src="png/874.png" width="554" height="302" />
+				<img src="png/882.png" width="554" height="302" />
+				<img src="png/890.png" width="554" height="302" />
+				<img src="png/902.png" width="554" height="302" />
+				<img src="png/910.png" width="554" height="302" />
+				<img src="png/914.png" width="554" height="302" />
+				<img src="png/846.png" width="554" height="302" />
+				<img src="png/826.png" width="554" height="302" />
+				<img src="png/854.png" width="554" height="302" />
+				<img src="png/866.png" width="554" height="302" />
+			</p>
+			<br/>
+			<p>
+				<h5 style="font-family:宋体; font-size:10.5pt; font-weight:bold">分析总结(可进行编辑)：</h5>
+				<textarea type='text' rows="10" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    在本月，所有宿主机IO等待情况较为平稳，和上月相比，无IO等待时间增加情况发生，较上月持平。
+				</textarea>
+			</p>
+			<br/><br/>
+			
+
+			<p id="id-9">
+				<span style="font-family:宋体; font-size:12pt; font-weight:bold">9、ESXI集群内存使用情况如下所示</span>
+			</p>
+					
+			<p style="font-size:10.5pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<img src="png/875.png" width="554" height="302" />
+				<img src="png/883.png" width="554" height="302" />
+				<img src="png/891.png" width="554" height="302" />
+				<img src="png/903.png" width="554" height="302" />
+				<img src="png/911.png" width="554" height="302" />
+				<img src="png/915.png" width="554" height="302" />
+				<img src="png/847.png" width="554" height="302" />
+				<img src="png/827.png" width="554" height="302" />
+				<img src="png/855.png" width="554" height="302" />
+				<img src="png/867.png" width="554" height="302" />
+			</p>
+			<br/>
+			<p>
+				<h5 style="font-family:宋体; font-size:10.5pt; font-weight:bold">分析总结(可进行编辑)：</h5>
+				<textarea type='text' rows="4" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    在本月，所有宿主机的内存使用情况较为平稳，较上月持平，无明显内存使用突增情况。
+	
+    如下为各台宿主机的内存资源状态：
+				</textarea>
+			</p>
+			<p style="font-size:10.5pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<img src="png/9.png" width="800" height="200" />
+			</p>
+			<p>
+				<textarea type='text' rows="10" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    所有的宿主机内存利用超80%的有2台，超70%的有5台，超60%的有7台。内存使用已经达到总内存的64.3%，较上月保持一致，内存总容量并未见消耗。
+	
+    总而言之，在上季度完成生产环境资源整合后，内存资源使用并不紧张，在预留故障转移所需的内存后，预计在内存方面可以满足星星打车项目拆分后所需资源以及星星打车ELK和GIS项目、MIS项目、金融项目在3个月内稳定发展所需的资源。
+	
+    如有新的项目需要开展，则需要进行资源扩展增加，目前ESXI集群内存剩余量不足以支撑新项目的开展。
+				</textarea>
+			</p>
+			<br/><br/>
+			
+
+			<p id="id-10">
+				<span style="font-family:宋体; font-size:12pt; font-weight:bold">10、ESXI集群网络状态使用情况如下所示</span>
+			</p>
+					
+			<p style="font-size:10.5pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<img src="png/876.png" width="554" height="302" />
+				<img src="png/884.png" width="554" height="302" />
+				<img src="png/892.png" width="554" height="302" />
+				<img src="png/904.png" width="554" height="302" />
+				<img src="png/912.png" width="554" height="302" />
+				<img src="png/916.png" width="554" height="302" />
+				<img src="png/848.png" width="554" height="302" />
+				<img src="png/828.png" width="554" height="302" />
+				<img src="png/856.png" width="554" height="302" />
+				<img src="png/868.png" width="554" height="302" />
+			</p>
+			<br/>
+			<p>
+				<h5 style="font-family:宋体; font-size:10.5pt; font-weight:bold">分析总结(可进行编辑)：</h5>
+				<textarea type='text' rows="10" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    从本月的ESXI宿主机的网络监控状态来看，所有宿主机的网络状态都维持在平稳的状态下，而且发送和接收的速率日常耗用（非均值）均在2Mb/s以内，较上月持平。
+	
+    注：从监控图上看，有些机器的网络是有波动，但是因为起波动范围值太小，可以忽略不计这个波动。
+				</textarea>
+			</p>
+			<br/><br/>
+			
+			
+				
+				
+			<p id="id-11">
+				<span style="font-family:宋体; font-size:12pt; font-weight:bold">11、中山联通机房虚拟主机CPU状态如下所示</span>
+			</p>
+
+			<p style="font-size:10.5pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<img src="png/558.png" width="554" height="302" />
+				<img src="png/574.png" width="554" height="302" />
+				<img src="png/598.png" width="554" height="302" />
+				<img src="png/606.png" width="554" height="302" />
+				<img src="png/946.png" width="554" height="302" />
+				<img src="png/630.png" width="554" height="302" />
+				<img src="png/638.png" width="554" height="302" />
+				<img src="png/566.png" width="554" height="302" />
+				<img src="png/1158.png" width="554" height="302" />
+				<img src="png/710.png" width="554" height="302" />
+				<img src="png/694.png" width="554" height="302" />
+				<img src="png/726.png" width="554" height="302" />
+				<img src="png/1140.png" width="554" height="302" />
+				<img src="png/1148.png" width="554" height="302" />
+				<img src="png/937.png" width="554" height="302" />
+				<img src="png/1092.png" width="554" height="302" />
+				<img src="png/1100.png" width="554" height="302" />
+				<img src="png/1108.png" width="554" height="302" />
+				<img src="png/1132.png" width="554" height="302" />
+				<img src="png/1246.png" width="554" height="302" />
+				<img src="png/1002.png" width="554" height="302" />
+				<img src="png/1010.png" width="554" height="302" />
+				<img src="png/1018.png" width="554" height="302" />
+				<img src="png/1116.png" width="554" height="302" />
+				<img src="png/1124.png" width="554" height="302" />
+				<img src="png/1166.png" width="554" height="302" />
+				<img src="png/1174.png" width="554" height="302" />
+				<img src="png/1182.png" width="554" height="302" />
+				<img src="png/1190.png" width="554" height="302" />
+				<img src="png/1198.png" width="554" height="302" />
+				<img src="png/1206.png" width="554" height="302" />
+				<img src="png/1214.png" width="554" height="302" />
+				<img src="png/1222.png" width="554" height="302" />
+				<img src="png/1230.png" width="554" height="302" />
+				<img src="png/1238.png" width="554" height="302" />
+				<img src="png/1254.png" width="554" height="302" />
+				<img src="png/762.png" width="554" height="302" />
+				<img src="png/920.png" width="554" height="302" />
+				<img src="png/929.png" width="554" height="302" />
+				<img src="png/954.png" width="554" height="302" />
+				<img src="png/962.png" width="554" height="302" />
+				<img src="png/970.png" width="554" height="302" />
+				<img src="png/978.png" width="554" height="302" />
+				<img src="png/986.png" width="554" height="302" />
+				<img src="png/994.png" width="554" height="302" />
+				<img src="" width="554" height="302" />
+			</p>
+			<br/>
+			<p>
+				<h5 style="font-family:宋体; font-size:10.5pt; font-weight:bold">分析总结:</h5>
+				<h5>a)、代理层相关(可进行编辑)：</h5>
+				<textarea type='text' rows="4" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    在本月，Nginx两台主机（172.31.0.5、172.31.0.6）的CPU耗用维持在平稳状态，这两台Nginx的CPU日常耗用（非均值）基本上都维持在0.1%以内，均值均未超过0.1%，较上月有所下降，属于较低耗用；
+				</textarea>
+				<h5>b)、金融系统相关(可进行编辑)：</h5>
+				<textarea type='text' rows="12" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    金融的3台Web主机（172.31.2.1、172.31.2.2、172.31.2.5）以及2台数据库主机（172.31.3.1、172.31.3.2）的cpu利用率也较低，也较为平稳，除了金融App2主机（172.31.2.2）以外，其他4台主机日常耗用（非均值）在0.5%以内，较上月持平，属于较低耗用；
+	
+    上述提到的金融App2主机（172.31.2.2）的cpu日常耗用（非均值）在3%~7%左右，均值未超过1%，较上月持平；由于金融hirecar_v2主节点运行在该主机之上，备用节点仅在主节点无法提供服务时启用，因此该主节点所在的主机会耗用较多的cpu资源，但其耗用的cpu还在可控范围内；
+	
+    注：金融业务系统各项耗用均是周一到周五时间段会比周末或者节假日高一些，这个也是公司的业务特点，因此不管是金融的数据库还是web，符合业务特性的较小性能波动我们均认为是正常的。
+				</textarea>
+				<h5>c)、BI系统相关(可进行编辑)：</h5>
+				<textarea type='text' rows="11" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    BI的Web主机（172.31.2.11）的cpu利用率也较低，日常耗用（非均值）范围在0.5%以内，均值未超过0.1%，较上月持平，属于较低耗用；
+	
+    数据库主库（172.31.3.11）和从库（172.31.3.12）的cpu日常耗用（非均值）基本上维持在3%左右或以内，但是数据库主库和从库的cpu耗用均值都未超过0.4%，主库和从库的CPU耗用走势较上月持平；
+	
+    注：上述提到的BI主库以及从库的cpu高耗用均是在凌晨导数据时才出现的，其他时间的耗用则是很低的，这个也是符合BI的业务特性；
+				</textarea>
+				<h5>d)、星星打车以及顺风车系统相关(可进行编辑)：</h5>
+				<textarea type='text' rows="38" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    星星打车的Web主机的cpu利用率较其他的主机高，前台web（172.31.2.23）的cpu日常耗用（非均值）在1.25%以内，均值未超过0.5%，CPU利用率使用平缓，较上个月持平，但并无其他明显异常；
+	
+    后台web与引擎（172.31.2.24）的cpu日常耗用（非均值）基本上维持在1.5%以内，均值未超过0.9%，较上月有少量上涨，其他无明显异常；
+	
+    缓存服务redis+memcache（172.31.2.25）在本月的日常耗用（非均值）在0.7%以内，均值未超过0.7%，较上月持平，无其他明显异常；
+	
+    GIS模块的两台web（172.31.2.26、172.31.2.27）在本月的cpu走势来看，日常耗用（非均值）基本上维持在0.15%以内，均值未超过0.1%，较上月持平，无明显异常，该CPU耗用水平属于较低耗用；
+	
+    顺风车模块的web（172.31.2.69）的CPU日常耗用（非均值）在0.25%以内，均值未超过0.2%，较上月持平，无明显异常；
+	
+    MySQL数据库中包括主库和从库，主库（172.31.3.21）的cpu日常耗用（非均值）在2%以内，均值未超过1.3%，CPU利用率较上月持平；
+	
+    第一从库（172.31.3.29）本月的CPU利用率日常耗用（非均值）在0.5%左右，均值未超过0.3%，属于较低耗用，其CPU走势较上月持平；注：每周六晚上11:30开始，第一从库均会进行数据库备份任务，备份任务执行时间大约1.5小时，因此在该持续的1.5小时以内，CPU利用率会飙高至2.5%左右，该情况为已知且正常。
+	
+    第二、第三从库（172.31.3.30）本月的CPU利用率日常耗用（非均值）在2.5%以内，均值未超过1.5%，第二、第三从库为运行在同一台机器上的两个mysql实例，因此该日常耗用为正常值，其CPU走势较上月持平，无明显异常；
+	
+    ELK模块的mongo数据库包括mongo主库和mongo从库，mongo主库（172.31.3.24）的CPU日常耗用（非均值）在1.5%以内，均值未超过0.3%，属于较低耗用，较上月有少量上升，其他无明显异常；从库（172.31.3.23）日常耗用（非均值）在0.15%以内，均值未超过0.1%，属于较低耗用，较上月持平，其他无明显异常；
+	
+    ELK的两台elasticsearch在本月来看，ELK的Elasticsearch两个节点（172.31.3.25、172.31.3.26）的cpu耗用均属于正常耗用，日常耗用（非均值）都在0.3%以内，均值均未超过0.2%，较上月持平；
+	
+    postgresql数据库也分为主库和从库，主库（172.31.3.27）在本月的趋势来看较为平稳，cpu日常耗用（非均值）在2%以内，均值未超过0.3%，较上月持平；从库（172.31.3.28）在本月的趋势来看也较为平稳，cpu日常耗用（非均值）在0.1%以内，属于较低耗用，较上月持平，无明显异常；
+				</textarea>
+				<h5>e)、MIS系统相关(可进行编辑)：</h5>
+				<textarea type='text' rows="15" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    MIS生产环境，有两台App服务器（172.31.2.41、172.31.2.42）、两台MySQL数据库（172.31.3.41、172.31.3.42）以及两台FastDFS服务器（172.31.3.43、172.31.3.44），除了MySQL主库（172.31.3.41）以外，其余的5台服务器在本月的cpu日常耗用（非均值）在0.1%以内，属于较小耗用，较上月持平，无明显异常。
+	
+    上述提到的MySQL主库（172.31.3.41）在本月的cpu日常耗用（非均值）基本上维持在1.5%以内，均值未超过0.2%，即使如此，其CPU耗用也是属于较小耗用，较上月持平，无其他明显异常。
+				</textarea>
+			</p>
+			<br/><br/>
+			
+			
+			<p id="id-12">
+				<span style="font-family:宋体; font-size:12pt; font-weight:bold">12、中山联通机房虚拟主机Iowait状态如下所示</span>
+			</p>
+				
+			<p style="font-size:10.5pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<img src="png/557.png" width="554" height="302" />
+				<img src="png/573.png" width="554" height="302" />
+				<img src="png/597.png" width="554" height="302" />
+				<img src="png/605.png" width="554" height="302" />
+				<img src="png/945.png" width="554" height="302" />
+				<img src="png/629.png" width="554" height="302" />
+				<img src="png/637.png" width="554" height="302" />
+				<img src="png/565.png" width="554" height="302" />
+				<img src="png/1157.png" width="554" height="302" />
+				<img src="png/709.png" width="554" height="302" />
+				<img src="png/693.png" width="554" height="302" />
+				<img src="png/725.png" width="554" height="302" />
+				<img src="png/1139.png" width="554" height="302" />
+				<img src="png/1147.png" width="554" height="302" />
+				<img src="png/936.png" width="554" height="302" />
+				<img src="png/1091.png" width="554" height="302" />
+				<img src="png/1099.png" width="554" height="302" />
+				<img src="png/1107.png" width="554" height="302" />
+				<img src="png/1131.png" width="554" height="302" />
+				<img src="png/1245.png" width="554" height="302" />
+				<img src="png/1001.png" width="554" height="302" />
+				<img src="png/1009.png" width="554" height="302" />
+				<img src="png/1017.png" width="554" height="302" />
+				<img src="png/1115.png" width="554" height="302" />
+				<img src="png/1123.png" width="554" height="302" />
+				<img src="png/1165.png" width="554" height="302" />
+				<img src="png/1173.png" width="554" height="302" />
+				<img src="png/1181.png" width="554" height="302" />
+				<img src="png/1189.png" width="554" height="302" />
+				<img src="png/1197.png" width="554" height="302" />
+				<img src="png/1205.png" width="554" height="302" />
+				<img src="png/1213.png" width="554" height="302" />
+				<img src="png/1221.png" width="554" height="302" />
+				<img src="png/1229.png" width="554" height="302" />
+				<img src="png/1237.png" width="554" height="302" />
+				<img src="png/1253.png" width="554" height="302" />
+				<img src="png/761.png" width="554" height="302" />
+				<img src="png/919.png" width="554" height="302" />
+				<img src="png/928.png" width="554" height="302" />
+				<img src="png/953.png" width="554" height="302" />
+				<img src="png/961.png" width="554" height="302" />
+				<img src="png/969.png" width="554" height="302" />
+				<img src="png/977.png" width="554" height="302" />
+				<img src="png/985.png" width="554" height="302" />
+				<img src="png/993.png" width="554" height="302" />
+				<img src="" width="554" height="302" />
+			</p>
+			<br/>
+			<p>
+				<h5 style="font-family:宋体; font-size:10.5pt; font-weight:bold">分析总结(可进行编辑)：</h5>
+				<textarea type='text' rows="40" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+	在这些虚拟主机中，除了
+	
+	a)、星星打车MySQL数据库主库（172.31.3.21）
+	b)、星星打车Mysql数据库第一从库（172.31.3.29）
+	c)、星星打车MySQL数据库第二三从库（172.31.3.30）
+	d)、星星打车Mongo数据从库（172.31.3.23）
+	e)、BI的MySQL主库（172.31.3.11）
+	f)、BI的MySQL从库（172.31.3.12）
+	
+	这6台虚拟机以外，其他所有的虚拟主机的io等待日常频繁耗用（非均值）均未超过0.2%，上述总体情况较上月基本一致。根据系统的配置情况，iowait在3%以内都是可接受的，目前来说虚拟主机的读写性能较好。
+	
+	其中星星打车MySQL数据库主库（172.31.3.21）io等待的日常耗用值（非均值）在0.3%以内，均值未超过0.2%，较上月持平，并无其他无明显异常；
+	
+	星星打车Mysql数据库第一从库（172.31.3.29）io等待的日常耗用值（非均值）在0.5%左右，均值未超过0.2%，较上月持平，无明显异常；
+	
+	星星打车MySQL数据库第二三从库（172.31.3.30）io等待的日常耗用值（非均值）在0.7%以内，均值未超过0.2%，以上数据库的io耗用较上月持平，其他并无明显异常，仍属于较低耗用；
+	
+	星星打车Mongo数据从库（172.31.3.23）io等待的日常耗用值（非均值）在1%以内，均值未超过0.8%，保持稳定，较上月持平；（注：该mongo数据从库会出现io等待是因为所在的虚拟主机使用的是本机存储，并不是共享存储，因此在读写性能方面会有所薄弱，但是出于资源合理利用考虑，且不影响主从功能，因此还是可以接受的；）
+	BI的MySQL主库（172.31.3.11）的）io等待的日常耗用（非均值）在0.8%以内，均值未超过0.1%，较上月有所降低，其他无明显异常，属于较低耗用；
+	
+	BI的MySQL从库（172.31.3.12）io等待的日常耗用（非均值）在0.35%以内，均值未超过0.1%，属于较低耗用，以上数据库的io耗用较上月持平，无明显异常；上述提到的BI主库以及从库的IO高耗用均是在凌晨导数据时才出现的，其他时间的耗用则是很低的，这个也是符合BI的业务特性；
+				</textarea>
+			</p>
+			<br/><br/>
+			
+			
+			<p id="id-13">
+				<span style="font-family:宋体; font-size:12pt; font-weight:bold">13、中山联通机房虚拟主机系统负载状态如下所示</span>
+			</p>
+				
+			<p style="font-size:10.5pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<img src="png/556.png" width="554" height="302" />
+				<img src="png/572.png" width="554" height="302" />
+				<img src="png/596.png" width="554" height="302" />
+				<img src="png/604.png" width="554" height="302" />
+				<img src="png/944.png" width="554" height="302" />
+				<img src="png/628.png" width="554" height="302" />
+				<img src="png/636.png" width="554" height="302" />
+				<img src="png/564.png" width="554" height="302" />
+				<img src="png/1156.png" width="554" height="302" />
+				<img src="png/708.png" width="554" height="302" />
+				<img src="png/692.png" width="554" height="302" />
+				<img src="png/724.png" width="554" height="302" />
+				<img src="png/1138.png" width="554" height="302" />
+				<img src="png/1146.png" width="554" height="302" />
+				<img src="png/935.png" width="554" height="302" />
+				<img src="png/1090.png" width="554" height="302" />
+				<img src="png/1098.png" width="554" height="302" />
+				<img src="png/1106.png" width="554" height="302" />
+				<img src="png/1130.png" width="554" height="302" />
+				<img src="png/1244.png" width="554" height="302" />
+				<img src="png/1000.png" width="554" height="302" />
+				<img src="png/1008.png" width="554" height="302" />
+				<img src="png/1016.png" width="554" height="302" />
+				<img src="png/1114.png" width="554" height="302" />
+				<img src="png/1122.png" width="554" height="302" />
+				<img src="png/1164.png" width="554" height="302" />
+				<img src="png/1172.png" width="554" height="302" />
+				<img src="png/1180.png" width="554" height="302" />
+				<img src="png/1188.png" width="554" height="302" />
+				<img src="png/1196.png" width="554" height="302" />
+				<img src="png/1204.png" width="554" height="302" />
+				<img src="png/1212.png" width="554" height="302" />
+				<img src="png/1220.png" width="554" height="302" />
+				<img src="png/1228.png" width="554" height="302" />
+				<img src="png/1236.png" width="554" height="302" />
+				<img src="png/1252.png" width="554" height="302" />
+				<img src="png/760.png" width="554" height="302" />
+				<img src="png/918.png" width="554" height="302" />
+				<img src="png/927.png" width="554" height="302" />
+				<img src="png/952.png" width="554" height="302" />
+				<img src="png/960.png" width="554" height="302" />
+				<img src="png/968.png" width="554" height="302" />
+				<img src="png/976.png" width="554" height="302" />
+				<img src="png/984.png" width="554" height="302" />
+				<img src="png/992.png" width="554" height="302" />
+				<img src="" width="554" height="302" />
+			</p>
+			<br/>
+			<p>
+				<h5 style="font-family:宋体; font-size:10.5pt; font-weight:bold">分析总结(可进行编辑)：</h5>
+				<textarea type='text' rows="40" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    从本月的虚拟主机负载图来看，除了虚拟主机：
+	
+    a）、星星打车主库主机（172.31.3.21）、
+    b）、第二三从库主机（172.31.3.30）、
+    c）、BI主库主机（172.31.3.11）、
+    d）、BI从库主机（172.31.3.12）、
+    e）、金融web主节点主机（172.31.2.2）、
+    f）、星星打车后台web与引擎（172.31.2.24）
+	
+    共6台虚拟主机以外，其他所有虚拟主机（包括汽车金融，BI，星星打车、MIS所涉及到的虚拟主机）的负载，无论是1分钟均值，5分钟均值，15分钟的日常耗用（非均值）未超过0.5，较上月持平。
+	
+    注：系统负载的定义临界点为，如机器为4核的配置，那么系统负载为4则是临界点，超过4则为超出系统负载。我们的服务器均为2核以上，最高核心为24核。
+
+    星星打车主库（172.31.3.21）1分钟、5分钟、15分钟的日常耗用（非均值）在1以内，均值未超过0.5，较上月持平，系统负载相对较为稳定；
+	
+    星星打车第二三从库1分钟、5分钟、15分钟的日常耗用（非均值）在1.25以内，均值未超过0.8，较上月持平；
+	
+    星星打车后台web与引擎（172.31.2.24）的系统负载日常耗用（非均值）在0.2~1.25之间，均值未超过0.2，属于较低耗用，较上月持平；
+	
+    BI主库（172.31.3.11）以及从库（172.31.3.12）的系统负载日常耗用（非均值）在2以内，均值未超过0.2，较上月持平；上述提到的BI主库以及从库的系统负载高均是在凌晨导数据时才出现的，其他时间的耗用则是很低的，这个也是符合BI的业务特性；
+	
+    金融web主节点主机（172.31.2.2）的系统负载日常耗用（非均值）在0.8以内，均值未超过0.1，属于较低耗用，较上月有少量下降；
+	
+    上述提到的6台主机的系统耗用均为较小耗用，在正常值范围内，无明显异常。
+				</textarea>
+			</p>
+			<br/><br/>
+			
+			
+			<p id="id-14">
+				<span style="font-family:宋体; font-size:12pt; font-weight:bold">14、Nginx吞吐率如下所示</span>
+			</p>
+					
+			<p style="font-size:10.5pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<img src="png/678.png" width="554" height="302" />
+				<img src="png/688.png" width="554" height="302" />
+			</p>
+			<br/>
+			<p>
+				<h5 style="font-family:宋体; font-size:10.5pt; font-weight:bold">分析总结(可进行编辑)：</h5>
+				<textarea type='text' rows="6" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    目前两个Nginx在正常业务情况下的每秒钟的处理量为___个左右请求/秒，较上个月总体持平；Nginx方面在未来一段时间内不会出现瓶颈问题（在之前做过的压力测试中，我们的Nginx至少支持1000的并发）。
+				</textarea>
+			</p>
+			<br/><br/>
+			
+			
+			<p id="id-15">
+				<span style="font-family:宋体; font-size:12pt; font-weight:bold">15、星星打车访问状态码如下所示</span>
+			</p>
+					
+			<p style="font-size:10.5pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<img src="png/789.png" width="554" height="302" />
+				<img src="png/792.png" width="554" height="302" />
+			</p>
+			<p style="font-size:10.5pt; line-height:130%; margin:0pt; orphans:0; text-align:center; widows:0">
+				<img src="png/786.png" width="554" height="302" />
+				<img src="png/784.png" width="554" height="302" />
+			</p>
+			<br/>
+			<p>
+				<h5 style="font-family:宋体; font-size:10.5pt; font-weight:bold">分析总结(可进行编辑)：</h5>
+				<textarea type='text' rows="15" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "background-color:transparent;border:0;">
+    星星打车200状态码数量在本月均值为22.49W/天，其数量较上月有少量下降，约减少1.2W/天，近半年来，星星打车的访问量均是呈直线下降趋势，最近3个月开始已趋于稳定。
+	
+    异常状态码中，404异常状态码数量为4.6K/天，较上月上涨约4.49K/天，相对较大，经查明是404异常主要是来源于本月20号当天出现了113.69K的异常404请求（占本月404异常码的82.38%），当天通管局来公司进行网约车方面的查询，所以该问题为我方已知的，并在可控范围内的；
+	
+    499异常状态码数量小于0.1K/天，较上月持平，未有明显异常。
+	
+    500异常状态码数量为少于0.01K/天，基本上未出现，较上月持平，未有明显异常。
+	
+    502异常状态码数量为少于0.01K/天，基本上未出现，较上月持平，未有明显异常。
+				</textarea>
+			</p>
+			<br/><br/>
+			
+			
+			<p id="id-16">
+				<span style="font-family:宋体; font-size:12pt; font-weight:bold">16、整体报告精简汇总分析</span>
+			</p>
+			<p>
+				<textarea type='text' rows="10" cols="100" placeholder="请点击此处，并输入您分析的结果" style= "font-family:宋体; font-size:10.5pt; font-weight:bold;background-color:transparent;border:0;">
+    本月服务器各项性能指标、主机可用性、服务可用性、业务可用性等情况均属于正常情况，并无异常，请知悉。本月服务器各项性能指标、主机可用性、服务可用性、业务可用性等情况均属于正常情况，并无异常，请知悉。
+
+				</textarea>
+			</p>
+			<br/><br/>
+			
+			
+		</div>
+
+	</body>
+	
+</html>
