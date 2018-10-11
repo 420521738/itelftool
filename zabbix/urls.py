@@ -16,4 +16,6 @@ urlpatterns = [
     url(r'^graphgroup/add/$', getgraphs.graph_group_add, name='graph_group_add'),
     url(r'^graphgroup/edit/(?P<ids>\d+)/$', getgraphs.graph_group_edit, name='graph_group_edit'),
     url(r'^graphgroup/delete/(?P<ids>\d+)/$', getgraphs.graph_group_del, name='graph_group_del'),
+    
+    url(r'^graph/upload/$', getgraphs.graph_upload, name='graph_upload'),
 ]

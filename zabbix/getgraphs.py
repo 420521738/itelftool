@@ -14,6 +14,7 @@ from django.shortcuts import render
 from subprocess import Popen, PIPE
 from zabbix.models import MonitorGraph
 from zabbix.forms import GraphGroupForm
+from urllib import parse
 
 
 class ZabbixGraph(object):
@@ -63,7 +64,7 @@ def get_time_graph(request, starttime, endtime, ids):
     indexURL="http://21.20.48.67:16888/index.php"
     username = 'Admin'
     password = 'zabbix'
-    image_dir='/var/tmp/monitor/day/%s-%s' % (start_time,end_time)
+    image_dir='/var/tmp/monitor/report/%s-%s/png/' % (start_time,end_time)
     
     if os.path.exists(image_dir):
         shutil.rmtree(image_dir)
@@ -96,6 +97,25 @@ def sendgraph_info(request):
     starttime = datetime.datetime.strptime(st,"%Y-%m-%d %H:%M:%S")
     endtime = datetime.datetime.strptime(et,"%Y-%m-%d %H:%M:%S")
     image_dir = get_time_graph(request, starttime, endtime, graphids)
+    
+    workdir = os.path.abspath('.')
+    example_report = workdir + '/zabbix/example_report/data_report.html'
+    
+    year = st.split('-')[0]
+    month = st.split('-')[1]
+    title = year + '年' + month + '月份服务器使用情况报表'
+    sed_cmd = "/usr/bin/sed -i " + "'s/Title/" + title + "/g'" + " " + example_report + '&& ' + "/usr/bin/sed -i " + "'s/StartTime/" + st + "/g'" + " " + example_report + "&& " + "/usr/bin/sed -i " + "'s/EndTime/" + et + "/g'" + " " + example_report
+    p_sed = Popen(sed_cmd, stdout=PIPE, stderr=PIPE, shell=True)
+    p_sed.communicate()
+    #sed_cmd2 = "/usr/bin/sed -i " + "'s/StartTime/" + st + "/g'" + " " + example_report
+    #sed_cmd3 = "/usr/bin/sed -i " + "'s/EndTime/" + st + "/g'" + " " + example_report
+    
+    example_report_default = workdir + '/zabbix/example_report/data_report_default.html'
+    report_dir = image_dir.split('png')[0]
+    report_cmd = 'cp -ar ' + example_report + ' ' +  report_dir + '&& ' + 'cp -ar ' + example_report_default + ' ' +  example_report
+    p_report = Popen(report_cmd, stdout=PIPE, stderr=PIPE, shell=True)
+    p_report.communicate()
+    
     cmd = "cd " + image_dir +" && ls -l"
     p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
     data = p.communicate()
@@ -193,3 +213,31 @@ def graph_group_edit(request, ids):
 def graph_group_del(request, ids):
     MonitorGraph.objects.filter(id=ids).delete()
     return HttpResponseRedirect(reverse('graph_group_list'))
+
+
+
+def graph_upload(request):
+    if request.method == "POST":    # 请求方法为POST时，进行处理  
+        myFiles =request.FILES.getlist("myfile", None)    # 获取上传的文件，如果没有文件，则默认为None
+        image_dir = request.POST.get('image_dir')
+        for myFile in myFiles:
+            destination = open(os.path.join(image_dir,myFile.name),'wb+')    # 打开特定的文件进行二进制的写操作  
+            for chunk in myFile.chunks():      # 分块写入文件  
+                destination.write(chunk)  
+            destination.close()
+        
+        report_dir = image_dir.split('png')[0]
+        data_info = image_dir.split('report/')[1].split('/png')[0]
+        zip_cmd = 'cd ' + report_dir + ' ' + '&& ' + 'zip -r ' + 'Report_' + data_info + '.zip ' + './*'
+        zip_report = Popen(zip_cmd, stdout=PIPE, stderr=PIPE, shell=True)
+        zip_report.communicate()
+        
+        z_name = report_dir + 'Report_' + data_info + '.zip'
+        z_file = open(z_name, 'rb')
+        data = z_file.read()
+        z_file.close()
+        response = HttpResponse(data, content_type='application/zip')
+        response['Content-Disposition'] = 'attachment;filename=' + parse.quote(z_name.split('/')[-1])
+        return response
+        
+

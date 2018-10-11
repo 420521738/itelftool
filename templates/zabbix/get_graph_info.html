@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block page-content-title %}
-监控图生成结果
+数据报表生成结果
 {% endblock %}
 
 {% block page-nav-tab %}
@@ -18,13 +18,52 @@
 
 {% block page-content %}
 <div>
-	<h4 style="color:green">zabbix图像已经生成！</h4>
-	<h5>此次监控时间为： <span style="color:green">{{starttime|date:"Y-m-d H:i:s"}}</span> 至 <span style="color:green">{{endtime|date:"Y-m-d H:i:s"}}</span></h5>
-	<h5>监控图所在的目录是：{{image_dir}}</h5>
+	<h3 style="color:green">基础数据报表已经生成80%，请继续以下上传步骤完成报表导出！</h3>
+	<h4>此次报表统计时间为： <span style="color:#0000FF">{{starttime|date:"Y-m-d H:i:s"}}</span> 至 <span style="color:#0000FF">{{endtime|date:"Y-m-d H:i:s"}}</span></h4>
+	<!-- 
+	<h5>监控图所在的目录是：{{image_dir}}</h5> 
 	<h5>此次监控图列表如下：</h5>
-	<h6>{{ data|res_splict|safe }}</h6>
+	<h6>{{ data|res_splict|safe }}</h6> -->
+	<h4 style="color:red">注意，由于报表中有些数据图并不能通过zabbix接口获取其他系统接口获取，仍需要你手动上传。需要手动上传的数据统计图共有7张，如下：</h4>
+	<h4 style="color:red">第一张：主机可用率图，强制命名为：1.png</h4>
+	<h4 style="color:red">第二张：服务可用率图，强制命名为：2.png</h4>
+	<h4 style="color:red">第三张：业务故障率图，强制命名为：3.png</h4>
+	<h4 style="color:red">第四张：机房流量图，强制命名为：4.png</h4>
+	<h4 style="color:red">第五张：存储空间使用图，强制命名为：5.png</h4>
+	<h4 style="color:red">第六张：存储io使用图，强制命名为：6.png</h4>
+	<h4 style="color:red">第七张：宿主机内存资源状态图，强制命名为：9.png</h4>
 	
-</div>
+	<br/>
+	<h4>按上述命名规则上传图片</h4>
+	<div>
+		<form enctype="multipart/form-data" action="{% url 'graph_upload' %}" method="post">
+		{% csrf_token %}
+		   <input id="myfile" type="file" name="myfile" multiple="multiple"/>
+		   <input id="image_dir" type="hidden" name="image_dir" value="{{image_dir}}"/>
+		   <ul id="filelist"></ul>
+		   <input type="submit" class="btn btn-primary" value="上传并生成完整报表"/>
+		</form>
+	</div>
+	<div>
+	<h5 style="color:green">如果您已点击“上传并生成完整报表”按钮，并且已经下载报表，可以点击下面的“返回”按钮退出此次报表生成事件。<h5>
+	<a href="{% url 'input_graph_info' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>
+	</div>
+	</div>
+	
+	<script>
+	document.getElementById("myfile").addEventListener("change", function(event) {
+	  let output = document.getElementById("filelist");
+	  let files = event.target.files;
+	  //document.getElementById('directory_value').value = files
+	  //alert(files)
+	  for (let i=0; i<files.length; i++) {
+	    let item = document.createElement("li");
+	    item.innerHTML = files[i].name;
+	    //alert(item.innerHTML)
+	    output.appendChild(item);
+	  };
+	}, false);
+	</script>
 {% endblock %}
 
 {% block  bottom-js %}
