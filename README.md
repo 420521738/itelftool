@@ -58,3 +58,17 @@ WebShell登录管理：<br/><br/>
 ![image](https://github.com/420521738/itelftool/blob/master/screenshots/cod_excute_record.png)
 <br/>更新日志查看（方便溯源）：<br/>
 ![image](https://github.com/420521738/itelftool/blob/master/screenshots/coderelease_logdetail.png)
+<br/><br/>
+
+
+Zabbix数据报表管理面板：<br/>
+<br/>输入zabbix报表生成三要素：<br/>
+![image](https://github.com/420521738/itelftool/blob/master/screenshots/ZabbixInputInfo.png.png)
+<br/>
+<br/>上传无法调用zabbix接口获取的监控图像：<br/>
+![image](https://github.com/420521738/itelftool/blob/master/screenshots/ZabbixReportUpload.png)
+<br/>数据报表自动下载：<br/>
+![image](https://github.com/420521738/itelftool/blob/master/screenshots/ZabbixReportDownload.png)
+<br/>数据报表截图展示：<br/>
+![image](https://github.com/420521738/itelftool/blob/master/screenshots/ZabbixReportExample.png)
+<br/><br/>
