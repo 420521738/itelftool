@@ -36,6 +36,7 @@
 	<br/>
 	<h4>按上述命名规则上传图片</h4>
 	<div>
+		<!-- 这里的图片文件处理是交给graph_upload程序进行处理的 -->
 		<form enctype="multipart/form-data" action="{% url 'graph_upload' %}" method="post">
 		{% csrf_token %}
 		   <input id="myfile" type="file" name="myfile" multiple="multiple"/>
@@ -51,6 +52,7 @@
 	</div>
 	
 	<script>
+	// 这个js是用来显示上传按钮选中文件后，显示文件名的js
 	document.getElementById("myfile").addEventListener("change", function(event) {
 	  let output = document.getElementById("filelist");
 	  let files = event.target.files;

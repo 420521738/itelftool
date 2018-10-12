@@ -67,5 +67,6 @@ encoding//webshell/urls.py=utf-8
 encoding//webshell/views.py=utf-8
 encoding//zabbix/get_hostinfo.py=utf-8
 encoding//zabbix/getgraphs.py=utf-8
+encoding//zabbix/models.py=utf-8
 encoding//zabbix/urls.py=utf-8
 encoding/needtodo.txt=UTF-8

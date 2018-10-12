@@ -1,13 +1,19 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+from accounts.permission import permission_verify
+from django.contrib.auth.decorators import login_required
 import json
 import urllib.request, urllib.error, urllib.parse
 from django.shortcuts import render
 
+
+
 class ZabbixAPI:
     def __init__(self):
-        self.__url = 'http://21.20.48.67:16888/api_jsonrpc.php'
+        self.__url = 'http://121.201.48.67:16111/api_jsonrpc.php'
         self.__user = 'Admin'
-        self.__password = 'zabbix'
+        self.__password = 'zabbix@gz711'
         self.__header = {"Content-Type": "application/json-rpc"}
         self.__token_id = self.UserLogin()
     #登陆获取token
@@ -54,16 +60,23 @@ class ZabbixAPI:
                 "sortfield": "name"
             }
         return  self.PostRequest(data)       
-        
+    
 
+
+# 获取监控里包含的主机，以及各个主机id，主机对应的图的id，用于创建监控图组  
+@login_required
+@permission_verify()
 def main(request):
+    # This 实例化一个类
     zapi=ZabbixAPI()
     #token=zapi.UserLogin()
     #print(token)
+    # This 调用类的MyHostGet方法
     hosts=zapi.MyHostGet()
     
     mydictlist = []
     
+    # hosts返回的是host的监控名，主机的id，监控图id以及监控图名称
     for host in hosts:
         mydict = {}
         #print(host)
@@ -74,9 +87,6 @@ def main(request):
         for graph in graphinfo:
             mydict.update({'hostname':hostname, 'hostid':hostid, graph['name']:graph['graphid']})
         mydictlist.append(mydict)
-        
-        #print(mydict)
-    #print(mydictlist)
     
     
     results = {

@@ -36,6 +36,7 @@
         <div class="box-header with-border">
         </div>
         <div class="box-body">
+        <!-- 这个form表单的内容都提交到sendgraph_info去 -->
       <form action="{% url 'sendgraph_info' %}" method="post">
         {% csrf_token %}
 			<p> 
@@ -58,14 +59,15 @@
             <label><h5>监控图组：</h5></label>
             <select id="graphgroup" name="graphgroup" class="form-control" multiple="multiple" data-placeholder="监控图组选择" style="width: 100%;">
                 {% for g in monitor_group %}
+                		<!-- 这里的value一定要是组id的内容，这个值是需要传到后台去处理的 -->
                     <option value="{{ g.graphids }}">{{ g.groupname }}</option>
                 {% endfor %}
             </select>
           </div>
 			
 
-        <input type="submit" class="btn btn-primary" style="width: 80pt" value="生成数据报表">&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'input_graph_info' %}"><li style="width: 80pt" class="btn btn-primary" value="">返回</li></a><br>
+        <input type="submit" class="btn btn-primary" style="width: 100pt" value="生成基本数据报表">&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{% url 'input_graph_info' %}"><li style="width: 100pt" class="btn btn-primary" value="">返回</li></a><br>
       </form>
       
         </div>
@@ -77,6 +79,7 @@
   </div>
   
 <script>
+	// 这里也是一个选择的js，当选择了监控图组就不能手动输入id，只能二选一进行处理
   $(function () {
   		$("#graphgroup").select2().on("select2:select", function () { $("#graphid").prop("disabled", true); });
     });
@@ -90,6 +93,7 @@
 	<script src="/static/plugins/cxCalendar/js/jquery.cxcalendar.js"></script>
 	<script>
 		//$("#id_occur_time").cxCalendar();
+		// 这里是报表开始时间 和 报表结束时间的的工具，只需要点点点，不需要人为手动输入，人为容易错
 		$('#starttime,#endtime').cxCalendar({
 		  type: 'datetime',
 		  format: 'YYYY-MM-DD HH:mm:ss'

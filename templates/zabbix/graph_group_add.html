@@ -81,6 +81,7 @@
   </div>
 
 <script>
+	//选择框的js写法，只能选择其中一个，只要选中其中一个，另一个就禁用
   $(function () {
     $("#graphgroup").select2().on("select2:select", function () { $("#graphid").prop("disabled", true); });
     $("#graphgroup").select2().on("select2:unselect", function () { $("#graphid").prop("disabled", false); });
