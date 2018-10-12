@@ -72,10 +72,10 @@ def get_time_graph(request, starttime, endtime, ids):
     end_time = endtime.strftime('%Y%m%d')
     
     # This 以下这一段是固定的，zabbix的web登录信息，用来模拟zabbix登录
-    gr_url="http://121.201.48.67:16111/chart2.php"
-    indexURL="http://121.201.48.67:16111/index.php"
+    gr_url="http://21.20.48.67:16888/chart2.php"
+    indexURL="http://21.20.48.67:16888/index.php"
     username = 'Admin'
-    password = 'zabbix@gz711'
+    password = 'zabbix'
     
     # This 报表中所需要的图片的路径
     image_dir='/var/tmp/monitor/report/%s-%s/png/' % (start_time,end_time)

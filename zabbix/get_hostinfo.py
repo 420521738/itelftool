@@ -11,9 +11,9 @@ from django.shortcuts import render
 
 class ZabbixAPI:
     def __init__(self):
-        self.__url = 'http://121.201.48.67:16111/api_jsonrpc.php'
+        self.__url = 'http://21.20.48.67:16888/api_jsonrpc.php'
         self.__user = 'Admin'
-        self.__password = 'zabbix@gz711'
+        self.__password = 'zabbix'
         self.__header = {"Content-Type": "application/json-rpc"}
         self.__token_id = self.UserLogin()
     #登陆获取token
