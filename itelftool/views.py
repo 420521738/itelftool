@@ -144,7 +144,7 @@ def acc_login(request):
                     if utils.timezone.now() > user.valid_begin_time and utils.timezone.now()  < user.valid_end_time:
                         auth.login(request,user)
                         # 这个很重要，是设置用户登录后session保存多久，这里设置了30分钟，30分钟后需要重新登录
-                        request.session.set_expiry(60*300)
+                        request.session.set_expiry(60*30)
                         #print 'session expires at :',request.session.get_expiry_date()
                         # This 用户登录记录到数据库
                         user = request.user
@@ -161,7 +161,7 @@ def acc_login(request):
                 elif utils.timezone.now() > user.valid_begin_time:
                         auth.login(request,user)
                         # 这个很重要，是设置用户登录后session保存多久，这里设置了30分钟，30分钟后需要重新登录
-                        request.session.set_expiry(60*300)
+                        request.session.set_expiry(60*30)
                         # This 用户登录记录到数据库
                         user = request.user
                         ipaddr = request.META['REMOTE_ADDR']
