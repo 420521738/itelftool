@@ -18,12 +18,6 @@ from accounts.permission import permission_verify
 
 
 
-@login_required
-@permission_verify()
-def index(request):
-    return render(request, 'assets/dashboard.html')
-
-
 # 其中 utils.token_required装饰器为接口认证，这个认证与客户端的认证是一致的才能进行函数执行的操作
 @csrf_exempt
 @utils.token_required
@@ -163,16 +157,6 @@ def asset_detail(request, asset_id):
             return render(request, 'assets/asset_detail.html', {'error': e})
         return render(request, 'assets/asset_detail.html', {"asset_obj": asset_obj})
 
-
-# 这里是从index.html页面过来拿数据的
-@login_required
-def get_dashboard_data(request):
-    '''返回主页面数据'''
-    # 继承类 AssetDashboard
-    dashboard_data = AssetDashboard(request)
-    # 调用类 AssetDashboard下的searilize_page方法
-    dashboard_data.searilize_page()
-    return HttpResponse(json.dumps(dashboard_data.data))
 
 
 @login_required

@@ -27,6 +27,5 @@ urlpatterns = [
     # 资产列表，上面已经将assets下的rest_views做了别名为views,实际上是去找rest_views.AssetList
     url(r'asset_list/$',views.AssetList ),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^dashboard_data/',asset_views.get_dashboard_data,name="get_dashboard_data"),
     url(r'^eventlogs/$', rest_test.eventlog_list),
 ]
