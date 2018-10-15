@@ -12,11 +12,11 @@
 * 首页暂时显示的模块内容有：月用户活跃度、服务器在线率、月业务故障率、月资产信息变更率、用户总数、用户在线数、资产总数、机房总数、产品线总数、项目总数、系统登录记录（最近10次）、版本发布记录（最近10次）、资产信息变更记录（最近10次）
 
 ##### 效果截图：
-![image](https://github.com/420521738/itelftool/blob/master/screenshots/Dashboard.png)
+![Dashboard](https://github.com/420521738/itelftool/blob/master/screenshots/Dashboard.png)
 
 站点导航以及站点管理面板：<br/><br/>
-![image](https://github.com/420521738/itelftool/blob/master/screenshots/WebsiteNavi.png)
-![image](https://github.com/420521738/itelftool/blob/master/screenshots/WebsiteManagement.png)
+![WebsiteNavi](https://github.com/420521738/itelftool/blob/master/screenshots/WebsiteNavi.png)
+![WebsiteManagement](https://github.com/420521738/itelftool/blob/master/screenshots/WebsiteManagement.png)
 <br/><br/>
 
 故障记录面板：<br/><br/>
